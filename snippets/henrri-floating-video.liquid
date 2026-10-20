@@ -8,19 +8,13 @@
   @example
   {% render 'henrri-floating-video', product: product %}
 {% enddoc %}
+{%- capture video_src -%}{% render 'henrri-video-src', product: product %}{%- endcapture -%}
 {%- liquid
-  assign video = product.metafields.custom.video.value
-  assign video_src = blank
+  assign video_src = video_src | strip
   assign video_poster = blank
-
-  if video.media_type == 'video'
-    assign mp4 = video.sources | where: 'mime_type', 'video/mp4' | sort: 'width' | last
-    assign video_src = mp4.url | default: video.sources.first.url
+  assign video = product.metafields.custom.video.value
+  if video.media_type == 'video' and video.preview_image
     assign video_poster = video.preview_image | image_url: width: 400
-  elsif video.url != blank
-    assign video_src = video.url
-  elsif video != blank
-    assign video_src = video
   endif
 -%}
 {%- if video_src != blank -%}

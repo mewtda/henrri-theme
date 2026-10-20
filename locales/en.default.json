@@ -531,7 +531,9 @@
   "henrri": {
     "card": {
       "discount": "{{ percent }}% off",
-      "best_seller": "Best seller"
+      "best_seller": "Best seller",
+      "colors": "Colors",
+      "kit": "Kit {{ count }}"
     },
     "product": {
       "installments_html": "or <strong>{{ count }}x of {{ amount }}</strong> interest-free",

@@ -1,0 +1,80 @@
+{% doc %}
+  Renders small squares linking the products of the same group, above the card title.
+  The group comes from the product metafield `custom.group`, which holds the handle of an
+  automated collection with the products of that group (ex.: `camiseta-oversized`).
+  Each square uses the color from `custom.cor`, the image from `custom.estampa`, or
+  "Kit N" when `custom.number_of_products` is 2 or more.
+  Falls back to the color option swatches when the product has no group.
+
+  @param {product} product - The product
+  @param {number} [max] - Maximum number of squares before showing "+N" (default 6)
+
+  @example
+  {% render 'henrri-card-group', product: card_product, max: 6 %}
+{% enddoc %}
+{%- liquid
+  assign max = max | default: 6
+  assign current_group = product.metafields.custom.group.value | append: '' | strip
+  assign group_collection = null
+  if current_group != blank
+    assign group_collection = collections[current_group]
+  endif
+-%}
+{%- if group_collection != blank and group_collection.products_count > 1 -%}
+  {%- assign shown = 0 -%}
+  {%- assign hidden_count = 0 -%}
+  <ul class="henrri-swatches henrri-swatches--group" role="list" aria-label="{{ 'henrri.card.colors' | t }}">
+    {%- for p in group_collection.products limit: 50 -%}
+      {%- liquid
+        # Mesma regra do tema anterior: influencer e camiseta-maderite não se misturam
+        assign p_group = p.metafields.custom.group.value | append: ''
+        assign skip = false
+        if current_group == 'influencer1'
+          if p_group == 'camiseta-maderite' or p_group == 'influencer'
+            assign skip = true
+          endif
+        elsif current_group == 'camiseta-maderite'
+          if p_group == 'influencer1' or p_group == 'influencer'
+            assign skip = true
+          endif
+        endif
+        if skip
+          continue
+        endif
+        if shown >= max
+          assign hidden_count = hidden_count | plus: 1
+          continue
+        endif
+        assign shown = shown | plus: 1
+
+        assign kit_number = p.metafields.custom.number_of_products.value | plus: 0
+        assign color = p.metafields.custom.cor.value | append: '' | strip
+      -%}
+      <li>
+        <a
+          href="{{ p.url }}"
+          class="henrri-swatch{% if kit_number >= 2 %} henrri-swatch--kit{% endif %}{% if p.id == product.id %} is-current{% endif %}{% unless p.available %} henrri-swatch--unavailable{% endunless %}"
+          title="{{ p.title | escape }}"
+          {%- if kit_number < 2 -%}
+            {%- if p.metafields.custom.estampa.value != blank %}
+              style="--swatch-bg: url('{{ p.metafields.custom.estampa | image_url: width: 48 }}');"
+            {%- elsif color != blank %}
+              style="--swatch-bg: {{ color }};"
+            {%- endif -%}
+          {%- endif %}
+        >
+          {%- if kit_number >= 2 -%}
+            {{ 'henrri.card.kit' | t: count: kit_number }}
+          {%- else -%}
+            <span class="visually-hidden">{{ p.title | escape }}</span>
+          {%- endif -%}
+        </a>
+      </li>
+    {%- endfor -%}
+    {%- if hidden_count > 0 -%}
+      <li class="henrri-swatches__more">+{{ hidden_count }}</li>
+    {%- endif -%}
+  </ul>
+{%- else -%}
+  {%- render 'henrri-card-swatches', product: product, max: max -%}
+{%- endif -%}

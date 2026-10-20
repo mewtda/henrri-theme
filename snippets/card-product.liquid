@@ -39,6 +39,18 @@
     if ratio == 0 or ratio == null
       assign ratio = 1
     endif
+    if card_product.featured_media and settings.henrri_card_ratio != 'theme'
+      assign ratio = settings.henrri_card_ratio | times: 1.0
+    endif
+
+    assign henrri_video_src = ''
+    assign henrri_show_video = card_product.metafields.custom.mostra_video_card.value | append: '' | downcase | strip
+    if henrri_show_video == 'sim'
+      capture henrri_video_src
+        render 'henrri-video-src', product: card_product
+      endcapture
+      assign henrri_video_src = henrri_video_src | strip
+    endif
   -%}
 
   <product-component view-event-payload="{{ card_product | standard_event_data: 'view', context: product_view_context | escape }}">
@@ -61,7 +73,19 @@
         >
           {%- if card_product.featured_media -%}
             <div class="card__media{% if image_shape and image_shape != 'default' %} shape--{{ image_shape }} color-{{ settings.card_color_scheme }} gradient{% endif %}">
-              <div class="media media--transparent media--hover-effect">
+              <div class="media media--transparent media--hover-effect{% if henrri_video_src != blank %} henrri-card-media--video{% endif %}">
+                {%- if henrri_video_src != blank -%}
+                  <video
+                    class="henrri-card-video"
+                    src="{{ henrri_video_src }}"
+                    poster="{{ card_product.featured_media | image_url: width: 533 }}"
+                    muted
+                    loop
+                    playsinline
+                    preload="none"
+                    aria-label="{{ card_product.featured_media.alt | escape }}"
+                  ></video>
+                {%- else -%}
                 {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
                 <img
                   srcset="
@@ -84,8 +108,9 @@
                   height="{{ card_product.featured_media.height }}"
                 >
                 {% comment %}theme-check-enable ImgLazyLoading{% endcomment %}
+                {%- endif -%}
 
-                {%- if card_product.media[1] != null and show_secondary_image -%}
+                {%- if card_product.media[1] != null and show_secondary_image and henrri_video_src == blank -%}
                   <img
                     srcset="
                       {%- if card_product.media[1].width >= 165 -%}{{ card_product.media[1] | image_url: width: 165 }} 165w,{%- endif -%}
@@ -148,7 +173,7 @@
         </div>
         <div class="card__content">
           <div class="card__information">
-            {%- render 'henrri-card-swatches', product: card_product, max: 5 -%}
+            {%- render 'henrri-card-group', product: card_product, max: 6 -%}
             <h3
               class="card__heading{% if card_product.featured_media or settings.card_style == 'standard' %} h5{% endif %}"
               {% if card_product.featured_media or settings.card_style == 'card' %}
@@ -572,6 +597,9 @@
     assign placeholder = true
     if media_aspect_ratio == 'portrait'
       assign ratio = 0.8
+    endif
+    if settings.henrri_card_ratio != 'theme'
+      assign ratio = settings.henrri_card_ratio | times: 1.0
     endif
   -%}
   <div class="card-wrapper product-card-wrapper underline-links-hover">

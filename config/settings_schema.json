@@ -17,6 +17,35 @@
         "default": "best-seller"
       },
       {
+        "type": "select",
+        "id": "henrri_card_ratio",
+        "label": "Formato das fotos nos cards",
+        "options": [
+          {
+            "value": "0.667",
+            "label": "Retrato 2:3"
+          },
+          {
+            "value": "0.75",
+            "label": "Retrato 3:4"
+          },
+          {
+            "value": "0.8",
+            "label": "Retrato 4:5"
+          },
+          {
+            "value": "1",
+            "label": "Quadrado"
+          },
+          {
+            "value": "theme",
+            "label": "Igual à configuração de cada seção"
+          }
+        ],
+        "default": "0.667",
+        "info": "Todas as fotos ficam do mesmo tamanho, recortadas"
+      },
+      {
         "type": "header",
         "content": "Parcelamento e Pix"
       },

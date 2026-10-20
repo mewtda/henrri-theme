@@ -1,0 +1,23 @@
+{% doc %}
+  Outputs the URL of the product's `custom.video` metafield (video file, generic file or URL),
+  or nothing when there is no video. Use it inside a capture.
+
+  @param {product} product - The product
+
+  @example
+  {%- capture video_src -%}{% render 'henrri-video-src', product: product %}{%- endcapture -%}
+{% enddoc %}
+{%- liquid
+  assign video = product.metafields.custom.video.value
+  if video.media_type == 'video'
+    assign mp4 = video.sources | where: 'mime_type', 'video/mp4' | sort: 'height' | last
+    if mp4 == blank
+      assign mp4 = video.sources | first
+    endif
+    echo mp4.url
+  elsif video.url != blank
+    echo video.url
+  elsif video != blank
+    echo video
+  endif
+-%}

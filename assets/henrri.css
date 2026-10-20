@@ -234,6 +234,56 @@ a.henrri-marquee__item {
   line-height: 1;
 }
 
+/* Quadrados discretos do grupo (metafield custom.group) */
+.henrri-swatches--group {
+  gap: 0.5rem;
+}
+
+.henrri-swatches--group .henrri-swatch {
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 0;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+
+.henrri-swatches--group .henrri-swatch:hover,
+.henrri-swatches--group .henrri-swatch.is-current {
+  box-shadow: 0 0 0 1px #fff, 0 0 0 2px var(--henrri-black);
+}
+
+.henrri-swatches--group .henrri-swatch--kit {
+  display: flex;
+  align-items: center;
+  width: auto;
+  padding: 0 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--henrri-black);
+  background: #fff;
+  text-decoration: none;
+}
+
+.henrri-swatches--group .henrri-swatch--unavailable {
+  opacity: 0.35;
+}
+
+/* Fotos dos cards sempre do mesmo tamanho, recortadas */
+.card__media .media img,
+.card__media .media video {
+  object-fit: cover;
+  object-position: center top;
+}
+
+.henrri-card-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 /* ---------- Carrossel horizontal genérico ---------- */
 henrri-carousel {
   display: block;

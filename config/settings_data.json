@@ -194,7 +194,8 @@
       "henrri_best_seller_tag": "best-seller",
       "henrri_max_installments": 6,
       "henrri_min_installment": 50,
-      "henrri_pix_discount": 5
+      "henrri_pix_discount": 5,
+      "henrri_card_ratio": "0.667"
     }
   }
 }
