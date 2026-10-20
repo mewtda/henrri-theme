@@ -1,0 +1,134 @@
+{% doc %}
+  Kit builder for kit products. Instead of adding the kit product to the cart, the customer
+  picks a color and a size for each piece and the pieces go to the cart as separate products.
+
+  Metafields on the kit product:
+  - custom.kit_products: list of products (the colors that can go in the kit)
+  - custom.number_of_products: number of pieces (ex.: 5)
+  - custom.desconto: kit discount in % (only displayed; the discount itself comes from a Shopify discount).
+    When empty, the kit product's own "compare at" vs price discount is shown.
+  When kit_products is empty, the non-kit products of the same group (custom.group) are used.
+
+  Suggestions: one per color ("5x Branca") plus a color mix.
+
+  @param {product} product - The kit product
+  @param {string} section_id - The section id
+
+  @example
+  {% render 'henrri-kit-builder', product: product, section_id: section.id %}
+{% enddoc %}
+{%- liquid
+  assign pieces = product.metafields.custom.kit_products.value
+  if pieces == blank
+    assign current_group = product.metafields.custom.group.value | append: '' | strip
+    if current_group != blank and collections[current_group] != blank
+      assign pieces = collections[current_group].products | where: 'available'
+    endif
+  endif
+
+  assign count = product.metafields.custom.number_of_products.value | plus: 0
+  if count < 1
+    assign words = product.title | split: ' '
+    for word in words
+      assign n = word | remove: 'x' | remove: 'X' | plus: 0
+      if n > 1
+        assign count = n
+        break
+      endif
+    endfor
+  endif
+  assign discount = product.metafields.custom.desconto.value | default: product.metafields.custom.desconto | plus: 0
+  if discount <= 0 and product.compare_at_price > product.price
+    assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
+  endif
+-%}
+{%- if count > 0 and pieces != blank -%}
+  <henrri-kit-builder
+    class="henrri-kit"
+    data-count="{{ count }}"
+    data-discount="{{ discount }}"
+    data-section="{{ section_id }}"
+    data-money-format="{{ shop.money_format | escape }}"
+  >
+    <script type="application/json" data-kit-pieces>
+      [
+        {%- assign printed = false -%}
+        {%- for p in pieces -%}
+          {%- liquid
+            assign p_title = p.title | downcase
+            assign p_kit = p.metafields.custom.number_of_products.value | plus: 0
+            if p_kit >= 2 or p_title contains 'kit'
+              continue
+            endif
+            assign size_index = 0
+            for option in p.options_with_values
+              assign option_key = option.name | downcase | strip
+              if option_key == 'tamanho' or option_key == 'size'
+                assign size_index = forloop.index0
+              endif
+            endfor
+            assign color_name = p.title | split: ' - ' | last
+            assign swatch = p.metafields.custom.cor.value | append: '' | strip
+            if p.metafields.custom.estampa.value != blank
+              assign swatch = p.metafields.custom.estampa | image_url: width: 96 | prepend: "url('" | append: "')"
+            endif
+          -%}
+          {%- if printed %},{% endif -%}
+          {%- assign printed = true -%}
+          {
+            "id": {{ p.id }},
+            "title": {{ p.title | json }},
+            "color": {{ color_name | strip | json }},
+            "swatch": {{ swatch | default: '#cccccc' | json }},
+            "image": {{ p.featured_image | image_url: width: 240 | json }},
+            "variants": [
+              {%- for v in p.variants -%}
+                {%- unless forloop.first %},{% endunless -%}
+                { "id": {{ v.id }}, "size": {{ v.options[size_index] | default: v.title | json }}, "available": {{ v.available | json }}, "price": {{ v.price }} }
+              {%- endfor -%}
+            ]
+          }
+        {%- endfor -%}
+      ]
+    </script>
+
+    <div class="henrri-kit__block">
+      <p class="henrri-kit__label">{{ 'henrri.kit.suggestions' | t }}</p>
+      <div class="henrri-kit__suggestions" data-kit-suggestions></div>
+    </div>
+
+    <div class="henrri-kit__block">
+      <p class="henrri-kit__label">{{ 'henrri.kit.size_all' | t }}</p>
+      <div class="henrri-kit__sizes" data-kit-size-all></div>
+    </div>
+
+    <details class="henrri-kit__custom" data-kit-custom>
+      <summary>{{ 'henrri.kit.customize' | t: count: count }}</summary>
+      <ol class="henrri-kit__slots" data-kit-slots></ol>
+    </details>
+
+    <div class="henrri-kit__summary">
+      <p class="henrri-kit__chosen" data-kit-chosen></p>
+      <p class="henrri-kit__total">
+        <span>{{ 'henrri.kit.total' | t }}</span>
+        <s data-kit-compare hidden></s>
+        <strong data-kit-total></strong>
+      </p>
+    </div>
+
+    <p class="henrri-kit__error" data-kit-error role="alert" hidden></p>
+    <button type="button" class="button button--full-width henrri-kit__add" data-kit-add>
+      {{ 'henrri.kit.add' | t }}
+    </button>
+  </henrri-kit-builder>
+  <script>
+    window.henrriKitStrings = {
+      mix: {{ 'henrri.kit.mix' | t | json }},
+      piece: {{ 'henrri.kit.piece' | t | json }},
+      choose_sizes: {{ 'henrri.kit.choose_sizes' | t | json }},
+      adding: {{ 'henrri.kit.adding' | t | json }},
+      error: {{ 'henrri.kit.error' | t | json }}
+    };
+  </script>
+  <script src="{{ 'henrri-kit.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}

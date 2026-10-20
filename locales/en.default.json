@@ -537,11 +537,29 @@
     },
     "product": {
       "installments_html": "or <strong>{{ count }}x of {{ amount }}</strong> interest-free",
-      "pix_html": "<strong>{{ amount }}</strong> with Pix ({{ percent }}% off)"
+      "pix_html": "<strong>{{ amount }}</strong> with Pix ({{ percent }}% off)",
+      "color": "Color",
+      "choose_kit": "Choose by kit:",
+      "kit": "Kit {{ count }}"
     },
     "video": {
       "open": "Watch product video",
       "close": "Close video"
+    },
+    "kit": {
+      "suggestions": "Choose a suggestion",
+      "size_all": "Size for all pieces",
+      "customize": "Customize each of the {{ count }} pieces",
+      "total": "Kit total:",
+      "add": "Add kit to cart",
+      "mix": "Color mix",
+      "piece": "Piece",
+      "choose_sizes": "Choose the size of every piece.",
+      "adding": "Adding...",
+      "error": "Could not add the kit. Try again."
+    },
+    "collection": {
+      "categories": "Categories"
     }
   }
 }

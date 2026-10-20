@@ -30,8 +30,21 @@
                 class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
                 tabindex="-1"
               >
+                {%- liquid
+                  assign menu_key = link.title | downcase | strip
+                  assign mega_images = ''
+                  for block in section.blocks
+                    if block.type == 'henrri_mega_image'
+                      assign block_key = block.settings.menu_item | downcase | strip
+                      if block_key == menu_key and block.settings.image != blank
+                        assign mega_images = mega_images | append: block.id | append: ','
+                      endif
+                    endif
+                  endfor
+                -%}
+                <div class="henrri-mega page-width{% if mega_images != blank %} henrri-mega--has-images{% endif %}">
                 <ul
-                  class="mega-menu__list page-width{% if link.levels == 1 %} mega-menu__list--condensed{% endif %}"
+                  class="mega-menu__list{% if link.levels == 1 %} mega-menu__list--condensed{% endif %}"
                   role="list"
                 >
                   {%- for childlink in link.links -%}
@@ -67,6 +80,23 @@
                     </li>
                   {%- endfor -%}
                 </ul>
+                {%- if mega_images != blank -%}
+                  <ul class="henrri-mega__images" role="list">
+                    {%- for block in section.blocks -%}
+                      {%- assign block_marker = block.id | append: ',' -%}
+                      {%- unless mega_images contains block_marker -%}{%- continue -%}{%- endunless -%}
+                      <li {{ block.shopify_attributes }}>
+                        <a href="{{ block.settings.link | default: link.url }}" class="henrri-mega__image">
+                          {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 450, 600', sizes: '300px' }}
+                          {%- if block.settings.title != blank -%}
+                            <span class="henrri-mega__caption">{{ block.settings.title | escape }}</span>
+                          {%- endif -%}
+                        </a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+                </div>
               </div>
             </details>
           </header-menu>

@@ -627,3 +627,84 @@
   aspect-ratio: 1;
   object-fit: cover;
 }
+
+/* ---------- Banners de qualidade (página de produto) ---------- */
+.henrri-qbanners {
+  display: grid;
+  gap: 1.2rem;
+}
+
+@media screen and (min-width: 750px) {
+  .henrri-qbanners--2 { grid-template-columns: repeat(2, 1fr); }
+  .henrri-qbanners--3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+.henrri-qbanner {
+  position: relative;
+  overflow: hidden;
+}
+
+.henrri-qbanner__img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.henrri-qbanner .placeholder-svg {
+  aspect-ratio: 3 / 1;
+  background: #e5e5e5;
+}
+
+.henrri-qbanner__link {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.henrri-qbanner__content {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 44rem;
+  padding: 0 6%;
+}
+
+.henrri-qbanner--left .henrri-qbanner__content { left: 0; }
+.henrri-qbanner--right .henrri-qbanner__content { right: 0; text-align: right; }
+.henrri-qbanner--center .henrri-qbanner__content { left: 50%; transform: translate(-50%, -50%); text-align: center; }
+
+.henrri-qbanner--below .henrri-qbanner__content {
+  position: static;
+  transform: none;
+  max-width: none;
+  padding: 1.6rem 0 0;
+  color: var(--henrri-black) !important;
+}
+
+.henrri-qbanner__heading {
+  margin: 0 0 0.8rem;
+  color: inherit;
+  font-size: clamp(2rem, 2.4vw, 3.2rem);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.henrri-qbanner__text {
+  font-size: 1.4rem;
+  line-height: 1.6;
+}
+
+.henrri-qbanner__text p {
+  margin: 0;
+}
+
+@media screen and (max-width: 749px) {
+  .henrri-qbanner__content {
+    position: static;
+    transform: none !important;
+    max-width: none;
+    padding: 1.6rem 0 0;
+    text-align: left !important;
+    color: var(--henrri-black) !important;
+  }
+}

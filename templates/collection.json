@@ -8,13 +8,120 @@
         "color_scheme": "scheme-1"
       }
     },
+    "pills": {
+      "type": "henrri-collection-pills",
+      "blocks": {
+        "pill_1": {
+          "type": "pill",
+          "settings": {
+            "collection": "maderite",
+            "label": "Todos",
+            "show_on": "maderite, camiseta-maderite, kit-maderite, mei-dia, relogio-mei-dia, sexta-mei-dia, sextou-bb, influencer"
+          }
+        },
+        "pill_2": {
+          "type": "pill",
+          "settings": {
+            "collection": "camiseta-maderite",
+            "label": "Camisetas",
+            "show_on": "maderite, camiseta-maderite, kit-maderite, mei-dia, relogio-mei-dia, sexta-mei-dia, sextou-bb, influencer"
+          }
+        },
+        "pill_3": {
+          "type": "pill",
+          "settings": {
+            "collection": "kit-maderite",
+            "label": "Kits",
+            "show_on": "maderite, camiseta-maderite, kit-maderite, mei-dia, relogio-mei-dia, sexta-mei-dia, sextou-bb, influencer"
+          }
+        },
+        "pill_4": {
+          "type": "pill",
+          "settings": {
+            "collection": "mei-dia",
+            "label": "Mei Dia",
+            "show_on": "maderite, camiseta-maderite, kit-maderite, mei-dia, relogio-mei-dia, sexta-mei-dia, sextou-bb, influencer"
+          }
+        },
+        "pill_5": {
+          "type": "pill",
+          "settings": {
+            "collection": "relogio-mei-dia",
+            "label": "Relógio Mei Dia",
+            "show_on": "maderite, camiseta-maderite, kit-maderite, mei-dia, relogio-mei-dia, sexta-mei-dia, sextou-bb, influencer"
+          }
+        },
+        "pill_6": {
+          "type": "pill",
+          "settings": {
+            "collection": "sexta-mei-dia",
+            "label": "Sexta Mei Dia",
+            "show_on": "maderite, camiseta-maderite, kit-maderite, mei-dia, relogio-mei-dia, sexta-mei-dia, sextou-bb, influencer"
+          }
+        },
+        "pill_7": {
+          "type": "pill",
+          "settings": {
+            "collection": "sextou-bb",
+            "label": "Sextou BB",
+            "show_on": "maderite, camiseta-maderite, kit-maderite, mei-dia, relogio-mei-dia, sexta-mei-dia, sextou-bb, influencer"
+          }
+        },
+        "pill_8": {
+          "type": "pill",
+          "settings": {
+            "collection": "influencer",
+            "label": "Influencer",
+            "show_on": "maderite, camiseta-maderite, kit-maderite, mei-dia, relogio-mei-dia, sexta-mei-dia, sextou-bb, influencer"
+          }
+        },
+        "pill_9": {
+          "type": "pill",
+          "settings": {
+            "collection": "oversized",
+            "label": "Todos",
+            "show_on": "oversized, camiseta-oversized, camiseta-oversized-comfort"
+          }
+        },
+        "pill_10": {
+          "type": "pill",
+          "settings": {
+            "collection": "camiseta-oversized",
+            "label": "Oversized 100% Algodão",
+            "show_on": "oversized, camiseta-oversized, camiseta-oversized-comfort"
+          }
+        },
+        "pill_11": {
+          "type": "pill",
+          "settings": {
+            "collection": "camiseta-oversized-comfort",
+            "label": "Oversized Alg. Egípcio",
+            "show_on": "oversized, camiseta-oversized, camiseta-oversized-comfort"
+          }
+        }
+      },
+      "block_order": [
+        "pill_1",
+        "pill_2",
+        "pill_3",
+        "pill_4",
+        "pill_5",
+        "pill_6",
+        "pill_7",
+        "pill_8",
+        "pill_9",
+        "pill_10",
+        "pill_11"
+      ],
+      "settings": {}
+    },
     "product-grid": {
       "type": "main-collection-product-grid",
       "settings": {
         "products_per_page": 16,
         "columns_desktop": 4,
         "color_scheme": "scheme-1",
-        "image_ratio": "adapt",
+        "image_ratio": "portrait",
         "image_shape": "default",
         "show_secondary_image": false,
         "show_vendor": false,
@@ -31,6 +138,7 @@
   },
   "order": [
     "banner",
+    "pills",
     "product-grid"
   ]
 }

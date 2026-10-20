@@ -3,6 +3,7 @@
   or nothing when there is no video. Use it inside a capture.
 
   @param {product} product - The product
+  @param {number} [max_height] - Prefer the largest mp4 up to this height (ex.: 720 for cards)
 
   @example
   {%- capture video_src -%}{% render 'henrri-video-src', product: product %}{%- endcapture -%}
@@ -10,7 +11,15 @@
 {%- liquid
   assign video = product.metafields.custom.video.value
   if video.media_type == 'video'
-    assign mp4 = video.sources | where: 'mime_type', 'video/mp4' | sort: 'height' | last
+    assign mp4s = video.sources | where: 'mime_type', 'video/mp4' | sort: 'height'
+    assign mp4 = mp4s | last
+    if max_height
+      for source in mp4s
+        if source.height <= max_height
+          assign mp4 = source
+        endif
+      endfor
+    endif
     if mp4 == blank
       assign mp4 = video.sources | first
     endif

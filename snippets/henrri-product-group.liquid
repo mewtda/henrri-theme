@@ -1,0 +1,145 @@
+{% doc %}
+  Product page block: the colors and kits of the product's group.
+  The group comes from `custom.group` (handle of an automated collection).
+  Kits are products with `custom.number_of_products` >= 2 or "kit" in the title;
+  the other products are colors (square from `custom.cor` or `custom.estampa`).
+
+  @param {product} product - The current product
+  @param {boolean} [show_colors] - Show the colors row (default true)
+  @param {boolean} [show_kits] - Show the kits row (default true)
+
+  @example
+  {% render 'henrri-product-group', product: product %}
+{% enddoc %}
+{%- liquid
+  assign current_group = product.metafields.custom.group.value | append: '' | strip
+  assign group_collection = null
+  if current_group != blank
+    assign group_collection = collections[current_group]
+  endif
+
+  assign color_label = product.title | split: ' - ' | last
+  if color_label == product.title
+    assign color_label = ''
+  endif
+-%}
+{%- if group_collection != blank -%}
+  {%- capture colors_html -%}
+    {%- for p in group_collection.products limit: 50 -%}
+      {%- liquid
+        # Mesma regra do tema anterior: influencer1 e camiseta-maderite não se misturam
+        assign p_group = p.metafields.custom.group.value | append: ''
+        assign skip = false
+        if current_group == 'influencer1' and p_group == 'camiseta-maderite'
+          assign skip = true
+        elsif current_group == 'camiseta-maderite' and p_group == 'influencer1'
+          assign skip = true
+        endif
+        assign p_title = p.title | downcase
+        assign kit_number = p.metafields.custom.number_of_products.value | plus: 0
+        if kit_number >= 2 or p_title contains 'kit'
+          assign skip = true
+        endif
+        if skip
+          continue
+        endif
+        assign color = p.metafields.custom.cor.value | append: '' | strip
+      -%}
+      <li>
+        <a
+          href="{{ p.url }}"
+          class="henrri-pswatch{% if p.id == product.id %} is-current{% endif %}{% unless p.available %} is-unavailable{% endunless %}"
+          title="{{ p.title | escape }}"
+          {% if p.id == product.id %}
+            aria-current="true"
+          {% endif %}
+          {%- if p.metafields.custom.estampa.value != blank %}
+            style="--swatch-bg: url('{{ p.metafields.custom.estampa | image_url: width: 96 }}');"
+          {%- elsif color != blank %}
+            style="--swatch-bg: {{ color }};"
+          {%- endif %}
+        >
+          <span class="visually-hidden">{{ p.title | escape }}</span>
+        </a>
+      </li>
+    {%- endfor -%}
+  {%- endcapture -%}
+
+  {%- capture kits_html -%}
+    {%- for p in group_collection.products limit: 50 -%}
+      {%- liquid
+        assign p_group = p.metafields.custom.group.value | append: ''
+        assign skip = false
+        if current_group == 'influencer1' and p_group == 'camiseta-maderite'
+          assign skip = true
+        elsif current_group == 'camiseta-maderite' and p_group == 'influencer1'
+          assign skip = true
+        endif
+        assign p_title = p.title | downcase
+        assign kit_number = p.metafields.custom.number_of_products.value | plus: 0
+        if kit_number < 2
+          if p_title contains 'kit'
+            # Número do kit pelo título, ex.: "KIT 3x Camisetas" -> 3
+            assign words = p.title | split: ' '
+            for word in words
+              assign n = word | remove: 'x' | remove: 'X' | plus: 0
+              if n > 1
+                assign kit_number = n
+                break
+              endif
+            endfor
+          else
+            assign skip = true
+          endif
+        endif
+        if skip
+          continue
+        endif
+        assign off = 0
+        if p.compare_at_price > p.price
+          assign off = p.compare_at_price | minus: p.price | times: 100.0 | divided_by: p.compare_at_price | round
+        endif
+      -%}
+      <li>
+        <a
+          href="{{ p.url }}"
+          class="henrri-pkit{% if p.id == product.id %} is-current{% endif %}{% unless p.available %} is-unavailable{% endunless %}"
+          title="{{ p.title | escape }}"
+          {% if p.id == product.id %}
+            aria-current="true"
+          {% endif %}
+        >
+          {%- if kit_number > 1 -%}
+            {{ 'henrri.product.kit' | t: count: kit_number }}
+          {%- else -%}
+            {{ p.title | escape }}
+          {%- endif -%}
+          {%- if off > 0 -%}
+            <span class="henrri-pkit__off">-{{ off }}%</span>
+          {%- endif -%}
+        </a>
+      </li>
+    {%- endfor -%}
+  {%- endcapture -%}
+
+  {%- if show_colors != false and colors_html contains '<li>' -%}
+    <div class="henrri-pgroup">
+      <p class="henrri-pgroup__label">
+        {{- 'henrri.product.color' | t -}}
+        {%- if color_label != blank %}: <span>{{ color_label | escape }}</span>{% endif -%}
+      </p>
+      <ul class="henrri-pgroup__list" role="list">
+        {{- colors_html -}}
+      </ul>
+    </div>
+  {%- endif -%}
+
+  {%- if show_kits != false and kits_html contains '<li>' -%}
+    <div class="henrri-pgroup">
+      <p class="henrri-pgroup__label">{{ 'henrri.product.choose_kit' | t }}</p>
+      <ul class="henrri-pgroup__list henrri-pgroup__list--kits" role="list">
+        {{- kits_html -}}
+      </ul>
+    </div>
+  {%- endif -%}
+{%- endif -%}

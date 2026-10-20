@@ -15,7 +15,7 @@
             "overlay": 10,
             "text": "A primeira camiseta tech com tecido italiano",
             "heading": "CAMISETA <em>Double Tech</em>",
-            "button_label": "Shop now",
+            "button_label": "Confira",
             "link": "shopify://collections/all"
           }
         },
@@ -25,7 +25,7 @@
             "overlay": 10,
             "text": "Nova coleção",
             "heading": "COLEÇÃO <em>Inverno</em>",
-            "button_label": "Shop now",
+            "button_label": "Confira",
             "link": "shopify://collections/all"
           }
         }
@@ -48,7 +48,7 @@
         "t1": {
           "type": "tab",
           "settings": {
-            "title": "Best sellers",
+            "title": "Mais vendidos",
             "collection": "best-sellers"
           }
         },

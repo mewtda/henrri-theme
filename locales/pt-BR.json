@@ -543,17 +543,35 @@
   "henrri": {
     "card": {
       "discount": "{{ percent }}% OFF",
-      "best_seller": "Best seller",
+      "best_seller": "Mais vendido",
       "colors": "Cores",
       "kit": "Kit {{ count }}"
     },
     "product": {
       "installments_html": "ou <strong>{{ count }}x de {{ amount }}</strong> sem juros",
-      "pix_html": "<strong>{{ amount }}</strong> no Pix ({{ percent }}% off)"
+      "pix_html": "<strong>{{ amount }}</strong> no Pix ({{ percent }}% off)",
+      "color": "Cor",
+      "choose_kit": "Escolha por kit:",
+      "kit": "Kit {{ count }}"
     },
     "video": {
       "open": "Ver vídeo do produto",
       "close": "Fechar vídeo"
+    },
+    "kit": {
+      "suggestions": "Escolha uma sugestão",
+      "size_all": "Tamanho para todas as peças",
+      "customize": "Personalizar cada uma das {{ count }} peças",
+      "total": "Total do kit:",
+      "add": "Adicionar kit ao carrinho",
+      "mix": "Mix de cores",
+      "piece": "Peça",
+      "choose_sizes": "Escolha o tamanho de todas as peças.",
+      "adding": "Adicionando...",
+      "error": "Não foi possível adicionar o kit. Tente de novo."
+    },
+    "collection": {
+      "categories": "Categorias"
     }
   }
 }

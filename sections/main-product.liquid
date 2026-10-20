@@ -85,8 +85,20 @@
             class="product__info-container{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %}"
           >
             {%- assign product_form_id = 'product-form-' | append: section.id -%}
+            {%- capture henrri_kit_html -%}{% render 'henrri-kit-builder', product: product, section_id: section.id %}{%- endcapture -%}
+            {%- unless henrri_kit_html contains 'henrri-kit-builder' -%}
+              {%- assign henrri_kit_html = '' -%}
+            {%- endunless -%}
 
             {%- for block in section.blocks -%}
+              {%- if henrri_kit_html != blank -%}
+                {%- if block.type == 'buy_buttons' -%}
+                  <div {{ block.shopify_attributes }}>{{ henrri_kit_html }}</div>
+                  {%- continue -%}
+                {%- elsif block.type == 'variant_picker' or block.type == 'quantity_selector' -%}
+                  {%- continue -%}
+                {%- endif -%}
+              {%- endif -%}
               {%- case block.type -%}
                 {%- when '@app' -%}
                   {% render block %}
@@ -692,6 +704,14 @@
                   </product-recommendations>
                 {%- when 'icon-with-text' -%}
                   {% render 'icon-with-text', block: block %}
+                {%- when 'henrri_group' -%}
+                  <div {{ block.shopify_attributes }}>
+                    {% render 'henrri-product-group',
+                      product: product,
+                      show_colors: block.settings.show_colors,
+                      show_kits: block.settings.show_kits
+                    %}
+                  </div>
                 {%- when 'henrri_shipping' -%}
                   <div class="henrri-shipping-strip" {{ block.shopify_attributes }}>
                     {{- block.settings.text -}}
@@ -1561,6 +1581,19 @@
           "label": "t:sections.main-product.blocks.complementary_products.settings.enable_quick_add.label",
           "default": false
         }
+      ]
+    },
+    {
+      "type": "henrri_group",
+      "name": "Henrri: cores e kits",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Mostra as cores e os kits do mesmo grupo (metafield custom.group). Cores usam custom.cor; kits são produtos com custom.number_of_products 2 ou mais, ou com \"kit\" no título."
+        },
+        { "type": "checkbox", "id": "show_colors", "label": "Mostrar cores", "default": true },
+        { "type": "checkbox", "id": "show_kits", "label": "Mostrar kits", "default": true }
       ]
     },
     {

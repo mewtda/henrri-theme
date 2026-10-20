@@ -1,0 +1,26 @@
+{% doc %}
+  Outputs a product option name translated to Portuguese (Size → Tamanho, Color → Cor...).
+  Unknown names are returned as they are.
+
+  @param {string} name - The option name
+
+  @example
+  {% render 'henrri-option-name', name: option.name %}
+{% enddoc %}
+{%- liquid
+  assign key = name | downcase | strip
+  case key
+    when 'size', 'sizes'
+      echo 'Tamanho'
+    when 'color', 'colour', 'colors'
+      echo 'Cor'
+    when 'material'
+      echo 'Material'
+    when 'style'
+      echo 'Estilo'
+    when 'title'
+      echo 'Opção'
+    else
+      echo name
+  endcase
+-%}

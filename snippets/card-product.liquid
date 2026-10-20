@@ -44,10 +44,10 @@
     endif
 
     assign henrri_video_src = ''
-    assign henrri_show_video = card_product.metafields.custom.mostra_video_card.value | append: '' | downcase | strip
-    if henrri_show_video == 'sim'
+    assign henrri_show_video = card_product.metafields.custom.mostrar_video_card.value | default: card_product.metafields.custom.mostra_video_card.value | append: '' | downcase | strip
+    if henrri_show_video == 'sim' or henrri_show_video == 'true'
       capture henrri_video_src
-        render 'henrri-video-src', product: card_product
+        render 'henrri-video-src', product: card_product, max_height: 720
       endcapture
       assign henrri_video_src = henrri_video_src | strip
     endif

@@ -469,3 +469,357 @@ henrri-carousel {
   font-size: 1.3rem;
   padding: 0.4rem 0;
 }
+
+/* ---------- Mega menu ---------- */
+.mega-menu__content {
+  border-top: 1px solid var(--henrri-border);
+}
+
+.henrri-mega {
+  display: block;
+}
+
+.henrri-mega .mega-menu__list {
+  padding: 0;
+}
+
+.henrri-mega--has-images {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4rem;
+  align-items: start;
+}
+
+.henrri-mega__images {
+  display: flex;
+  gap: 1.2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.henrri-mega__image {
+  position: relative;
+  display: block;
+  width: 24rem;
+  color: #fff;
+  text-decoration: none;
+}
+
+.henrri-mega__image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+.henrri-mega__caption {
+  position: absolute;
+  left: 1.6rem;
+  bottom: 1.4rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+}
+
+.mega-menu__link--level-2 {
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+
+/* ---------- Cores e kits do grupo (página de produto) ---------- */
+.henrri-pgroup {
+  margin: 1.6rem 0;
+}
+
+.henrri-pgroup__label {
+  margin: 0 0 0.8rem;
+  font-size: 1.3rem;
+  color: var(--henrri-muted);
+}
+
+.henrri-pgroup__label span {
+  color: var(--henrri-black);
+  text-transform: capitalize;
+}
+
+.henrri-pgroup__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.henrri-pswatch {
+  position: relative;
+  display: block;
+  width: 3.2rem;
+  height: 3.2rem;
+  background: var(--swatch-bg, #ddd);
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+
+.henrri-pswatch:hover,
+.henrri-pswatch.is-current {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--henrri-black);
+}
+
+.henrri-pswatch.is-unavailable::after,
+.henrri-pkit.is-unavailable::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 140%;
+  height: 1px;
+  background: var(--henrri-muted);
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.henrri-pswatch.is-unavailable,
+.henrri-pkit.is-unavailable {
+  opacity: 0.5;
+  overflow: hidden;
+}
+
+.henrri-pkit {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 4.4rem;
+  padding: 0 1.4rem;
+  border: 1px solid rgba(15, 15, 15, 0.3);
+  font-size: 1.3rem;
+  letter-spacing: 0.04em;
+  color: var(--henrri-black);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.henrri-pkit:hover {
+  border-color: var(--henrri-black);
+}
+
+.henrri-pkit.is-current {
+  background: var(--henrri-black);
+  border-color: var(--henrri-black);
+  color: #fff;
+}
+
+.henrri-pkit__off {
+  font-size: 1.1rem;
+  color: var(--henrri-sale);
+}
+
+.henrri-pkit.is-current .henrri-pkit__off {
+  color: #fff;
+}
+
+/* ---------- Montador de kit ---------- */
+.henrri-kit {
+  display: block;
+  margin: 1.6rem 0;
+}
+
+.henrri-kit__block {
+  margin-bottom: 1.8rem;
+}
+
+.henrri-kit__label {
+  margin: 0 0 0.8rem;
+  font-size: 1.3rem;
+  color: var(--henrri-muted);
+}
+
+.henrri-kit__suggestions,
+.henrri-kit__sizes,
+.henrri-kit__slot-colors,
+.henrri-kit__slot-sizes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.henrri-kit__suggestion {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-height: 4.4rem;
+  padding: 0 1.4rem 0 1rem;
+  border: 1px solid rgba(15, 15, 15, 0.3);
+  background: #fff;
+  color: var(--henrri-black);
+  font-family: inherit;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.henrri-kit__suggestion[aria-pressed='true'] {
+  border-color: var(--henrri-black);
+  box-shadow: inset 0 0 0 1px var(--henrri-black);
+}
+
+.henrri-kit__suggestion-swatches {
+  display: flex;
+}
+
+.henrri-kit__suggestion-swatches span {
+  width: 1.8rem;
+  height: 1.8rem;
+  background: var(--swatch-bg, #ddd);
+  background-size: cover;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+
+.henrri-kit__suggestion-swatches span + span {
+  margin-left: -0.6rem;
+}
+
+.henrri-kit__size {
+  min-width: 4.4rem;
+  min-height: 4.4rem;
+  padding: 0 1.2rem;
+  border: 1px solid rgba(15, 15, 15, 0.3);
+  background: #fff;
+  color: var(--henrri-black);
+  font-family: inherit;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.henrri-kit__size[aria-pressed='true'] {
+  background: var(--henrri-black);
+  border-color: var(--henrri-black);
+  color: #fff;
+}
+
+.henrri-kit__size:disabled {
+  opacity: 0.35;
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+
+.henrri-kit__size--small {
+  min-width: 3.6rem;
+  min-height: 3.6rem;
+  font-size: 1.2rem;
+}
+
+.henrri-kit__custom {
+  margin-bottom: 1.8rem;
+  border-top: 1px solid var(--henrri-border);
+  border-bottom: 1px solid var(--henrri-border);
+}
+
+.henrri-kit__custom summary {
+  padding: 1.4rem 0;
+  font-size: 1.3rem;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+.henrri-kit__custom summary::after {
+  content: '+';
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.henrri-kit__custom[open] summary::after {
+  content: '−';
+}
+
+.henrri-kit__slots {
+  margin: 0;
+  padding: 0 0 1.4rem;
+  list-style: none;
+}
+
+.henrri-kit__slot {
+  display: flex;
+  gap: 1.2rem;
+  padding: 1.2rem 0;
+}
+
+.henrri-kit__slot + .henrri-kit__slot {
+  border-top: 1px solid var(--henrri-border);
+}
+
+.henrri-kit__slot-image {
+  width: 6rem;
+  height: 9rem;
+  object-fit: cover;
+  background: var(--henrri-card-bg);
+  flex-shrink: 0;
+}
+
+.henrri-kit__slot-body {
+  display: grid;
+  gap: 0.8rem;
+  min-width: 0;
+}
+
+.henrri-kit__slot-title {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.henrri-kit__color {
+  width: 2.6rem;
+  height: 2.6rem;
+  padding: 0;
+  border: 0;
+  background: var(--swatch-bg, #ddd);
+  background-size: cover;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+}
+
+.henrri-kit__color[aria-pressed='true'] {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 3px var(--henrri-black);
+}
+
+.henrri-kit__summary {
+  margin-bottom: 1.2rem;
+}
+
+.henrri-kit__chosen {
+  margin: 0 0 0.6rem;
+  font-size: 1.3rem;
+  color: var(--henrri-muted);
+}
+
+.henrri-kit__total {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.henrri-kit__total s {
+  color: var(--henrri-muted);
+}
+
+.henrri-kit__total strong {
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.henrri-kit__error {
+  margin: 0 0 1rem;
+  font-size: 1.3rem;
+  color: var(--henrri-sale);
+}
+
+.henrri-kit__add.is-pending {
+  opacity: 0.6;
+}
