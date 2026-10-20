@@ -2,15 +2,20 @@
 
 <div class="henrri-section" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
   <div class="page-width">
-    <div class="henrri-reviews__header">
-      {%- if section.settings.title != blank -%}
-        <h2 class="henrri-reviews__title">{{ section.settings.title | escape }}</h2>
-      {%- endif -%}
-      <div class="henrri-stars" aria-hidden="true">★★★★★</div>
-      {%- if section.settings.subtitle != blank -%}
-        <p class="henrri-reviews__subtitle">{{ section.settings.subtitle | escape }}</p>
-      {%- endif -%}
-    </div>
+    {%- assign manual_reviews = section.blocks | where: 'type', 'review' -%}
+    {%- if section.settings.title != blank or section.settings.subtitle != blank -%}
+      <div class="henrri-reviews__header">
+        {%- if section.settings.title != blank -%}
+          <h2 class="henrri-reviews__title">{{ section.settings.title | escape }}</h2>
+        {%- endif -%}
+        {%- if manual_reviews.size > 0 -%}
+          <div class="henrri-stars" aria-hidden="true">★★★★★</div>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <p class="henrri-reviews__subtitle">{{ section.settings.subtitle | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
 
     {%- for block in section.blocks -%}
       {%- if block.type == '@app' -%}
@@ -18,6 +23,7 @@
       {%- endif -%}
     {%- endfor -%}
 
+    {%- if manual_reviews.size > 0 -%}
     <ul class="henrri-reviews" role="list">
       {%- for block in section.blocks -%}
         {%- if block.type == '@app' -%}{%- continue -%}{%- endif -%}
@@ -45,6 +51,7 @@
         </li>
       {%- endfor -%}
     </ul>
+    {%- endif -%}
   </div>
 </div>
 
@@ -54,7 +61,7 @@
   "class": "henrri-reviews-section",
   "settings": [
     { "type": "text", "id": "title", "label": "Título", "default": "Deixe os clientes falarem por nós" },
-    { "type": "text", "id": "subtitle", "label": "Subtítulo", "default": "de mais de 4.000 avaliações" },
+    { "type": "text", "id": "subtitle", "label": "Subtítulo" },
     { "type": "range", "id": "padding_top", "label": "Espaço acima", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 48 },
     { "type": "range", "id": "padding_bottom", "label": "Espaço abaixo", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 48 }
   ],
