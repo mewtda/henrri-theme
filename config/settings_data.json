@@ -1,64 +1,22 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
-    "logo_width": 140,
-    "customer_account_menu": "customer-account-main-menu",
-    "color_schemes": {
-      "scheme-1": {
-        "settings": {
-          "background": "#FFFFFF",
-          "background_gradient": "",
-          "text": "#0F0F0F",
-          "button": "#0F0F0F",
-          "button_label": "#FFFFFF",
-          "secondary_button_label": "#0F0F0F",
-          "shadow": "#0F0F0F"
-        }
-      },
-      "scheme-2": {
-        "settings": {
-          "background": "#F8F8F8",
-          "background_gradient": "",
-          "text": "#0F0F0F",
-          "button": "#0F0F0F",
-          "button_label": "#FFFFFF",
-          "secondary_button_label": "#0F0F0F",
-          "shadow": "#0F0F0F"
-        }
-      },
-      "scheme-3": {
-        "settings": {
-          "background": "#0F0F0F",
-          "background_gradient": "",
-          "text": "#FFFFFF",
-          "button": "#FFFFFF",
-          "button_label": "#0F0F0F",
-          "secondary_button_label": "#FFFFFF",
-          "shadow": "#0F0F0F"
-        }
-      },
-      "scheme-4": {
-        "settings": {
-          "background": "#D62828",
-          "background_gradient": "",
-          "text": "#FFFFFF",
-          "button": "#FFFFFF",
-          "button_label": "#D62828",
-          "secondary_button_label": "#FFFFFF",
-          "shadow": "#0F0F0F"
-        }
-      },
-      "scheme-5": {
-        "settings": {
-          "background": "#F2F2F2",
-          "background_gradient": "",
-          "text": "#0F0F0F",
-          "button": "#0F0F0F",
-          "button_label": "#FFFFFF",
-          "secondary_button_label": "#0F0F0F",
-          "shadow": "#0F0F0F"
-        }
-      }
-    },
+    "henrri_best_seller_tag": "best-seller",
+    "henrri_card_ratio": "0.667",
+    "henrri_max_installments": 6,
+    "henrri_min_installment": 50,
+    "henrri_pix_discount": 5,
+    "logo": "shopify://shop_images/logo_henrri_MP_1024_x_747_px_ver.png",
+    "logo_width": 100,
+    "favicon": "shopify://shop_images/Flavicon.png",
     "type_header_font": "jost_n4",
     "heading_scale": 100,
     "type_body_font": "jost_n4",
@@ -157,14 +115,14 @@
     "brand_headline": "",
     "brand_description": "<p></p>",
     "brand_image_width": 100,
-    "social_twitter_link": "",
     "social_facebook_link": "",
-    "social_pinterest_link": "",
     "social_instagram_link": "",
-    "social_tiktok_link": "",
-    "social_tumblr_link": "",
-    "social_snapchat_link": "",
     "social_youtube_link": "",
+    "social_tiktok_link": "",
+    "social_twitter_link": "",
+    "social_snapchat_link": "",
+    "social_pinterest_link": "",
+    "social_tumblr_link": "",
     "social_vimeo_link": "",
     "predictive_search_enabled": true,
     "predictive_search_show_vendor": false,
@@ -175,6 +133,7 @@
     "show_cart_note": false,
     "cart_drawer_collection": "",
     "cart_color_scheme": "scheme-1",
+    "customer_account_menu": "customer-account-main-menu",
     "sections": {
       "main-password-header": {
         "type": "main-password-header",
@@ -189,16 +148,69 @@
         }
       }
     },
-    "henrri_best_seller_tag": "best-seller",
-    "henrri_max_installments": 6,
-    "henrri_min_installment": 50,
-    "henrri_pix_discount": 5,
-    "henrri_card_ratio": "0.667",
+    "content_for_index": [],
     "blocks": {
       "judgeme_core": {
         "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
         "disabled": false,
         "settings": {}
+      }
+    },
+    "color_schemes": {
+      "scheme-1": {
+        "settings": {
+          "background": "#ffffff",
+          "background_gradient": "",
+          "text": "#0f0f0f",
+          "button": "#0f0f0f",
+          "button_label": "#ffffff",
+          "secondary_button_label": "#0f0f0f",
+          "shadow": "#0f0f0f"
+        }
+      },
+      "scheme-2": {
+        "settings": {
+          "background": "#f8f8f8",
+          "background_gradient": "",
+          "text": "#0f0f0f",
+          "button": "#0f0f0f",
+          "button_label": "#ffffff",
+          "secondary_button_label": "#0f0f0f",
+          "shadow": "#0f0f0f"
+        }
+      },
+      "scheme-3": {
+        "settings": {
+          "background": "#0f0f0f",
+          "background_gradient": "",
+          "text": "#ffffff",
+          "button": "#ffffff",
+          "button_label": "#0f0f0f",
+          "secondary_button_label": "#ffffff",
+          "shadow": "#0f0f0f"
+        }
+      },
+      "scheme-4": {
+        "settings": {
+          "background": "#d62828",
+          "background_gradient": "",
+          "text": "#ffffff",
+          "button": "#ffffff",
+          "button_label": "#d62828",
+          "secondary_button_label": "#ffffff",
+          "shadow": "#0f0f0f"
+        }
+      },
+      "scheme-5": {
+        "settings": {
+          "background": "#f2f2f2",
+          "background_gradient": "",
+          "text": "#0f0f0f",
+          "button": "#0f0f0f",
+          "button_label": "#ffffff",
+          "secondary_button_label": "#0f0f0f",
+          "shadow": "#0f0f0f"
+        }
       }
     }
   },
