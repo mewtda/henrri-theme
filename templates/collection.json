@@ -178,6 +178,22 @@
             "label": "Oversized Alg. Egípcio",
             "show_on": "oversized, camiseta-oversized, camiseta-oversized-comfort"
           }
+        },
+        "back_maderite": {
+          "type": "back",
+          "settings": {
+            "label": "Todas as categorias",
+            "link": "/collections/all",
+            "show_on": "maderite, camiseta-maderite, kit-maderite, mei-dia, relogio-mei-dia, sexta-mei-dia, sextou-bb, influencer"
+          }
+        },
+        "back_oversized": {
+          "type": "back",
+          "settings": {
+            "label": "Todas as categorias",
+            "link": "/collections/all",
+            "show_on": "oversized, camiseta-oversized, camiseta-oversized-comfort"
+          }
         }
       },
       "block_order": [
@@ -191,6 +207,7 @@
         "main_8",
         "main_9",
         "main_10",
+        "back_maderite",
         "pill_1",
         "pill_2",
         "pill_3",
@@ -199,6 +216,7 @@
         "pill_6",
         "pill_7",
         "pill_8",
+        "back_oversized",
         "pill_9",
         "pill_10",
         "pill_11"
