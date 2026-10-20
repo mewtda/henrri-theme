@@ -11,8 +11,8 @@
   "current": {
     "henrri_best_seller_tag": "best-seller",
     "henrri_card_ratio": "0.667",
-    "henrri_max_installments": 6,
-    "henrri_min_installment": 50,
+    "henrri_max_installments": 4,
+    "henrri_min_installment": 10,
     "henrri_pix_discount": 5,
     "logo": "shopify://shop_images/logo_henrri_MP_1024_x_747_px_ver.png",
     "logo_width": 100,
@@ -406,8 +406,8 @@
         }
       },
       "henrri_best_seller_tag": "best-seller",
-      "henrri_max_installments": 6,
-      "henrri_min_installment": 50,
+      "henrri_max_installments": 4,
+      "henrri_min_installment": 10,
       "henrri_pix_discount": 5,
       "henrri_card_ratio": "0.667"
     }

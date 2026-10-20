@@ -374,7 +374,12 @@ henrri-carousel {
 
 .henrri-installments strong {
   color: var(--henrri-black);
-  font-weight: 500;
+  font-weight: 700;
+}
+
+.product__info-container .henrri-installments:first-of-type {
+  font-size: 1.5rem;
+  color: var(--henrri-black);
 }
 
 .product-form__input--pill input[type='radio'] + label {
@@ -822,4 +827,13 @@ henrri-carousel {
 
 .henrri-kit__add.is-pending {
   opacity: 0.6;
+}
+
+.henrri-installments--card {
+  margin: 0.2rem 0 0;
+  font-size: 1.2rem;
+}
+
+.henrri-installments--card strong {
+  font-weight: 600;
 }

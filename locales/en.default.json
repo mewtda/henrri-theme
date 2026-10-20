@@ -545,7 +545,7 @@
       "kit": "Kit {{ count }}"
     },
     "product": {
-      "installments_html": "or <strong>{{ count }}x of {{ amount }}</strong> interest-free",
+      "installments_html": "up to <strong>{{ count }}x of {{ amount }} interest-free</strong>",
       "pix_html": "<strong>{{ amount }}</strong> with Pix ({{ percent }}% off)",
       "color": "Color",
       "choose_kit": "Choose by kit:",

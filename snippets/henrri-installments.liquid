@@ -1,25 +1,27 @@
 {% doc %}
-  Renders the installments line ("6x de R$ 54,83 sem juros") and the Pix price
+  Renders the installments line ("em até 4x de R$ 37,48 sem juros") and the Pix price
   ("R$ 312,55 no Pix (5% off)") using the Henrri theme settings.
 
   @param {number} price - Price in cents
+  @param {boolean} [show_pix] - Show the Pix price line (default true)
+  @param {string} [class] - Extra CSS class (ex.: henrri-installments--card)
 
   @example
   {% render 'henrri-installments', price: product.selected_or_first_available_variant.price %}
 {% enddoc %}
 {%- liquid
-  assign max_installments = settings.henrri_max_installments | default: 6
-  assign min_cents = settings.henrri_min_installment | default: 50 | times: 100 | at_least: 1
+  assign max_installments = settings.henrri_max_installments | default: 4
+  assign min_cents = settings.henrri_min_installment | default: 10 | times: 100 | at_least: 1
   assign count = price | divided_by: min_cents | floor | at_most: max_installments
   assign pix_discount = settings.henrri_pix_discount | default: 0
 -%}
 {%- if count >= 2 -%}
   {%- assign installment = price | times: 1.0 | divided_by: count | ceil | money -%}
-  <p class="henrri-installments">
+  <p class="henrri-installments {{ class }}">
     {{ 'henrri.product.installments_html' | t: count: count, amount: installment }}
   </p>
 {%- endif -%}
-{%- if pix_discount > 0 -%}
+{%- if pix_discount > 0 and show_pix != false -%}
   {%- assign pix_price = 100 | minus: pix_discount | times: price | divided_by: 100.0 | round | money -%}
   <p class="henrri-installments">
     {{ 'henrri.product.pix_html' | t: amount: pix_price, percent: pix_discount }}
