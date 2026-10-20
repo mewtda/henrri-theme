@@ -11,6 +11,86 @@
     "pills": {
       "type": "henrri-collection-pills",
       "blocks": {
+        "main_1": {
+          "type": "pill",
+          "settings": {
+            "label": "Todos",
+            "show_on": "all, camisetas, kits, polo, camiseta-manga-longa, calca-alfaiataria-sarja, bermudas, acessorios, best-sellers, sale, todos-os-produtos",
+            "link": "/collections/all"
+          }
+        },
+        "main_2": {
+          "type": "pill",
+          "settings": {
+            "label": "Camisetas",
+            "show_on": "all, camisetas, kits, polo, camiseta-manga-longa, calca-alfaiataria-sarja, bermudas, acessorios, best-sellers, sale, todos-os-produtos",
+            "collection": "camisetas"
+          }
+        },
+        "main_3": {
+          "type": "pill",
+          "settings": {
+            "label": "Kits",
+            "show_on": "all, camisetas, kits, polo, camiseta-manga-longa, calca-alfaiataria-sarja, bermudas, acessorios, best-sellers, sale, todos-os-produtos",
+            "collection": "kits"
+          }
+        },
+        "main_4": {
+          "type": "pill",
+          "settings": {
+            "label": "Oversized",
+            "show_on": "all, camisetas, kits, polo, camiseta-manga-longa, calca-alfaiataria-sarja, bermudas, acessorios, best-sellers, sale, todos-os-produtos",
+            "collection": "oversized"
+          }
+        },
+        "main_5": {
+          "type": "pill",
+          "settings": {
+            "label": "Maderite",
+            "show_on": "all, camisetas, kits, polo, camiseta-manga-longa, calca-alfaiataria-sarja, bermudas, acessorios, best-sellers, sale, todos-os-produtos",
+            "collection": "maderite"
+          }
+        },
+        "main_6": {
+          "type": "pill",
+          "settings": {
+            "label": "Polo",
+            "show_on": "all, camisetas, kits, polo, camiseta-manga-longa, calca-alfaiataria-sarja, bermudas, acessorios, best-sellers, sale, todos-os-produtos",
+            "collection": "polo"
+          }
+        },
+        "main_7": {
+          "type": "pill",
+          "settings": {
+            "label": "Manga Longa",
+            "show_on": "all, camisetas, kits, polo, camiseta-manga-longa, calca-alfaiataria-sarja, bermudas, acessorios, best-sellers, sale, todos-os-produtos",
+            "collection": "camiseta-manga-longa"
+          }
+        },
+        "main_8": {
+          "type": "pill",
+          "settings": {
+            "label": "Calças",
+            "show_on": "all, camisetas, kits, polo, camiseta-manga-longa, calca-alfaiataria-sarja, bermudas, acessorios, best-sellers, sale, todos-os-produtos",
+            "collection": "calca-alfaiataria-sarja"
+          }
+        },
+        "main_9": {
+          "type": "pill",
+          "settings": {
+            "label": "Shorts",
+            "show_on": "all, camisetas, kits, polo, camiseta-manga-longa, calca-alfaiataria-sarja, bermudas, acessorios, best-sellers, sale, todos-os-produtos",
+            "collection": "bermudas"
+          }
+        },
+        "main_10": {
+          "type": "pill",
+          "settings": {
+            "label": "Acessórios",
+            "show_on": "all, camisetas, kits, polo, camiseta-manga-longa, calca-alfaiataria-sarja, bermudas, acessorios, best-sellers, sale, todos-os-produtos",
+            "collection": "acessorios"
+          }
+        },
         "pill_1": {
           "type": "pill",
           "settings": {
@@ -101,6 +181,16 @@
         }
       },
       "block_order": [
+        "main_1",
+        "main_2",
+        "main_3",
+        "main_4",
+        "main_5",
+        "main_6",
+        "main_7",
+        "main_8",
+        "main_9",
+        "main_10",
         "pill_1",
         "pill_2",
         "pill_3",
