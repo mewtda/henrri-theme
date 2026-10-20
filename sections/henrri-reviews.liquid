@@ -1,0 +1,86 @@
+{{ 'henrri-sections.css' | asset_url | stylesheet_tag }}
+
+<div class="henrri-section" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
+  <div class="page-width">
+    <div class="henrri-reviews__header">
+      {%- if section.settings.title != blank -%}
+        <h2 class="henrri-reviews__title">{{ section.settings.title | escape }}</h2>
+      {%- endif -%}
+      <div class="henrri-stars" aria-hidden="true">★★★★★</div>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="henrri-reviews__subtitle">{{ section.settings.subtitle | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == '@app' -%}
+        <div class="henrri-reviews__app">{% render block %}</div>
+      {%- endif -%}
+    {%- endfor -%}
+
+    <ul class="henrri-reviews" role="list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == '@app' -%}{%- continue -%}{%- endif -%}
+        <li class="henrri-review" {{ block.shopify_attributes }}>
+          <div class="henrri-stars" role="img" aria-label="{{ block.settings.rating }}/5">
+            {%- for i in (1..5) -%}
+              <span{% if i > block.settings.rating %} class="is-empty"{% endif %}>★</span>
+            {%- endfor -%}
+          </div>
+          {%- if block.settings.heading != blank -%}
+            <p class="henrri-review__heading">{{ block.settings.heading | escape }}</p>
+          {%- endif -%}
+          <div class="henrri-review__text">{{ block.settings.text }}</div>
+          {%- if block.settings.author != blank -%}
+            <p class="henrri-review__author">{{ block.settings.author | escape }}</p>
+          {%- endif -%}
+          {%- if block.settings.product != blank -%}
+            <a href="{{ block.settings.product.url }}" class="henrri-review__product">
+              {%- if block.settings.product.featured_image -%}
+                {{ block.settings.product.featured_image | image_url: width: 120 | image_tag: loading: 'lazy' }}
+              {%- endif -%}
+              <span>{{ block.settings.product.title | escape }}</span>
+            </a>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Henrri: avaliações",
+  "class": "henrri-reviews-section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "Deixe os clientes falarem por nós" },
+    { "type": "text", "id": "subtitle", "label": "Subtítulo", "default": "de mais de 4.000 avaliações" },
+    { "type": "range", "id": "padding_top", "label": "Espaço acima", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "label": "Espaço abaixo", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 48 }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Avaliação",
+      "settings": [
+        { "type": "range", "id": "rating", "label": "Estrelas", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "text", "id": "heading", "label": "Título", "default": "Excelente!" },
+        { "type": "richtext", "id": "text", "label": "Texto", "default": "<p>Tecido diferenciado e caimento perfeito.</p>" },
+        { "type": "text", "id": "author", "label": "Nome do cliente" },
+        { "type": "product", "id": "product", "label": "Produto avaliado" }
+      ]
+    },
+    { "type": "@app" }
+  ],
+  "presets": [
+    {
+      "name": "Henrri: avaliações",
+      "blocks": [
+        { "type": "review", "settings": { "heading": "Muito top", "text": "<p>Realmente um tecido diferenciado!</p>" } },
+        { "type": "review", "settings": { "heading": "Excelente!", "text": "<p>Confortável demais, além de estiloso.</p>" } },
+        { "type": "review", "settings": { "heading": "Recomendo", "text": "<p>Caimento perfeito, já quero outras cores.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

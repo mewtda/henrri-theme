@@ -1,0 +1,78 @@
+{{ 'henrri-sections.css' | asset_url | stylesheet_tag }}
+
+<div class="henrri-section" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
+  <div class="henrri-tiles henrri-tiles--{{ section.settings.columns }}{% if section.settings.full_width == false %} page-width{% endif %}">
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign link = block.settings.link
+        if link == blank and block.settings.collection != blank
+          assign link = block.settings.collection.url
+        endif
+        assign title = block.settings.title
+        if title == blank
+          assign title = block.settings.collection.title
+        endif
+        assign image = block.settings.image
+        if image == blank
+          assign image = block.settings.collection.featured_image
+        endif
+      -%}
+      <a href="{{ link | default: '#' }}" class="henrri-tile" style="--ratio: {{ section.settings.ratio }};" {{ block.shopify_attributes }}>
+        <div class="henrri-tile__media">
+          {%- if image != blank -%}
+            {{ image | image_url: width: 1600 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1600', sizes: '(min-width: 750px) 50vw, 100vw' }}
+          {%- else -%}
+            {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </div>
+        <div class="henrri-tile__content">
+          <h3 class="henrri-tile__title">
+            {{- title | escape -}}
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13 5l7 7-7 7-1.4-1.4 4.6-4.6H4v-2h12.2l-4.6-4.6z"/></svg>
+          </h3>
+          {%- if block.settings.text != blank -%}
+            <p class="henrri-tile__text">{{ block.settings.text | escape }}</p>
+          {%- endif -%}
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Henrri: categorias",
+  "class": "henrri-collection-tiles-section",
+  "settings": [
+    { "type": "select", "id": "columns", "label": "Colunas (desktop)", "options": [{ "value": "2", "label": "2" }, { "value": "3", "label": "3" }, { "value": "4", "label": "4" }], "default": "2" },
+    { "type": "select", "id": "ratio", "label": "Formato da imagem", "options": [{ "value": "1.17", "label": "Paisagem" }, { "value": "1", "label": "Quadrado" }, { "value": "0.8", "label": "Retrato" }], "default": "1.17" },
+    { "type": "checkbox", "id": "full_width", "label": "Largura total", "default": true },
+    { "type": "range", "id": "padding_top", "label": "Espaço acima", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 16 },
+    { "type": "range", "id": "padding_bottom", "label": "Espaço abaixo", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 16 }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Categoria",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Coleção" },
+        { "type": "image_picker", "id": "image", "label": "Imagem", "info": "Se vazio, usa a imagem da coleção" },
+        { "type": "text", "id": "title", "label": "Título", "info": "Se vazio, usa o nome da coleção" },
+        { "type": "text", "id": "text", "label": "Subtítulo" },
+        { "type": "url", "id": "link", "label": "Link", "info": "Se vazio, abre a coleção" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Henrri: categorias",
+      "blocks": [
+        { "type": "tile", "settings": { "title": "Gola Alta", "text": "Elegância instantânea" } },
+        { "type": "tile", "settings": { "title": "Shorts e Bermudas", "text": "Essencial para o verão" } },
+        { "type": "tile", "settings": { "title": "Polos", "text": "Do trabalho ao fim de semana" } },
+        { "type": "tile", "settings": { "title": "Calças", "text": "Alfaiataria com conforto" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

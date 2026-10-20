@@ -1,0 +1,88 @@
+{% doc %}
+  Renders color swatches for a product card, based on the product's color option.
+  Renders nothing when the product has no color option.
+
+  @param {product} product - The product
+  @param {number} [max] - Maximum number of swatches before showing "+N" (default 5)
+
+  @example
+  {% render 'henrri-card-swatches', product: card_product, max: 5 %}
+{% enddoc %}
+{%- liquid
+  assign max = max | default: 5
+  assign color_option = null
+  for option in product.options_with_values
+    assign option_key = option.name | downcase | strip
+    if option_key == 'cor' or option_key == 'color' or option_key == 'colour' or option_key == 'cores'
+      assign color_option = option
+      break
+    endif
+  endfor
+-%}
+{%- if color_option and color_option.values.size > 1 -%}
+  <ul class="henrri-swatches" role="list" aria-label="{{ color_option.name | escape }}">
+    {%- for value in color_option.values limit: max -%}
+      {%- liquid
+        assign swatch_url = value.product_url
+        if swatch_url == blank and value.variant
+          assign swatch_url = value.variant.url
+        endif
+        if swatch_url == blank
+          assign swatch_url = product.url
+        endif
+
+        assign name_key = value.name | downcase | strip
+        assign fallback = ''
+        case name_key
+          when 'preto', 'black', 'all black', 'total black'
+            assign fallback = '#000000'
+          when 'branco', 'white', 'off white', 'off-white'
+            assign fallback = '#ffffff'
+          when 'cinza', 'grey', 'gray', 'mescla', 'cinza mescla'
+            assign fallback = '#8c8c8c'
+          when 'azul', 'blue', 'marinho', 'navy', 'azul marinho'
+            assign fallback = '#1f2f5c'
+          when 'vermelho', 'red', 'tibetan red'
+            assign fallback = '#a4161a'
+          when 'verde', 'green', 'militar'
+            assign fallback = '#3d5a3a'
+          when 'rosa', 'pink'
+            assign fallback = '#e7a1b0'
+          when 'marrom', 'brown', 'chocolate', 'dark brown', 'chocolate martini', 'café'
+            assign fallback = '#4e3629'
+          when 'bege', 'beige', 'nude', 'areia', 'sand'
+            assign fallback = '#d8c3a5'
+          when 'vinho', 'bordô', 'burgundy'
+            assign fallback = '#5c1a2b'
+          when 'lilás', 'lilas', 'lilac', 'burnished lilac'
+            assign fallback = '#a393b8'
+          when 'amarelo', 'yellow'
+            assign fallback = '#e9c46a'
+          when 'laranja', 'orange'
+            assign fallback = '#e76f51'
+        endcase
+      -%}
+      <li>
+        <a
+          href="{{ swatch_url }}"
+          class="henrri-swatch{% if value.available == false %} henrri-swatch--unavailable{% endif %}"
+          title="{{ value.name | escape }}"
+          {%- if value.swatch.image %}
+            style="--swatch-bg: url('{{ value.swatch.image | image_url: width: 48 }}');"
+          {%- elsif value.swatch.color %}
+            style="--swatch-bg: {{ value.swatch.color }};"
+          {%- elsif fallback != blank %}
+            style="--swatch-bg: {{ fallback }};"
+          {%- elsif value.variant.featured_image %}
+            style="--swatch-bg: url('{{ value.variant.featured_image | image_url: width: 48 }}');"
+          {%- endif %}
+        >
+          <span class="visually-hidden">{{ value.name | escape }}</span>
+        </a>
+      </li>
+    {%- endfor -%}
+    {%- if color_option.values.size > max -%}
+      <li class="henrri-swatches__more">+{{ color_option.values.size | minus: max }}</li>
+    {%- endif -%}
+  </ul>
+{%- endif -%}

@@ -1,0 +1,27 @@
+{% doc %}
+  Renders a thin line icon used by the Henrri benefits and product trust blocks.
+
+  @param {string} icon - One of: tag, truck, return, card, shield, percent, box
+  @param {string} [class] - CSS class for the svg
+
+  @example
+  {% render 'henrri-icon', icon: 'truck', class: 'henrri-benefits__icon' %}
+{% enddoc %}
+<svg class="{{ class }}" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+  {%- case icon -%}
+    {%- when 'tag' -%}
+      <path d="M17.5 3.5h10v10L14 27a2 2 0 0 1-2.8 0L4.9 20.8a2 2 0 0 1 0-2.8z"/><circle cx="22.5" cy="8.5" r="1.8"/><path d="M12.5 14.5c-1.5 0-2.5.9-2.5 2s1 1.7 2.5 2 2.5.9 2.5 2-1 2-2.5 2m0-8v-1.5m0 11.5V21"/>
+    {%- when 'truck' -%}
+      <path d="M2.5 8.5h16v14h-16zM18.5 13h6l4.5 5v4.5h-10.5"/><circle cx="8" cy="23.5" r="2.5"/><circle cx="23.5" cy="23.5" r="2.5"/>
+    {%- when 'return' -%}
+      <path d="M26 16a10 10 0 1 1-3-7.1"/><path d="M23.5 3.5v5.5H18"/>
+    {%- when 'card' -%}
+      <rect x="3" y="8" width="22" height="14" rx="1.5"/><path d="M3 12.5h22M7 17.5h5M25 12l4 1.5-3.5 10-3-1"/>
+    {%- when 'shield' -%}
+      <path d="M16 3.5l10 4v7c0 6.5-4.3 11.3-10 14-5.7-2.7-10-7.5-10-14v-7z"/><path d="M11.5 16l3.2 3.2 6-6.4"/>
+    {%- when 'percent' -%}
+      <circle cx="16" cy="16" r="12.5"/><path d="M11 21l10-10"/><circle cx="11.8" cy="11.8" r="1.6"/><circle cx="20.2" cy="20.2" r="1.6"/>
+    {%- when 'box' -%}
+      <path d="M16 3.5l11.5 5.5v14L16 28.5 4.5 23V9z"/><path d="M4.5 9L16 14.5 27.5 9M16 14.5v14M10 6.2l11.5 5.6"/>
+  {%- endcase -%}
+</svg>

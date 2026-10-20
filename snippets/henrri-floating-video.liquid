@@ -1,0 +1,257 @@
+{% doc %}
+  Floating product video in the bottom-left corner of the product page.
+  Reads the product metafield `custom.video` (a video file, or a URL to an .mp4).
+  The thumbnail plays muted in a loop; clicking it opens the video with sound.
+
+  @param {product} product - The product
+
+  @example
+  {% render 'henrri-floating-video', product: product %}
+{% enddoc %}
+{%- liquid
+  assign video = product.metafields.custom.video.value
+  assign video_src = blank
+  assign video_poster = blank
+
+  if video.media_type == 'video'
+    assign mp4 = video.sources | where: 'mime_type', 'video/mp4' | sort: 'width' | last
+    assign video_src = mp4.url | default: video.sources.first.url
+    assign video_poster = video.preview_image | image_url: width: 400
+  elsif video.url != blank
+    assign video_src = video.url
+  elsif video != blank
+    assign video_src = video
+  endif
+-%}
+{%- if video_src != blank -%}
+  <henrri-floating-video class="henrri-fvideo" hidden>
+    <div class="henrri-fvideo__thumb">
+      <button type="button" class="henrri-fvideo__open" aria-label="{{ 'henrri.video.open' | t }}">
+        <video
+          src="{{ video_src }}"
+          {% if video_poster != blank %}
+            poster="{{ video_poster }}"
+          {% endif %}
+          muted
+          loop
+          playsinline
+          autoplay
+          preload="metadata"
+        ></video>
+        <span class="henrri-fvideo__play" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+        </span>
+      </button>
+      <button type="button" class="henrri-fvideo__close" aria-label="{{ 'henrri.video.close' | t }}">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path stroke="currentColor" stroke-width="2" d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <div class="henrri-fvideo__modal" role="dialog" aria-modal="true" aria-label="{{ product.title | escape }}">
+      <div class="henrri-fvideo__modal-content">
+        <video src="{{ video_src }}" playsinline controls preload="none"></video>
+        <button type="button" class="henrri-fvideo__modal-close" aria-label="{{ 'henrri.video.close' | t }}">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path stroke="currentColor" stroke-width="2" d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+    </div>
+  </henrri-floating-video>
+
+  <style>
+    .henrri-fvideo {
+      position: fixed;
+      left: 2rem;
+      bottom: 2rem;
+      z-index: 50;
+    }
+
+    .henrri-fvideo[hidden] {
+      display: none;
+    }
+
+    .henrri-fvideo__thumb {
+      position: relative;
+      width: 12rem;
+      height: 20rem;
+      overflow: hidden;
+      background: #000;
+      box-shadow: 0 0.4rem 2rem rgba(0, 0, 0, 0.25);
+      transition: transform 0.2s ease;
+    }
+
+    .henrri-fvideo__thumb:hover {
+      transform: scale(1.04);
+    }
+
+    .henrri-fvideo__open {
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      border: 0;
+      background: none;
+      cursor: pointer;
+    }
+
+    .henrri-fvideo__open video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .henrri-fvideo__play {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3.6rem;
+      height: 3.6rem;
+      margin: -1.8rem 0 0 -1.8rem;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      color: #0f0f0f;
+    }
+
+    .henrri-fvideo__play svg {
+      width: 1.6rem;
+      height: 1.6rem;
+      margin-left: 0.2rem;
+    }
+
+    .henrri-fvideo__close,
+    .henrri-fvideo__modal-close {
+      position: absolute;
+      top: 0.6rem;
+      right: 0.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.4rem;
+      height: 2.4rem;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .henrri-fvideo__close svg,
+    .henrri-fvideo__modal-close svg {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+
+    .henrri-fvideo__modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.92);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+
+    .henrri-fvideo.is-open .henrri-fvideo__modal {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .henrri-fvideo__modal-content {
+      position: relative;
+      width: 90%;
+      max-width: 42rem;
+    }
+
+    .henrri-fvideo__modal-content video {
+      display: block;
+      width: 100%;
+      max-height: 85vh;
+      background: #000;
+    }
+
+    .henrri-fvideo__modal-close {
+      top: 1rem;
+      right: 1rem;
+      width: 4rem;
+      height: 4rem;
+      z-index: 2;
+    }
+
+    .henrri-fvideo__modal-close svg {
+      width: 1.8rem;
+      height: 1.8rem;
+    }
+
+    @media screen and (max-width: 749px) {
+      .henrri-fvideo {
+        left: 1.2rem;
+        bottom: 1.2rem;
+      }
+
+      .henrri-fvideo__thumb {
+        width: 9rem;
+        height: 15rem;
+      }
+    }
+  </style>
+
+  <script>
+    if (!customElements.get('henrri-floating-video')) {
+      customElements.define(
+        'henrri-floating-video',
+        class HenrriFloatingVideo extends HTMLElement {
+          connectedCallback() {
+            try {
+              if (sessionStorage.getItem('henrri-fvideo-closed') === '{{ product.id }}') return;
+            } catch (e) {}
+
+            this.hidden = false;
+            this.thumbVideo = this.querySelector('.henrri-fvideo__open video');
+            this.modalVideo = this.querySelector('.henrri-fvideo__modal video');
+
+            this.querySelector('.henrri-fvideo__open').addEventListener('click', () => this.open());
+            this.querySelector('.henrri-fvideo__close').addEventListener('click', () => this.dismiss());
+            this.querySelector('.henrri-fvideo__modal-close').addEventListener('click', () => this.close());
+            this.querySelector('.henrri-fvideo__modal').addEventListener('click', (event) => {
+              if (event.target === event.currentTarget) this.close();
+            });
+            this.onKeyUp = (event) => {
+              if (event.key === 'Escape') this.close();
+            };
+          }
+
+          open() {
+            this.classList.add('is-open');
+            this.thumbVideo.pause();
+            this.modalVideo.currentTime = 0;
+            this.modalVideo.play().catch(() => {});
+            document.addEventListener('keyup', this.onKeyUp);
+          }
+
+          close() {
+            if (!this.classList.contains('is-open')) return;
+            this.classList.remove('is-open');
+            this.modalVideo.pause();
+            this.thumbVideo.play().catch(() => {});
+            document.removeEventListener('keyup', this.onKeyUp);
+          }
+
+          dismiss() {
+            this.thumbVideo.pause();
+            this.hidden = true;
+            try {
+              sessionStorage.setItem('henrri-fvideo-closed', '{{ product.id }}');
+            } catch (e) {}
+          }
+        }
+      );
+    }
+  </script>
+{%- endif -%}

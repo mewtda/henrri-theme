@@ -1,0 +1,629 @@
+/* Seções da home Henrri */
+
+.henrri-section {
+  padding-top: calc(var(--pt, 0px) * 0.75);
+  padding-bottom: calc(var(--pb, 0px) * 0.75);
+}
+
+@media screen and (min-width: 750px) {
+  .henrri-section {
+    padding-top: var(--pt, 0px);
+    padding-bottom: var(--pb, 0px);
+  }
+}
+
+.page-width--wide {
+  max-width: 160rem;
+}
+
+/* ---------- Bolinhas ---------- */
+.henrri-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 1.6rem;
+}
+
+.henrri-dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #c9c9c9;
+  cursor: pointer;
+}
+
+.henrri-dot[aria-current='true'] {
+  background: var(--henrri-black);
+}
+
+/* ---------- Hero ---------- */
+.henrri-hero {
+  position: relative;
+  display: block;
+}
+
+.henrri-hero__track {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.henrri-hero__track::-webkit-scrollbar {
+  display: none;
+}
+
+.henrri-hero__slide {
+  position: relative;
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  height: 60vh;
+  min-height: 42rem;
+  overflow: hidden;
+}
+
+.henrri-hero--large .henrri-hero__slide { height: 75vh; }
+.henrri-hero--full .henrri-hero__slide { height: calc(100vh - 9rem); }
+
+@media screen and (max-width: 749px) {
+  .henrri-hero__slide,
+  .henrri-hero--large .henrri-hero__slide,
+  .henrri-hero--full .henrri-hero__slide {
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 4 / 5;
+  }
+}
+
+.henrri-hero__media,
+.henrri-hero__media img,
+.henrri-hero__media picture,
+.henrri-hero__media .placeholder-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.henrri-hero__media .placeholder-svg {
+  background: #d9d9d9;
+}
+
+.henrri-hero__link {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.henrri-hero__content {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr auto;
+  align-items: center;
+  padding: 4rem 9rem;
+  color: #fff;
+  background: rgba(0, 0, 0, var(--overlay, 0));
+  pointer-events: none;
+}
+
+.henrri-hero__text {
+  margin: 0;
+  font-size: 1.6rem;
+  letter-spacing: 0.02em;
+}
+
+.henrri-hero__heading {
+  margin: 0;
+  justify-self: end;
+  color: #fff;
+  font-size: clamp(2.4rem, 2.8vw, 4rem);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+}
+
+.henrri-hero__heading em {
+  font-family: 'Times New Roman', Georgia, serif;
+  font-size: 1.3em;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.henrri-hero__button {
+  grid-column: 1 / -1;
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.9rem 1.4rem;
+  background: #fff;
+  color: var(--henrri-black);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  pointer-events: auto;
+  position: relative;
+  z-index: 3;
+  margin-bottom: 2rem;
+}
+
+.henrri-hero__button svg {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+
+@media screen and (max-width: 749px) {
+  .henrri-hero__content {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto auto;
+    align-content: end;
+    padding: 2.4rem;
+    gap: 1.2rem;
+    text-align: center;
+  }
+
+  .henrri-hero__heading {
+    justify-self: center;
+  }
+
+  .henrri-hero__text {
+    font-size: 1.3rem;
+  }
+}
+
+.henrri-hero__arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 4;
+  width: 4.4rem;
+  height: 4.4rem;
+  margin-top: -2.2rem;
+  padding: 0.8rem;
+  border: 0;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.henrri-hero__arrow--prev { left: 1rem; }
+.henrri-hero__arrow--next { right: 1rem; }
+
+.henrri-hero__arrow svg {
+  width: 100%;
+  height: 100%;
+}
+
+.henrri-hero__dots {
+  position: absolute;
+  right: 2rem;
+  bottom: 1.6rem;
+  z-index: 4;
+  margin: 0;
+}
+
+.henrri-hero__dots .henrri-dot {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.henrri-hero__dots .henrri-dot[aria-current='true'] {
+  background: #fff;
+}
+
+.henrri-hero__scroll {
+  position: absolute;
+  left: 50%;
+  bottom: -2.2rem;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.4rem;
+  height: 4.4rem;
+  margin-left: -2.2rem;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--henrri-black);
+  box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.08);
+}
+
+.henrri-hero__scroll svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+@media screen and (max-width: 749px) {
+  .henrri-hero__arrow,
+  .henrri-hero__scroll {
+    display: none;
+  }
+
+  .henrri-hero__dots {
+    right: 0;
+    left: 0;
+  }
+}
+
+/* ---------- Abas ---------- */
+.henrri-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1.6rem;
+  margin-bottom: 2.4rem;
+}
+
+.henrri-tabs__tab {
+  padding: 0.4rem 0;
+  border: 0;
+  background: none;
+  color: var(--henrri-muted);
+  font-family: inherit;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+.henrri-tabs__tab[aria-selected='true'] {
+  color: var(--henrri-black);
+}
+
+.henrri-tabs__tab + .henrri-tabs__tab {
+  padding-left: 1.6rem;
+  border-left: 1px solid var(--henrri-border);
+}
+
+/* ---------- Categorias ---------- */
+.henrri-tiles {
+  display: grid;
+  gap: 1rem;
+  padding: 0 1.5rem;
+}
+
+.henrri-tiles.page-width {
+  padding: 0 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .henrri-tiles--2 { grid-template-columns: repeat(2, 1fr); }
+  .henrri-tiles--3 { grid-template-columns: repeat(3, 1fr); }
+  .henrri-tiles--4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+.henrri-tile {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: var(--ratio, 1.17);
+  color: #fff;
+  text-decoration: none;
+}
+
+.henrri-tile__media img,
+.henrri-tile__media .placeholder-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s ease;
+}
+
+.henrri-tile__media .placeholder-svg {
+  background: #d9d9d9;
+}
+
+.henrri-tile:hover .henrri-tile__media img {
+  transform: scale(1.03);
+}
+
+.henrri-tile::after {
+  content: '';
+  position: absolute;
+  inset: 50% 0 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.35), transparent);
+}
+
+.henrri-tile__content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: 2.4rem 2.8rem;
+}
+
+.henrri-tile__title {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin: 0;
+  color: #fff;
+  font-size: clamp(2rem, 2.2vw, 3rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.henrri-tile__title svg {
+  width: 1.8rem;
+  height: 1.8rem;
+  transition: transform 0.3s;
+}
+
+.henrri-tile:hover .henrri-tile__title svg {
+  transform: translateX(0.4rem);
+}
+
+.henrri-tile__text {
+  margin: 0.6rem 0 0;
+  font-size: 1.2rem;
+}
+
+/* ---------- Benefícios ---------- */
+.henrri-benefits {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.4rem 1.6rem;
+  margin: 0;
+  padding: 3.2rem 0;
+  list-style: none;
+  text-align: center;
+  border-top: 1px solid var(--henrri-border);
+  border-bottom: 1px solid var(--henrri-border);
+}
+
+@media screen and (min-width: 990px) {
+  .henrri-benefits {
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  }
+}
+
+.henrri-benefits__icon {
+  width: 3.2rem;
+  height: 3.2rem;
+  object-fit: contain;
+  margin: 0 auto 1rem;
+  display: block;
+}
+
+.henrri-benefits__title {
+  margin: 0 0 0.8rem;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.henrri-benefits__text {
+  max-width: 22rem;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--henrri-muted);
+}
+
+.henrri-benefits__text p {
+  margin: 0;
+}
+
+/* ---------- Compre o look ---------- */
+.henrri-look {
+  display: grid;
+  gap: 2.4rem;
+  align-items: center;
+}
+
+@media screen and (min-width: 750px) {
+  .henrri-look {
+    grid-template-columns: 3fr 2fr;
+    gap: 4rem;
+  }
+}
+
+.henrri-look__image {
+  position: relative;
+}
+
+.henrri-look__image img,
+.henrri-look__image .placeholder-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.henrri-look__image .placeholder-svg {
+  aspect-ratio: 4 / 5;
+  background: #d9d9d9;
+}
+
+.henrri-look__hotspot {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  margin: -1.3rem 0 0 -1.3rem;
+  padding: 0;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: var(--henrri-black);
+  color: #fff;
+  cursor: pointer;
+  animation: henrri-pulse 2s infinite;
+}
+
+.henrri-look__hotspot svg {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+@keyframes henrri-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6); }
+  70% { box-shadow: 0 0 0 1rem rgba(255, 255, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+
+.henrri-look__products {
+  width: 100%;
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.henrri-look__track {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.henrri-look__track::-webkit-scrollbar {
+  display: none;
+}
+
+.henrri-look__track > li {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+}
+
+/* ---------- Avaliações ---------- */
+.henrri-reviews__header {
+  text-align: center;
+  margin-bottom: 3.2rem;
+}
+
+.henrri-reviews__title {
+  margin: 0 0 0.8rem;
+  font-size: clamp(2.2rem, 2.2vw, 2.8rem);
+  font-weight: 400;
+}
+
+.henrri-reviews__subtitle {
+  margin: 0.4rem 0 0;
+  font-size: 1.2rem;
+  color: var(--henrri-muted);
+}
+
+.henrri-stars {
+  color: #1d7a6c;
+  font-size: 1.6rem;
+  letter-spacing: 0.15em;
+}
+
+.henrri-stars .is-empty {
+  color: #d0d0d0;
+}
+
+.henrri-reviews {
+  display: grid;
+  gap: 3.2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+
+@media screen and (min-width: 750px) {
+  .henrri-reviews {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 90rem;
+    margin: 0 auto;
+  }
+}
+
+.henrri-review__heading {
+  margin: 0.6rem 0 0.4rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.henrri-review__text {
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.henrri-review__text p {
+  margin: 0;
+}
+
+.henrri-review__author {
+  margin: 0.8rem 0 0;
+  font-size: 1.1rem;
+  color: var(--henrri-muted);
+}
+
+.henrri-review__product {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.6rem;
+  font-size: 1.1rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.henrri-review__product img {
+  width: 6rem;
+  height: auto;
+}
+
+.henrri-reviews__app {
+  margin-bottom: 3.2rem;
+}
+
+/* ---------- Instagram ---------- */
+.henrri-instagram {
+  text-align: center;
+}
+
+.henrri-instagram__handle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 1.8rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.henrri-instagram__handle svg {
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+.henrri-instagram__text {
+  margin: 0.6rem 0 2.4rem;
+  font-size: 1.2rem;
+  color: var(--henrri-muted);
+}
+
+.henrri-instagram__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media screen and (min-width: 750px) {
+  .henrri-instagram__grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+.henrri-instagram__grid img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}

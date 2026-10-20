@@ -1,0 +1,61 @@
+{{ 'henrri-sections.css' | asset_url | stylesheet_tag }}
+
+<div class="henrri-section henrri-instagram" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
+  <div class="page-width page-width--wide">
+    <a href="{{ settings.social_instagram_link | default: '#' }}" class="henrri-instagram__handle" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg>
+      {{- section.settings.handle | escape -}}
+    </a>
+    {%- if section.settings.text != blank -%}
+      <p class="henrri-instagram__text">{{ section.settings.text | escape }}</p>
+    {%- endif -%}
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == '@app' -%}
+        {% render block %}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- assign images = section.blocks | where: 'type', 'image' -%}
+    {%- if images.size > 0 -%}
+      <ul class="henrri-instagram__grid" role="list">
+        {%- for block in images -%}
+          <li {{ block.shopify_attributes }}>
+            <a href="{{ block.settings.link | default: settings.social_instagram_link }}" target="_blank" rel="noopener">
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300, 450, 600', sizes: '(min-width: 750px) 17vw, 33vw' }}
+              {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Henrri: instagram",
+  "class": "henrri-instagram-section",
+  "settings": [
+    { "type": "text", "id": "handle", "label": "@ do Instagram", "default": "@henrri", "info": "O link vem de Configurações do tema → Redes sociais" },
+    { "type": "text", "id": "text", "label": "Texto", "default": "Acompanhe as novidades" },
+    { "type": "range", "id": "padding_top", "label": "Espaço acima", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 },
+    { "type": "range", "id": "padding_bottom", "label": "Espaço abaixo", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Foto",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Imagem" },
+        { "type": "url", "id": "link", "label": "Link do post" }
+      ]
+    },
+    { "type": "@app" }
+  ],
+  "presets": [{ "name": "Henrri: instagram" }]
+}
+{% endschema %}

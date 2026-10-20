@@ -1,0 +1,41 @@
+{% doc %}
+  Renders Henrri product card badges over the image: "X% OFF" (top right) and
+  "★ BEST SELLER" (bottom left) for products tagged with the theme setting tag.
+
+  @param {product} product - The product
+
+  @example
+  {% render 'henrri-card-badges', product: card_product %}
+{% enddoc %}
+{%- liquid
+  assign best_tag = settings.henrri_best_seller_tag | downcase | strip
+  assign is_best = false
+  if best_tag != blank
+    for tag in product.tags
+      assign tag_key = tag | downcase | strip
+      if tag_key == best_tag
+        assign is_best = true
+        break
+      endif
+    endfor
+  endif
+  assign discount = 0
+  if product.compare_at_price > product.price and product.available
+    assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
+  endif
+-%}
+{%- if is_best or discount > 0 -%}
+  <div class="henrri-badges">
+    {%- if discount > 0 -%}
+      <span class="henrri-badge henrri-badge--sale">{{ 'henrri.card.discount' | t: percent: discount }}</span>
+    {%- endif -%}
+    {%- if is_best -%}
+      <span class="henrri-badge henrri-badge--best">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/>
+        </svg>
+        {{- 'henrri.card.best_seller' | t -}}
+      </span>
+    {%- endif -%}
+  </div>
+{%- endif -%}

@@ -1,0 +1,421 @@
+/* Henrri — estilo global inspirado na Tailor's Mind: preto e branco, tipografia geométrica, muito respiro */
+
+:root {
+  --henrri-black: #0f0f0f;
+  --henrri-grey-bg: #f8f8f8;
+  --henrri-card-bg: #f2f2f2;
+  --henrri-border: #ebebeb;
+  --henrri-muted: #646464;
+  --henrri-sale: #d62828;
+}
+
+body {
+  letter-spacing: 0.02rem;
+}
+
+h1, h2, h3, h4, h5, .h0, .h1, .h2, .h3, .h4, .h5 {
+  letter-spacing: 0;
+}
+
+/* Títulos de seção pequenos em caixa alta ("BEST SELLERS", "COMPRE O LOOK") */
+.henrri-title {
+  margin: 0 0 2.4rem;
+  text-align: center;
+  font-family: var(--font-heading-family);
+  font-size: 1.9rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.henrri-title--small {
+  font-size: 1.2rem;
+  letter-spacing: 0.08em;
+}
+
+/* Botões retos, finos, caixa alta */
+.button,
+.shopify-payment-button__button--unbranded {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 1.3rem;
+  min-height: 4.6rem;
+}
+
+/* ---------- Faixa de anúncios rolando ---------- */
+.henrri-marquee {
+  overflow: hidden;
+  background: var(--henrri-black);
+  color: #fff;
+}
+
+.henrri-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: henrri-marquee var(--marquee-speed, 30s) linear infinite;
+}
+
+.henrri-marquee:hover .henrri-marquee__track {
+  animation-play-state: paused;
+}
+
+.henrri-marquee__group {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.henrri-marquee__item {
+  padding: 0.7rem 4rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  color: inherit;
+  text-decoration: none;
+}
+
+a.henrri-marquee__item {
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+@keyframes henrri-marquee {
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .henrri-marquee__track { animation: none; }
+}
+
+/* ---------- Header ---------- */
+.header-wrapper--border-bottom {
+  border-bottom-color: var(--henrri-border);
+}
+
+.header__heading-logo-wrapper,
+.header__heading-link {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.header__heading-link .h2 {
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.header__menu-item {
+  font-size: 1.4rem;
+}
+
+.header__menu-item:hover span,
+.header__active-menu-item {
+  text-decoration: none;
+}
+
+.header__inline-menu .list-menu__item--link,
+.header__inline-menu .header__menu-item span {
+  letter-spacing: 0.02em;
+}
+
+/* Menu em destaque (ex.: "Sale") — adicione a palavra no título do item */
+.header__inline-menu a[href*="sale"] span,
+.header__inline-menu a[href*="promo"] span {
+  color: #c9822b;
+  font-weight: 500;
+}
+
+.cart-count-bubble {
+  background-color: var(--henrri-black);
+  color: #fff;
+}
+
+/* ---------- Cards de produto ---------- */
+.card-wrapper .card__inner.color-scheme-2,
+.card-wrapper .card__media,
+.card--standard .card__inner {
+  background: var(--henrri-card-bg);
+}
+
+.card__heading.h5 {
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.card-information .price {
+  font-size: 1.3rem;
+  color: var(--henrri-muted);
+  letter-spacing: 0.02em;
+}
+
+.price--on-sale .price-item--sale {
+  color: var(--henrri-sale);
+}
+
+.price--on-sale .price-item--regular {
+  color: var(--henrri-muted);
+}
+
+.card__badge .badge {
+  border-radius: 0;
+}
+
+.henrri-badges {
+  position: absolute;
+  inset: 1.2rem;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.henrri-badge {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--henrri-black);
+  background: #fff;
+}
+
+.henrri-badge--sale {
+  top: 0;
+  right: 0;
+  background: transparent;
+  border: 1px solid var(--henrri-black);
+}
+
+.henrri-badge--best {
+  bottom: 0;
+  left: 0;
+}
+
+.henrri-badge--best svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.henrri-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 0.6rem;
+  padding: 0;
+  list-style: none;
+  position: relative;
+  z-index: 2;
+}
+
+.henrri-swatch {
+  display: block;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  background: var(--swatch-bg, #ddd);
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+
+.henrri-swatch:hover {
+  box-shadow: 0 0 0 1px #fff, 0 0 0 2px var(--henrri-black);
+}
+
+.henrri-swatch--unavailable {
+  opacity: 0.4;
+}
+
+.henrri-swatches__more {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+/* ---------- Carrossel horizontal genérico ---------- */
+henrri-carousel {
+  display: block;
+}
+
+.henrri-carousel {
+  position: relative;
+}
+
+.henrri-carousel__track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - (var(--columns) - 1) * 1.2rem) / var(--columns));
+  gap: 1.2rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.henrri-carousel__track::-webkit-scrollbar {
+  display: none;
+}
+
+.henrri-carousel__track > * {
+  scroll-snap-align: start;
+}
+
+.henrri-carousel__arrow {
+  position: absolute;
+  top: 40%;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border: 0;
+  background: #fff;
+  color: var(--henrri-black);
+  cursor: pointer;
+  box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.08);
+  transition: opacity 0.2s;
+}
+
+.henrri-carousel__arrow[disabled] {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.henrri-carousel__arrow--prev { left: 0.6rem; }
+.henrri-carousel__arrow--next { right: 0.6rem; }
+
+.henrri-carousel__arrow svg {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+@media screen and (max-width: 749px) {
+  .henrri-carousel__track {
+    grid-auto-columns: calc((100% - 1.2rem) / var(--columns-mobile, 2));
+  }
+
+  .henrri-carousel__arrow {
+    display: none;
+  }
+}
+
+/* ---------- Página de produto ---------- */
+.product__info-container .product__title h1 {
+  font-size: 2.4rem;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.product__info-container .price--large {
+  font-size: 2rem;
+  letter-spacing: 0.02em;
+}
+
+.henrri-installments {
+  margin: 0.4rem 0 0;
+  font-size: 1.3rem;
+  color: var(--henrri-muted);
+}
+
+.henrri-installments strong {
+  color: var(--henrri-black);
+  font-weight: 500;
+}
+
+.product-form__input--pill input[type='radio'] + label {
+  border-radius: 0;
+  min-width: 4.4rem;
+  padding: 1rem 1.2rem;
+  justify-content: center;
+  letter-spacing: 0.04em;
+}
+
+.product-form__input .form__label {
+  font-size: 1.3rem;
+  color: var(--henrri-muted);
+}
+
+.product-form__submit {
+  background: var(--henrri-black);
+  color: #fff;
+}
+
+.henrri-shipping-strip {
+  margin: 1.6rem 0;
+  padding: 1.2rem 1.6rem;
+  text-align: center;
+  font-size: 1.3rem;
+  background: var(--henrri-grey-bg);
+}
+
+.henrri-shipping-strip strong {
+  color: #2a9d5c;
+  font-weight: 500;
+}
+
+.henrri-trust {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 2.4rem 0;
+  text-align: center;
+}
+
+.henrri-trust__item {
+  padding: 0 1rem;
+}
+
+.henrri-trust__item + .henrri-trust__item {
+  border-left: 1px solid var(--henrri-border);
+}
+
+.henrri-trust__icon {
+  display: block;
+  width: 2.8rem;
+  height: 2.8rem;
+  margin: 0 auto 0.8rem;
+}
+
+.henrri-trust__title {
+  display: block;
+  font-size: 1.3rem;
+  line-height: 1.3;
+}
+
+.henrri-trust__text {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  color: var(--henrri-muted);
+}
+
+/* ---------- Coleção ---------- */
+.facets__summary,
+.facet-filters__label,
+.facets__heading {
+  font-size: 1.3rem;
+}
+
+.collection-hero__title {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 400;
+}
+
+/* ---------- Rodapé preto ---------- */
+.footer-block__heading {
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 400;
+}
+
+.footer-block__details-content .list-menu__item--link {
+  font-size: 1.3rem;
+  padding: 0.4rem 0;
+}

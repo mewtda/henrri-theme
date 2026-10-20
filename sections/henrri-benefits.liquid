@@ -1,0 +1,69 @@
+{{ 'henrri-sections.css' | asset_url | stylesheet_tag }}
+
+<div class="henrri-section" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
+  <div class="page-width">
+    <ul class="henrri-benefits" role="list">
+      {%- for block in section.blocks -%}
+        <li class="henrri-benefits__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 80 | image_tag: class: 'henrri-benefits__icon', loading: 'lazy' }}
+          {%- else -%}
+            {% render 'henrri-icon', icon: block.settings.icon, class: 'henrri-benefits__icon' %}
+          {%- endif -%}
+          <p class="henrri-benefits__title">{{ block.settings.title | escape }}</p>
+          {%- if block.settings.text != blank -%}
+            <div class="henrri-benefits__text">{{ block.settings.text }}</div>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Henrri: benefícios",
+  "class": "henrri-benefits-section",
+  "settings": [
+    { "type": "range", "id": "padding_top", "label": "Espaço acima", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 28 },
+    { "type": "range", "id": "padding_bottom", "label": "Espaço abaixo", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 28 }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefício",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Ícone",
+          "options": [
+            { "value": "tag", "label": "Etiqueta" },
+            { "value": "truck", "label": "Caminhão" },
+            { "value": "return", "label": "Troca" },
+            { "value": "card", "label": "Cartão" },
+            { "value": "shield", "label": "Garantia" },
+            { "value": "percent", "label": "Porcentagem" },
+            { "value": "box", "label": "Caixa" }
+          ],
+          "default": "truck"
+        },
+        { "type": "image_picker", "id": "image", "label": "Ícone personalizado", "info": "Substitui o ícone acima" },
+        { "type": "text", "id": "title", "label": "Título", "default": "Frete grátis" },
+        { "type": "richtext", "id": "text", "label": "Texto", "default": "<p>nas compras acima de R$ 399</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Henrri: benefícios",
+      "blocks": [
+        { "type": "benefit", "settings": { "icon": "tag", "title": "10% off na primeira compra", "text": "<p>Use o cupom: PRIMEIRACOMPRA</p>" } },
+        { "type": "benefit", "settings": { "icon": "truck", "title": "Frete grátis", "text": "<p>nas compras acima de R$ 399</p>" } },
+        { "type": "benefit", "settings": { "icon": "return", "title": "Troca fácil", "text": "<p>30 dias para trocar ou 7 dias para devolver</p>" } },
+        { "type": "benefit", "settings": { "icon": "card", "title": "Formas de pagamento", "text": "<p>Pix ou cartão de crédito em até 6x sem juros</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

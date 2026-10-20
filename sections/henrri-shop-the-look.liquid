@@ -1,0 +1,99 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'henrri-sections.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'henrri-carousel.js' | asset_url }}" defer="defer"></script>
+
+<div class="henrri-section color-{{ section.settings.color_scheme }} gradient" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
+  <div class="page-width page-width--wide">
+    {%- if section.settings.title != blank -%}
+      <h2 class="henrri-title">{{ section.settings.title | escape }}</h2>
+    {%- endif -%}
+
+    <henrri-carousel class="henrri-look">
+      <div class="henrri-look__image">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1400', sizes: '(min-width: 750px) 60vw, 100vw' }}
+        {%- else -%}
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+        {%- for block in section.blocks -%}
+          <button
+            type="button"
+            class="henrri-look__hotspot"
+            style="left: {{ block.settings.x }}%; top: {{ block.settings.y }}%;"
+            data-index="{{ forloop.index0 }}"
+            aria-label="{{ block.settings.product.title | default: 'Produto' | escape }}"
+            {{ block.shopify_attributes }}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path stroke="currentColor" stroke-width="2" d="M12 7v10M7 12h10"/></svg>
+          </button>
+        {%- endfor -%}
+      </div>
+
+      <div class="henrri-look__products">
+        <ul class="henrri-look__track" data-track role="list">
+          {%- for block in section.blocks -%}
+            <li>
+              {%- if block.settings.product != blank -%}
+                {% render 'card-product',
+                  card_product: block.settings.product,
+                  media_aspect_ratio: 'portrait',
+                  show_secondary_image: false,
+                  lazy_load: true,
+                  section_id: section.id
+                %}
+              {%- else -%}
+                {% render 'card-product' %}
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+        <div class="henrri-dots" data-dots></div>
+      </div>
+    </henrri-carousel>
+  </div>
+</div>
+
+<script>
+  (() => {
+    const look = document.currentScript.previousElementSibling.querySelector('.henrri-look');
+    look.querySelectorAll('.henrri-look__hotspot').forEach((spot) => {
+      spot.addEventListener('click', () => look.goTo && look.goTo(Number(spot.dataset.index)));
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Henrri: compre o look",
+  "class": "henrri-shop-the-look-section",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "Compre o look" },
+    { "type": "image_picker", "id": "image", "label": "Imagem do look" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Esquema de cores", "default": "scheme-2" },
+    { "type": "range", "id": "padding_top", "label": "Espaço acima", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "label": "Espaço abaixo", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 48 }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Produto",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Produto" },
+        { "type": "range", "id": "x", "label": "Posição do ponto (horizontal)", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 40 },
+        { "type": "range", "id": "y", "label": "Posição do ponto (vertical)", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 40 }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Henrri: compre o look",
+      "blocks": [
+        { "type": "product", "settings": { "x": 36, "y": 30 } },
+        { "type": "product", "settings": { "x": 70, "y": 52 } }
+      ]
+    }
+  ]
+}
+{% endschema %}
