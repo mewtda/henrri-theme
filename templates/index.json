@@ -64,7 +64,7 @@
         "s2"
       ],
       "settings": {
-        "height": "large",
+        "height": "medium",
         "autoplay": true,
         "speed": 6,
         "show_scroll": true
