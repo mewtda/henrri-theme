@@ -27,6 +27,7 @@
         "slide_UETnRy": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/Campanha_Minimalista_de_Nova_Colecao.png",
             "overlay": 10,
             "text": "",
             "heading": "",
