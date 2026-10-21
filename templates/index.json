@@ -28,6 +28,7 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/Campanha_Minimalista_de_Nova_Colecao.png",
+            "image_mobile": "shopify://shop_images/Banner_mobile_maderite_eterno.png",
             "overlay": 10,
             "text": "",
             "heading": "",
