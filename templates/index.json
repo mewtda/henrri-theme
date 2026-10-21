@@ -28,9 +28,9 @@
           "type": "slide",
           "settings": {
             "overlay": 10,
-            "text": "A primeira camiseta tech com tecido italiano",
-            "heading": "CAMISETA <em>Double Tech</em>",
-            "button_label": "Confira",
+            "text": "",
+            "heading": "",
+            "button_label": "",
             "link": ""
           }
         },
