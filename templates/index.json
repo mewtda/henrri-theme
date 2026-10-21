@@ -128,6 +128,7 @@
           "type": "tile",
           "settings": {
             "collection": "",
+            "image": "shopify://shop_images/Polos_Preto_e_Branco_Minimalistas.png",
             "title": "Polos",
             "text": "Do trabalho ao fim de semana",
             "link": ""
