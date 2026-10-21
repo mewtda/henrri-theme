@@ -11,25 +11,43 @@
   "sections": {
     "hero": {
       "type": "henrri-hero",
-      "settings": {
-        "height": "large",
-        "autoplay": true,
-        "speed": 6,
-        "show_scroll": true
-      },
       "blocks": {
         "s1": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/07b53490-feea-45e9-aa08-5cc446996076.png",
+            "image_mobile": "shopify://shop_images/Anuncio_Minimalista_de_Camisetas_Henrri.png",
+            "overlay": 10,
+            "text": "",
+            "heading": "",
+            "button_label": "",
+            "link": "shopify://collections/all"
+          }
+        },
+        "slide_UETnRy": {
           "type": "slide",
           "settings": {
             "overlay": 10,
             "text": "A primeira camiseta tech com tecido italiano",
             "heading": "CAMISETA <em>Double Tech</em>",
             "button_label": "Confira",
-            "link": "shopify://collections/all"
+            "link": ""
+          }
+        },
+        "slide_6XCG3k": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "overlay": 10,
+            "text": "",
+            "heading": "",
+            "button_label": "Confira",
+            "link": ""
           }
         },
         "s2": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "overlay": 10,
             "text": "Nova coleção",
@@ -41,18 +59,19 @@
       },
       "block_order": [
         "s1",
+        "slide_UETnRy",
+        "slide_6XCG3k",
         "s2"
-      ]
+      ],
+      "settings": {
+        "height": "large",
+        "autoplay": true,
+        "speed": 6,
+        "show_scroll": true
+      }
     },
     "best_sellers": {
       "type": "henrri-product-carousel",
-      "settings": {
-        "columns": 5,
-        "limit": 12,
-        "color_scheme": "scheme-1",
-        "padding_top": 48,
-        "padding_bottom": 24
-      },
       "blocks": {
         "t1": {
           "type": "tab",
@@ -72,45 +91,52 @@
       "block_order": [
         "t1",
         "t2"
-      ]
+      ],
+      "settings": {
+        "columns": 5,
+        "limit": 12,
+        "color_scheme": "scheme-1",
+        "padding_top": 48,
+        "padding_bottom": 24
+      }
     },
     "tiles": {
       "type": "henrri-collection-tiles",
-      "settings": {
-        "columns": "2",
-        "ratio": "1.17",
-        "full_width": true,
-        "padding_top": 16,
-        "padding_bottom": 16
-      },
       "blocks": {
         "c1": {
           "type": "tile",
           "settings": {
+            "collection": "gola-alta",
             "title": "Gola Alta",
             "text": "Elegância instantânea",
-            "collection": "gola-alta"
+            "link": ""
           }
         },
         "c2": {
           "type": "tile",
           "settings": {
+            "collection": "",
             "title": "Shorts e Bermudas",
-            "text": "Essencial para o verão"
+            "text": "Essencial para o verão",
+            "link": ""
           }
         },
         "c3": {
           "type": "tile",
           "settings": {
+            "collection": "",
             "title": "Polos",
-            "text": "Do trabalho ao fim de semana"
+            "text": "Do trabalho ao fim de semana",
+            "link": ""
           }
         },
         "c4": {
           "type": "tile",
           "settings": {
+            "collection": "",
             "title": "Calças",
-            "text": "Alfaiataria com conforto"
+            "text": "Alfaiataria com conforto",
+            "link": ""
           }
         }
       },
@@ -119,14 +145,17 @@
         "c2",
         "c3",
         "c4"
-      ]
+      ],
+      "settings": {
+        "columns": "2",
+        "ratio": "1.17",
+        "full_width": true,
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
     },
     "benefits": {
       "type": "henrri-benefits",
-      "settings": {
-        "padding_top": 28,
-        "padding_bottom": 28
-      },
       "blocks": {
         "b1": {
           "type": "benefit",
@@ -166,20 +195,19 @@
         "b2",
         "b3",
         "b4"
-      ]
+      ],
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
     },
     "look": {
       "type": "henrri-shop-the-look",
-      "settings": {
-        "title": "Compre o look",
-        "color_scheme": "scheme-2",
-        "padding_top": 48,
-        "padding_bottom": 48
-      },
       "blocks": {
         "p1": {
           "type": "product",
           "settings": {
+            "product": "",
             "x": 36,
             "y": 30
           }
@@ -187,6 +215,7 @@
         "p2": {
           "type": "product",
           "settings": {
+            "product": "",
             "x": 70,
             "y": 52
           }
@@ -195,16 +224,16 @@
       "block_order": [
         "p1",
         "p2"
-      ]
+      ],
+      "settings": {
+        "title": "Compre o look",
+        "color_scheme": "scheme-2",
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
     },
     "reviews": {
       "type": "henrri-reviews",
-      "settings": {
-        "title": "",
-        "subtitle": "",
-        "padding_top": 56,
-        "padding_bottom": 40
-      },
       "blocks": {
         "judge_me_reviews_testimonials_carousel": {
           "type": "shopify://apps/judge-me-reviews/blocks/testimonials_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
@@ -245,7 +274,13 @@
       },
       "block_order": [
         "judge_me_reviews_testimonials_carousel"
-      ]
+      ],
+      "settings": {
+        "title": "",
+        "subtitle": "",
+        "padding_top": 56,
+        "padding_bottom": 40
+      }
     },
     "instagram": {
       "type": "henrri-instagram",
