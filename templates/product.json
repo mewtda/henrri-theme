@@ -124,6 +124,7 @@
           "type": "banner",
           "settings": {
             "image": "shopify://shop_images/Textura_Negra_com_Emblema_Bordado.png",
+            "image_mobile": "shopify://shop_images/a.png",
             "heading": "Algodão egípcio",
             "text": "<p>Fibras longas e finas: mais macio, mais resistente e não desbota.</p>",
             "text_position": "left",
