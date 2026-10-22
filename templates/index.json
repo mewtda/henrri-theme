@@ -138,6 +138,7 @@
           "type": "tile",
           "settings": {
             "collection": "",
+            "image": "shopify://shop_images/Calcas_Chino_em_Cabides_de_Madeira.png",
             "title": "Calças",
             "text": "Alfaiataria com conforto",
             "link": ""
