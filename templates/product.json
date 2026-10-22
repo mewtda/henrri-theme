@@ -130,21 +130,10 @@
             "text_color": "#ffffff",
             "link": ""
           }
-        },
-        "q2": {
-          "type": "banner",
-          "settings": {
-            "heading": "Caimento perfeito",
-            "text": "<p>Modelagem pensada para valorizar a silhueta.</p>",
-            "text_position": "right",
-            "text_color": "#ffffff",
-            "link": ""
-          }
         }
       },
       "block_order": [
-        "q1",
-        "q2"
+        "q1"
       ],
       "settings": {
         "title": "",
