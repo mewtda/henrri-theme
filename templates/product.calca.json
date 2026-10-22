@@ -1,0 +1,195 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "description": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "Descrição",
+            "icon": "none",
+            "henrri_description": true,
+            "henrri_open": true
+          }
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        },
+        "henrri_shipping": {
+          "type": "henrri_shipping",
+          "settings": {
+            "text": "<strong>Frete grátis</strong> nas compras acima de R$ 399"
+          }
+        },
+        "henrri_trust": {
+          "type": "henrri_trust",
+          "settings": {}
+        },
+        "henrri_group": {
+          "type": "henrri_group",
+          "settings": {
+            "show_colors": true,
+            "show_kits": true
+          }
+        },
+        "judge_me_preview_badge": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "judge_me_preview_badge",
+        "price",
+        "henrri_group",
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "henrri_shipping",
+        "description",
+        "share",
+        "henrri_trust"
+      ],
+      "settings": {
+        "henrri_floating_video": true,
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "cover",
+        "gallery_layout": "columns",
+        "mobile_thumbnails": "show",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 24,
+        "padding_bottom": 36
+      }
+    },
+    "disclosures": {
+      "type": "disclosures",
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "Você também pode gostar",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    },
+    "quality_banners": {
+      "type": "henrri-quality-banners",
+      "blocks": {
+        "q1": {
+          "type": "banner",
+          "settings": {
+            "heading": "Algodão egípcio",
+            "text": "<p>Fibras longas e finas: mais macio, mais resistente e não desbota.</p>",
+            "text_position": "left",
+            "text_color": "#ffffff"
+          }
+        },
+        "q2": {
+          "type": "banner",
+          "settings": {
+            "heading": "Caimento perfeito",
+            "text": "<p>Modelagem pensada para valorizar a silhueta.</p>",
+            "text_position": "right",
+            "text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2"
+      ],
+      "settings": {
+        "title": "",
+        "columns": "1",
+        "full_width": false,
+        "padding_top": 24,
+        "padding_bottom": 24
+      }
+    },
+    "judge_me_reviews": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_review_widget": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "real_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_review_widget"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "quality_banners",
+    "judge_me_reviews",
+    "disclosures",
+    "related-products"
+  ]
+}
