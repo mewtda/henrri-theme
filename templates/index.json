@@ -66,7 +66,7 @@
         "s2"
       ],
       "custom_css": [
-        "@media screen and (max-width: 749px) {.hero__media img, .hero__image img, .banner__media img {width: 100% !important; height: 100% !important; object-fit: contain !important; object-position: center center !important; }}"
+        "@media screen and (max-width: 749px) {.hero, .hero__media, .banner, .banner__media {height: auto !important; min-height: 0 !important; aspect-ratio: 9 / 16 !important; } img {width: 100% !important; height: 100% !important; object-fit: contain !important; object-position: center !important; }}"
       ],
       "settings": {
         "height": "large",
