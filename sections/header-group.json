@@ -1,12 +1,18 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "t:sections.header.name",
   "type": "header",
   "sections": {
     "henrri-marquee": {
       "type": "henrri-marquee",
-      "settings": {
-        "speed": 35
-      },
       "blocks": {
         "m1": {
           "type": "message",
@@ -34,42 +40,40 @@
         "m1",
         "m2",
         "m3"
-      ]
+      ],
+      "settings": {
+        "speed": 35
+      }
     },
     "header": {
       "type": "header",
       "settings": {
-        "color_scheme": "scheme-1",
-        "menu_color_scheme": "scheme-1",
         "logo_position": "middle-left",
+        "mobile_logo_position": "center",
         "menu": "main-menu",
         "menu_type_desktop": "mega",
-        "sticky_header_type": "always",
-        "show_line_separator": true,
-        "enable_country_selector": false,
-        "enable_language_selector": false,
-        "mobile_logo_position": "center",
-        "margin_bottom": 0,
-        "padding_top": 12,
-        "padding_bottom": 12,
         "vestuario_title": "Vestuário",
         "vestuario_collections": [
+          "camiseta-alg-egipcio-relogio-mei-dia",
           "camisetas",
-          "polo",
-          "camiseta-manga-longa",
-          "camiseta-oversized",
-          "camiseta-oversized-comfort",
-          "gola-alta",
-          "calca-alfaiataria-sarja",
-          "oversized",
-          "bermudas",
-          "acessorios"
+          "camiseta-gola-o",
+          "camiseta-gola-v",
+          "kits"
         ],
-        "vestuario_link": "shopify://collections/all",
+        "vestuario_link": "",
         "vestuario_position": 1,
         "vestuario_show_images": true,
         "showroom_text": "Visite nosso showroom",
-        "showroom_link": "https://www.google.com/maps/search/?api=1&query=Av.+Get%C3%BAlio+Vargas,+54+-+Loja+8,+Funcion%C3%A1rios,+Belo+Horizonte+-+MG"
+        "showroom_link": "",
+        "sticky_header_type": "always",
+        "show_line_separator": true,
+        "color_scheme": "scheme-1",
+        "menu_color_scheme": "scheme-1",
+        "enable_country_selector": false,
+        "enable_language_selector": false,
+        "margin_bottom": 0,
+        "padding_top": 12,
+        "padding_bottom": 12
       }
     }
   },
