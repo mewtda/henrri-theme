@@ -65,6 +65,9 @@
         "slide_6XCG3k",
         "s2"
       ],
+      "custom_css": [
+        "@media screen and (max-width: 749px) {.hero__media img, .hero__image img, .banner__media img {width: 100% !important; height: 100% !important; object-fit: contain !important; object-position: center center !important; }}"
+      ],
       "settings": {
         "height": "large",
         "autoplay": true,
