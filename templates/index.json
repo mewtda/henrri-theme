@@ -117,7 +117,7 @@
         "c2": {
           "type": "tile",
           "settings": {
-            "collection": "",
+            "collection": "bermudas",
             "image": "shopify://shop_images/Colecao_de_Bermudas_em_Cabides_de_Madeira.png",
             "title": "Shorts e Bermudas",
             "text": "Essencial para o verão",
@@ -127,7 +127,7 @@
         "c3": {
           "type": "tile",
           "settings": {
-            "collection": "",
+            "collection": "polo",
             "image": "shopify://shop_images/Polos_Preto_e_Branco_Minimalistas.png",
             "title": "Polos",
             "text": "Do trabalho ao fim de semana",
@@ -137,7 +137,7 @@
         "c4": {
           "type": "tile",
           "settings": {
-            "collection": "",
+            "collection": "calca-alfaiataria-sarja",
             "image": "shopify://shop_images/Calcas_Chino_em_Cabides_de_Madeira.png",
             "title": "Calças",
             "text": "Alfaiataria com conforto",
