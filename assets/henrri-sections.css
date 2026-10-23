@@ -90,7 +90,12 @@
   height: 100%;
   object-fit: cover;
 }
-
+@media screen and (max-width: 749px) {
+  .henrri-hero__media img {
+    object-fit: contain !important;
+    object-position: center center !important;
+  }
+}
 
 
 
