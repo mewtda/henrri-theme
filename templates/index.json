@@ -33,7 +33,7 @@
             "text": "",
             "heading": "",
             "button_label": "",
-            "link": ""
+            "link": "shopify://collections/camiseta-maderite"
           }
         },
         "slide_6XCG3k": {
@@ -65,9 +65,7 @@
         "slide_6XCG3k",
         "s2"
       ],
-      "custom_css": [
-        "@media screen and (max-width: 749px) {.slideshow__slide, .slideshow__media, .banner, .banner__media, .media {width: 100% !important; height: auto !important; min-height: 0 !important; aspect-ratio: 9 / 16 !important; } .slideshow__slide img, .banner__media img, .media img {width: 100% !important; height: 100% !important; object-fit: contain !important; object-position: center !important; }}"
-      ],
+      "custom_css": [],
       "settings": {
         "height": "large",
         "autoplay": true,
