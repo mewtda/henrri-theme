@@ -76,7 +76,7 @@
   .henrri-hero--full .henrri-hero__slide {
     height: auto;
     min-height: 0;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 3 / 5;
   }
 }
 
