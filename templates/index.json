@@ -15,7 +15,7 @@
         "s1": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/final.png",
+            "image": "shopify://shop_images/final_3.png",
             "image_mobile": "shopify://shop_images/final2.png",
             "overlay": 10,
             "text": "",
