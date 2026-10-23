@@ -7,6 +7,19 @@
       assign visible = visible | append: block.id | append: ','
     endif
   endfor
+
+  comment
+    Collections not listed in any button fall back to the buttons of the default collection.
+  endcomment
+  assign fallback = section.settings.fallback_handle | default: 'all' | strip
+  if visible == blank and current != fallback
+    for block in section.blocks
+      assign show_on = block.settings.show_on | remove: ' ' | split: ','
+      if show_on contains fallback
+        assign visible = visible | append: block.id | append: ','
+      endif
+    endfor
+  endif
 -%}
 {%- if visible != blank -%}
   <div class="henrri-pills-wrap page-width">
@@ -124,6 +137,13 @@
     {
       "type": "paragraph",
       "content": "Botões que levam para outras coleções. Em cada botão, \"Mostrar nas coleções\" define em quais páginas ele aparece (handles separados por vírgula; vazio = todas)."
+    },
+    {
+      "type": "text",
+      "id": "fallback_handle",
+      "label": "Coleção padrão",
+      "default": "all",
+      "info": "Coleções que não aparecem em nenhum \"Mostrar nas coleções\" usam os botões desta coleção."
     }
   ],
   "blocks": [
