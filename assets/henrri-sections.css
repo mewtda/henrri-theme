@@ -76,7 +76,7 @@
   .henrri-hero--full .henrri-hero__slide {
     height: auto;
     min-height: 0;
-    aspect-ratio: auto;
+    aspect-ratio: 4 / 5;
   }
 }
 
@@ -91,18 +91,7 @@
   object-fit: cover;
 }
 
-/* Corrigir corte do banner no celular */
-@media screen and (max-width: 749px) {
-  .henrri-hero__slide {
-    aspect-ratio: 4 / 5;
-    min-height: 0;
-  }
 
-  .henrri-hero__media img {
-    object-fit: contain;
-    object-position: center center;
-  }
-}
 
 
 .henrri-hero__media .placeholder-svg {
