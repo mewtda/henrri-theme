@@ -8,21 +8,36 @@
 <nav class="header__inline-menu">
   <ul class="list-menu list-menu--inline" role="list">
     {%- liquid
-      assign vestuario_enabled = false
-      if section.settings.vestuario_collections.size > 0
-        assign vestuario_enabled = true
-        assign vestuario_key = section.settings.vestuario_title | default: 'Vestuário' | downcase | strip
-      endif
-      assign vestuario_rendered = false
+      assign menu_keys = ','
+      for link in section.settings.menu.links
+        assign menu_key = link.title | downcase | strip
+        assign menu_keys = menu_keys | append: menu_key | append: ','
+      endfor
     -%}
     {%- for link in section.settings.menu.links -%}
-      {%- if vestuario_enabled -%}
-        {%- assign link_key = link.title | downcase | strip -%}
-        {%- if link_key == vestuario_key -%}{%- continue -%}{%- endif -%}
-        {%- if vestuario_rendered == false and forloop.index >= section.settings.vestuario_position -%}
-          {%- render 'henrri-vestuario-mega', context: 'desktop' -%}
-          {%- assign vestuario_rendered = true -%}
-        {%- endif -%}
+      {%- for mega in section.blocks -%}
+        {%- if mega.type != 'henrri_mega_collections' or mega.settings.position != forloop.parentloop.index -%}{%- continue -%}{%- endif -%}
+        {%- assign mega_marker = mega.settings.title | downcase | strip | prepend: ',' | append: ',' -%}
+        {%- unless menu_keys contains mega_marker -%}
+          {%- render 'henrri-collection-mega', mega: mega, context: 'desktop' -%}
+        {%- endunless -%}
+      {%- endfor -%}
+      {%- liquid
+        assign link_key = link.title | downcase | strip
+        assign link_mega = nil
+        for mega in section.blocks
+          if mega.type == 'henrri_mega_collections'
+            assign mega_key = mega.settings.title | downcase | strip
+            if mega_key == link_key
+              assign link_mega = mega
+              break
+            endif
+          endif
+        endfor
+      -%}
+      {%- if link_mega -%}
+        {%- render 'henrri-collection-mega', mega: link_mega, context: 'desktop' -%}
+        {%- continue -%}
       {%- endif -%}
       <li>
         {%- if link.links != blank -%}
@@ -136,8 +151,13 @@
         {%- endif -%}
       </li>
     {%- endfor -%}
-    {%- if vestuario_enabled and vestuario_rendered == false -%}
-      {%- render 'henrri-vestuario-mega', context: 'desktop' -%}
-    {%- endif -%}
+    {%- assign menu_size = section.settings.menu.links.size -%}
+    {%- for mega in section.blocks -%}
+      {%- if mega.type != 'henrri_mega_collections' or mega.settings.position <= menu_size -%}{%- continue -%}{%- endif -%}
+      {%- assign mega_marker = mega.settings.title | downcase | strip | prepend: ',' | append: ',' -%}
+      {%- unless menu_keys contains mega_marker -%}
+        {%- render 'henrri-collection-mega', mega: mega, context: 'desktop' -%}
+      {%- endunless -%}
+    {%- endfor -%}
   </ul>
 </nav>

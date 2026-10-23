@@ -119,18 +119,16 @@
                           Minha conta
                         </a>
                       </li>
-                      {%- if block.settings.track_link != blank -%}
-                        <li>
-                          <a
-                            href="{{ block.settings.track_link }}"
-                            class="link link--text list-menu__item list-menu__item--link"
-                            target="_blank"
-                            rel="noopener"
-                          >
-                            Rastrear pedido
-                          </a>
-                        </li>
-                      {%- endif -%}
+                      <li>
+                        <a
+                          href="{{ block.settings.track_link | default: 'https://rastreamento.correios.com.br/app/index.php' }}"
+                          class="link link--text list-menu__item list-menu__item--link"
+                          target="_blank"
+                          rel="noopener"
+                        >
+                          Rastrear pedido
+                        </a>
+                      </li>
                     </ul>
                   {%- when 'henrri_policies' -%}
                     <ul class="footer-block__details-content list-unstyled">
@@ -151,18 +149,18 @@
                     <ul class="footer-block__details-content list-unstyled henrri-footer-contact">
                       {%- if block.settings.address != blank -%}
                         <li>
-                          {%- if block.settings.address_link != blank -%}
-                            <a
-                              href="{{ block.settings.address_link }}"
-                              class="link link--text list-menu__item list-menu__item--link"
-                              target="_blank"
-                              rel="noopener"
-                            >
-                              {{- block.settings.address | escape -}}
-                            </a>
-                          {%- else -%}
-                            <span class="list-menu__item">{{ block.settings.address | escape }}</span>
-                          {%- endif -%}
+                          {%- liquid
+                            assign address_query = block.settings.address | url_encode
+                            assign address_maps = 'https://www.google.com/maps/search/?api=1&query=' | append: address_query
+                          -%}
+                          <a
+                            href="{{ block.settings.address_link | default: address_maps }}"
+                            class="link link--text list-menu__item list-menu__item--link"
+                            target="_blank"
+                            rel="noopener"
+                          >
+                            {{- block.settings.address | escape -}}
+                          </a>
                         </li>
                       {%- endif -%}
                       {%- if block.settings.email != blank -%}
@@ -467,7 +465,7 @@
           "type": "url",
           "id": "track_link",
           "label": "Link \"Rastrear pedido\"",
-          "default": "https://rastreamento.correios.com.br/app/index.php"
+          "info": "Vazio = site de rastreamento dos Correios"
         }
       ]
     },

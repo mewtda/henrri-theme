@@ -52,19 +52,8 @@
         "mobile_logo_position": "center",
         "menu": "main-menu",
         "menu_type_desktop": "mega",
-        "vestuario_title": "Vestuário",
-        "vestuario_collections": [
-          "camiseta-alg-egipcio-relogio-mei-dia",
-          "camisetas",
-          "camiseta-gola-o",
-          "camiseta-gola-v",
-          "kits"
-        ],
-        "vestuario_link": "https://henrri.com.br/collections/all",
-        "vestuario_position": 2,
-        "vestuario_show_images": true,
         "showroom_text": "Visite nosso showroom",
-        "showroom_link": "",
+        "showroom_link": "https://www.google.com/maps/search/?api=1&query=Av.+Getulio+Vargas,+54+-+Loja+8,+Funcionarios,+Belo+Horizonte+-+MG",
         "sticky_header_type": "always",
         "show_line_separator": true,
         "color_scheme": "scheme-1",
@@ -74,7 +63,42 @@
         "margin_bottom": 0,
         "padding_top": 12,
         "padding_bottom": 12
-      }
+      },
+      "blocks": {
+        "mega_vestuario": {
+          "type": "henrri_mega_collections",
+          "settings": {
+            "title": "Vestuário",
+            "collections": [
+              "camiseta-alg-egipcio-relogio-mei-dia",
+              "camisetas",
+              "camiseta-gola-o",
+              "camiseta-gola-v",
+              "kits"
+            ],
+            "link": "https://henrri.com.br/collections/all",
+            "position": 2,
+            "show_images": true
+          }
+        },
+        "mega_kits": {
+          "type": "henrri_mega_collections",
+          "settings": {
+            "title": "Kits",
+            "collections": [
+              "kits",
+              "kit-maderite"
+            ],
+            "link": "shopify://collections/kits",
+            "position": 3,
+            "show_images": true
+          }
+        }
+      },
+      "block_order": [
+        "mega_vestuario",
+        "mega_kits"
+      ]
     }
   },
   "order": [

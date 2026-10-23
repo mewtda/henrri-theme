@@ -1,0 +1,110 @@
+{% doc %}
+  Renders a top-level menu item built from a header "henrri_mega_collections" block.
+  On desktop it opens a mega menu with the block's collections; in the drawer it is a plain link.
+
+  @param {object} mega - The header block of type henrri_mega_collections.
+  @param {string} context - 'desktop' for the inline mega menu, 'drawer' for the menu drawer.
+
+  @example
+  {% render 'henrri-collection-mega', mega: block, context: 'desktop' %}
+{% enddoc %}
+
+{%- liquid
+  assign title = mega.settings.title
+  assign all_url = mega.settings.link | default: mega.settings.collections.first.url | default: routes.all_products_collection_url
+  assign is_active = false
+  if all_url == request.path
+    assign is_active = true
+  endif
+  for collection_item in mega.settings.collections
+    if collection_item.url == request.path
+      assign is_active = true
+    endif
+  endfor
+-%}
+
+{%- if context == 'drawer' -%}
+  <li {{ mega.shopify_attributes }}>
+    <a
+      id="HeaderDrawer-{{ mega.id }}"
+      href="{{ all_url }}"
+      class="menu-drawer__menu-item list-menu__item link link--text focus-inset{% if is_active %} menu-drawer__menu-item--active{% endif %}"
+      {% if all_url == request.path %}
+        aria-current="page"
+      {% endif %}
+    >
+      {{ title | escape }}
+    </a>
+  </li>
+{%- elsif mega.settings.collections == empty -%}
+  <li {{ mega.shopify_attributes }}>
+    <a
+      id="HeaderMenu-{{ mega.id }}"
+      href="{{ all_url }}"
+      class="header__menu-item list-menu__item link link--text focus-inset"
+    >
+      <span{% if is_active %} class="header__active-menu-item"{% endif %}>{{ title | escape }}</span>
+    </a>
+  </li>
+{%- else -%}
+  <li {{ mega.shopify_attributes }}>
+    <header-menu>
+      <details id="Details-HeaderMenu-{{ mega.id }}" class="mega-menu">
+        <summary id="HeaderMenu-{{ mega.id }}" class="header__menu-item list-menu__item link focus-inset">
+          <span{% if is_active %} class="header__active-menu-item"{% endif %}>{{ title | escape }}</span>
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </summary>
+        <div
+          id="MegaMenu-Content-{{ mega.id }}"
+          class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
+          tabindex="-1"
+        >
+          <div class="henrri-collection-mega page-width">
+            <div class="henrri-collection-mega__links">
+              <p class="henrri-collection-mega__heading">{{ title | escape }}</p>
+              <ul class="list-unstyled" role="list">
+                {%- for collection_item in mega.settings.collections -%}
+                  <li>
+                    <a
+                      href="{{ collection_item.url }}"
+                      class="mega-menu__link link{% if collection_item.url == request.path %} mega-menu__link--active{% endif %}"
+                      {% if collection_item.url == request.path %}
+                        aria-current="page"
+                      {% endif %}
+                    >
+                      {{ collection_item.title | escape }}
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+              <a href="{{ all_url }}" class="henrri-collection-mega__all link">Ver tudo</a>
+            </div>
+            {%- if mega.settings.show_images -%}
+              <ul class="henrri-collection-mega__grid" role="list">
+                {%- for collection_item in mega.settings.collections limit: 6 -%}
+                  {%- assign collection_image = collection_item.featured_image | default: collection_item.products.first.featured_media.preview_image -%}
+                  <li>
+                    <a href="{{ collection_item.url }}" class="henrri-collection-mega__card">
+                      <span class="henrri-collection-mega__media">
+                        {%- if collection_image != blank -%}
+                          {{
+                            collection_image
+                            | image_url: width: 500
+                            | image_tag: loading: 'lazy', widths: '250, 375, 500', sizes: '200px', alt: collection_item.title
+                          }}
+                        {%- else -%}
+                          {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                        {%- endif -%}
+                      </span>
+                      <span class="henrri-collection-mega__card-title">{{ collection_item.title | escape }}</span>
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </div>
+        </div>
+      </details>
+    </header-menu>
+  </li>
+{%- endif -%}

@@ -26,21 +26,36 @@
           <nav class="menu-drawer__navigation">
             <ul class="menu-drawer__menu has-submenu list-menu" role="list">
               {%- liquid
-                assign vestuario_enabled = false
-                if section.settings.vestuario_collections.size > 0
-                  assign vestuario_enabled = true
-                  assign vestuario_key = section.settings.vestuario_title | default: 'Vestuário' | downcase | strip
-                endif
-                assign vestuario_rendered = false
+                assign menu_keys = ','
+                for link in section.settings.menu.links
+                  assign menu_key = link.title | downcase | strip
+                  assign menu_keys = menu_keys | append: menu_key | append: ','
+                endfor
               -%}
               {%- for link in section.settings.menu.links -%}
-                {%- if vestuario_enabled -%}
-                  {%- assign link_key = link.title | downcase | strip -%}
-                  {%- if link_key == vestuario_key -%}{%- continue -%}{%- endif -%}
-                  {%- if vestuario_rendered == false and forloop.index >= section.settings.vestuario_position -%}
-                    {%- render 'henrri-vestuario-mega', context: 'drawer' -%}
-                    {%- assign vestuario_rendered = true -%}
-                  {%- endif -%}
+                {%- for mega in section.blocks -%}
+                  {%- if mega.type != 'henrri_mega_collections' or mega.settings.position != forloop.parentloop.index -%}{%- continue -%}{%- endif -%}
+                  {%- assign mega_marker = mega.settings.title | downcase | strip | prepend: ',' | append: ',' -%}
+                  {%- unless menu_keys contains mega_marker -%}
+                    {%- render 'henrri-collection-mega', mega: mega, context: 'drawer' -%}
+                  {%- endunless -%}
+                {%- endfor -%}
+                {%- liquid
+                  assign link_key = link.title | downcase | strip
+                  assign link_mega = nil
+                  for mega in section.blocks
+                    if mega.type == 'henrri_mega_collections'
+                      assign mega_key = mega.settings.title | downcase | strip
+                      if mega_key == link_key
+                        assign link_mega = mega
+                        break
+                      endif
+                    endif
+                  endfor
+                -%}
+                {%- if link_mega -%}
+                  {%- render 'henrri-collection-mega', mega: link_mega, context: 'drawer' -%}
+                  {%- continue -%}
                 {%- endif -%}
                 <li>
                   {%- if link.links != blank -%}
@@ -153,24 +168,30 @@
                   {%- endif -%}
                 </li>
               {%- endfor -%}
-              {%- if vestuario_enabled and vestuario_rendered == false -%}
-                {%- render 'henrri-vestuario-mega', context: 'drawer' -%}
+              {%- assign menu_size = section.settings.menu.links.size -%}
+              {%- for mega in section.blocks -%}
+                {%- if mega.type != 'henrri_mega_collections' or mega.settings.position <= menu_size -%}{%- continue -%}{%- endif -%}
+                {%- assign mega_marker = mega.settings.title | downcase | strip | prepend: ',' | append: ',' -%}
+                {%- unless menu_keys contains mega_marker -%}
+                  {%- render 'henrri-collection-mega', mega: mega, context: 'drawer' -%}
+                {%- endunless -%}
+              {%- endfor -%}
+              {%- if section.settings.showroom_text != blank -%}
+                <li>
+                  <a
+                    href="{{ section.settings.showroom_link | default: 'https://www.google.com/maps/search/?api=1&query=Av.+Getulio+Vargas,+54+-+Loja+8,+Funcionarios,+Belo+Horizonte+-+MG' }}"
+                    class="menu-drawer__menu-item list-menu__item henrri-showroom henrri-showroom--drawer link link--text focus-inset"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                    <span>{{ section.settings.showroom_text | escape }}</span>
+                  </a>
+                </li>
               {%- endif -%}
             </ul>
           </nav>
           <div class="menu-drawer__utility-links">
-            {%- if section.settings.showroom_text != blank -%}
-              <a
-                href="{{ section.settings.showroom_link | default: '#' }}"
-                class="henrri-showroom henrri-showroom--drawer link link--text focus-inset"
-                {% if section.settings.showroom_link contains 'http' %}
-                  target="_blank" rel="noopener"
-                {% endif %}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
-                <span>{{ section.settings.showroom_text | escape }}</span>
-              </a>
-            {%- endif -%}
             {%- if show_country_selector or show_language_selector -%}
               <div class="menu-drawer__localization header-localization">
                 {%- if show_country_selector -%}

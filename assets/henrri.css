@@ -838,15 +838,15 @@ henrri-carousel {
   font-weight: 600;
 }
 
-/* Mega menu Vestuário */
-.henrri-vestuario {
+/* Mega menu de coleções */
+.henrri-collection-mega {
   display: grid;
   grid-template-columns: minmax(18rem, 1fr) 4fr;
   gap: 4rem;
   align-items: start;
 }
 
-.henrri-vestuario__heading {
+.henrri-collection-mega__heading {
   margin: 0 0 1.2rem;
   font-size: 1.2rem;
   font-weight: 600;
@@ -855,12 +855,12 @@ henrri-carousel {
   color: rgba(var(--color-foreground), 0.6);
 }
 
-.henrri-vestuario__links .mega-menu__link {
+.henrri-collection-mega__links .mega-menu__link {
   padding: 0.5rem 0;
   font-size: 1.4rem;
 }
 
-.henrri-vestuario__all {
+.henrri-collection-mega__all {
   display: inline-block;
   margin-top: 1.6rem;
   font-size: 1.3rem;
@@ -869,7 +869,7 @@ henrri-carousel {
   text-underline-offset: 0.3rem;
 }
 
-.henrri-vestuario__grid {
+.henrri-collection-mega__grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 1.2rem;
@@ -878,21 +878,21 @@ henrri-carousel {
   list-style: none;
 }
 
-.henrri-vestuario__card {
+.henrri-collection-mega__card {
   display: block;
   color: rgb(var(--color-foreground));
   text-decoration: none;
 }
 
-.henrri-vestuario__media {
+.henrri-collection-mega__media {
   display: block;
   overflow: hidden;
   aspect-ratio: 3 / 4;
   background: rgba(var(--color-foreground), 0.04);
 }
 
-.henrri-vestuario__media img,
-.henrri-vestuario__media svg {
+.henrri-collection-mega__media img,
+.henrri-collection-mega__media svg {
   display: block;
   width: 100%;
   height: 100%;
@@ -900,11 +900,11 @@ henrri-carousel {
   transition: transform 0.4s ease;
 }
 
-.henrri-vestuario__card:hover img {
+.henrri-collection-mega__card:hover img {
   transform: scale(1.04);
 }
 
-.henrri-vestuario__card-title {
+.henrri-collection-mega__card-title {
   display: block;
   margin-top: 0.8rem;
   font-size: 1.3rem;
