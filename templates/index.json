@@ -17,7 +17,7 @@
           "settings": {
             "image": "shopify://shop_images/final_3.png",
             "image_mobile": "shopify://shop_images/Kit_de_Camisetas_Henrri.png",
-            "overlay": 10,
+            "overlay": 15,
             "text": "",
             "heading": "",
             "button_label": "",
@@ -66,7 +66,7 @@
         "s2"
       ],
       "settings": {
-        "height": "large",
+        "height": "medium",
         "autoplay": true,
         "speed": 6,
         "show_scroll": true
