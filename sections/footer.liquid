@@ -101,6 +101,97 @@
                         {%- endfor -%}
                       </ul>
                     {%- endif -%}
+                  {%- when 'henrri_account' -%}
+                    <ul class="footer-block__details-content list-unstyled">
+                      <li>
+                        <a
+                          href="{{ block.settings.orders_link | default: routes.account_url }}"
+                          class="link link--text list-menu__item list-menu__item--link"
+                        >
+                          Meus pedidos
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="{{ block.settings.account_link | default: routes.account_url }}"
+                          class="link link--text list-menu__item list-menu__item--link"
+                        >
+                          Minha conta
+                        </a>
+                      </li>
+                      {%- if block.settings.track_link != blank -%}
+                        <li>
+                          <a
+                            href="{{ block.settings.track_link }}"
+                            class="link link--text list-menu__item list-menu__item--link"
+                            target="_blank"
+                            rel="noopener"
+                          >
+                            Rastrear pedido
+                          </a>
+                        </li>
+                      {%- endif -%}
+                    </ul>
+                  {%- when 'henrri_policies' -%}
+                    <ul class="footer-block__details-content list-unstyled">
+                      {%- for policy in shop.policies -%}
+                        {%- if policy != blank -%}
+                          <li>
+                            <a
+                              href="{{ policy.url }}"
+                              class="link link--text list-menu__item list-menu__item--link{% if policy.url == request.path %} list-menu__item--active{% endif %}"
+                            >
+                              {{ policy.title | escape }}
+                            </a>
+                          </li>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </ul>
+                  {%- when 'henrri_contact' -%}
+                    <ul class="footer-block__details-content list-unstyled henrri-footer-contact">
+                      {%- if block.settings.address != blank -%}
+                        <li>
+                          {%- if block.settings.address_link != blank -%}
+                            <a
+                              href="{{ block.settings.address_link }}"
+                              class="link link--text list-menu__item list-menu__item--link"
+                              target="_blank"
+                              rel="noopener"
+                            >
+                              {{- block.settings.address | escape -}}
+                            </a>
+                          {%- else -%}
+                            <span class="list-menu__item">{{ block.settings.address | escape }}</span>
+                          {%- endif -%}
+                        </li>
+                      {%- endif -%}
+                      {%- if block.settings.email != blank -%}
+                        <li>
+                          <a
+                            href="mailto:{{ block.settings.email | strip }}"
+                            class="link link--text list-menu__item list-menu__item--link"
+                          >
+                            {{- block.settings.email | escape -}}
+                          </a>
+                        </li>
+                      {%- endif -%}
+                      {%- if block.settings.phone != blank -%}
+                        {%- assign phone_digits = block.settings.phone | remove: ' ' | remove: '(' | remove: ')' | remove: '-' | remove: '+' -%}
+                        <li>
+                          <a
+                            href="https://wa.me/55{{ phone_digits }}"
+                            class="link link--text list-menu__item list-menu__item--link"
+                            target="_blank"
+                            rel="noopener"
+                          >
+                            {{- block.settings.phone | escape -}}
+                          </a>
+                        </li>
+                      {%- endif -%}
+                      {%- if block.settings.cnpj != blank -%}
+                        <li><span class="list-menu__item">CNPJ: {{ block.settings.cnpj | escape }}</span></li>
+                      {%- endif -%}
+                    </ul>
                   {%- when 'brand_information' -%}
                     <div class="footer-block__brand-info">
                       {%- if settings.brand_image != blank -%}
@@ -302,7 +393,26 @@
         <small class="copyright__content"
           >&copy; {{ 'now' | date: '%Y' }}, {{ shop.name | link_to: routes.root_url -}}
         </small>
-        <small class="copyright__content">{{ powered_by_link }}</small>
+        {%- if section.settings.legal_text != blank -%}
+          <small class="copyright__content henrri-footer-legal">{{ section.settings.legal_text | escape }}</small>
+        {%- endif -%}
+        {%- if section.settings.show_mewtda -%}
+          <a
+            href="https://www.mewtda.com.br"
+            class="henrri-footer-dev"
+            target="_blank"
+            rel="noopener"
+          >
+            <small class="copyright__content">Desenvolvido por</small>
+            <img
+              src="{{ 'mewtda-logo.png' | asset_url }}"
+              alt="Mewtda"
+              loading="lazy"
+              width="62"
+              height="20"
+            >
+          </a>
+        {%- endif -%}
         {%- if section.settings.show_policy -%}
           <ul class="policies list-unstyled">
             {%- for policy in shop.policies -%}
@@ -344,6 +454,44 @@
           "default": "footer",
           "label": "t:sections.footer.blocks.link_list.settings.menu.label"
         }
+      ]
+    },
+    {
+      "type": "henrri_account",
+      "name": "Conta (pedidos/rastreio)",
+      "settings": [
+        { "type": "inline_richtext", "id": "heading", "label": "Título", "default": "Conta" },
+        { "type": "url", "id": "orders_link", "label": "Link \"Meus pedidos\"", "info": "Vazio = página da conta" },
+        { "type": "url", "id": "account_link", "label": "Link \"Minha conta\"", "info": "Vazio = página da conta" },
+        {
+          "type": "url",
+          "id": "track_link",
+          "label": "Link \"Rastrear pedido\"",
+          "default": "https://rastreamento.correios.com.br/app/index.php"
+        }
+      ]
+    },
+    {
+      "type": "henrri_policies",
+      "name": "Políticas da loja",
+      "settings": [
+        { "type": "inline_richtext", "id": "heading", "label": "Título", "default": "Políticas" },
+        {
+          "type": "paragraph",
+          "content": "Lista automaticamente todas as políticas preenchidas em Configurações > Políticas."
+        }
+      ]
+    },
+    {
+      "type": "henrri_contact",
+      "name": "Contato / endereço",
+      "settings": [
+        { "type": "inline_richtext", "id": "heading", "label": "Título", "default": "Contato" },
+        { "type": "text", "id": "address", "label": "Endereço" },
+        { "type": "url", "id": "address_link", "label": "Link do endereço (Google Maps)" },
+        { "type": "text", "id": "email", "label": "E-mail" },
+        { "type": "text", "id": "phone", "label": "Telefone / WhatsApp", "info": "Abre o WhatsApp ao clicar" },
+        { "type": "text", "id": "cnpj", "label": "CNPJ" }
       ]
     },
     {
@@ -491,6 +639,22 @@
       "default": true,
       "label": "t:sections.footer.settings.show_policy.label",
       "info": "t:sections.footer.settings.show_policy.info"
+    },
+    {
+      "type": "header",
+      "content": "Rodapé legal"
+    },
+    {
+      "type": "text",
+      "id": "legal_text",
+      "label": "Texto legal",
+      "info": "Ex.: razão social, CNPJ e endereço"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_mewtda",
+      "label": "Mostrar \"Desenvolvido por Mewtda\"",
+      "default": true
     },
     {
       "type": "header",

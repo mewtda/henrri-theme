@@ -7,7 +7,23 @@
 
 <nav class="header__inline-menu">
   <ul class="list-menu list-menu--inline" role="list">
+    {%- liquid
+      assign vestuario_enabled = false
+      if section.settings.vestuario_collections.size > 0
+        assign vestuario_enabled = true
+        assign vestuario_key = section.settings.vestuario_title | default: 'Vestuário' | downcase | strip
+      endif
+      assign vestuario_rendered = false
+    -%}
     {%- for link in section.settings.menu.links -%}
+      {%- if vestuario_enabled -%}
+        {%- assign link_key = link.title | downcase | strip -%}
+        {%- if link_key == vestuario_key -%}{%- continue -%}{%- endif -%}
+        {%- if vestuario_rendered == false and forloop.index >= section.settings.vestuario_position -%}
+          {%- render 'henrri-vestuario-mega', context: 'desktop' -%}
+          {%- assign vestuario_rendered = true -%}
+        {%- endif -%}
+      {%- endif -%}
       <li>
         {%- if link.links != blank -%}
           <header-menu>
@@ -120,5 +136,8 @@
         {%- endif -%}
       </li>
     {%- endfor -%}
+    {%- if vestuario_enabled and vestuario_rendered == false -%}
+      {%- render 'henrri-vestuario-mega', context: 'desktop' -%}
+    {%- endif -%}
   </ul>
 </nav>

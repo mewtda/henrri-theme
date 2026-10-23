@@ -6,10 +6,12 @@
       "type": "footer",
       "blocks": {
         "f1": {
-          "type": "link_list",
+          "type": "henrri_account",
           "settings": {
             "heading": "Conta",
-            "menu": "footer"
+            "orders_link": "",
+            "account_link": "",
+            "track_link": "https://rastreamento.correios.com.br/app/index.php"
           }
         },
         "f2": {
@@ -20,17 +22,28 @@
           }
         },
         "f3": {
-          "type": "link_list",
+          "type": "henrri_policies",
           "settings": {
-            "heading": "Políticas",
-            "menu": "footer"
+            "heading": "Políticas"
+          }
+        },
+        "f4": {
+          "type": "henrri_contact",
+          "settings": {
+            "heading": "Contato",
+            "address": "Av. Getúlio Vargas, 54 - Loja 8, Funcionários - Belo Horizonte - MG",
+            "address_link": "https://www.google.com/maps/search/?api=1&query=Av.+Get%C3%BAlio+Vargas,+54+-+Loja+8,+Funcion%C3%A1rios,+Belo+Horizonte+-+MG",
+            "email": "suporte@henrri.com.br",
+            "phone": "(31) 99802-5792",
+            "cnpj": "53.856.173/0001-72"
           }
         }
       },
       "block_order": [
         "f1",
         "f2",
-        "f3"
+        "f3",
+        "f4"
       ],
       "settings": {
         "color_scheme": "scheme-3",
@@ -41,10 +54,12 @@
         "enable_country_selector": false,
         "enable_language_selector": false,
         "payment_enable": true,
-        "show_policy": true,
+        "show_policy": false,
         "margin_top": 0,
         "padding_top": 56,
-        "padding_bottom": 36
+        "padding_bottom": 36,
+        "show_mewtda": true,
+        "legal_text": "Henrri · CNPJ 53.856.173/0001-72 · Av. Getúlio Vargas, 54 - Loja 8, Funcionários - Belo Horizonte - MG"
       }
     }
   },

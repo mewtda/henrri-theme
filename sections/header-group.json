@@ -51,7 +51,25 @@
         "mobile_logo_position": "center",
         "margin_bottom": 0,
         "padding_top": 12,
-        "padding_bottom": 12
+        "padding_bottom": 12,
+        "vestuario_title": "Vestuário",
+        "vestuario_collections": [
+          "camisetas",
+          "polo",
+          "camiseta-manga-longa",
+          "camiseta-oversized",
+          "camiseta-oversized-comfort",
+          "gola-alta",
+          "calca-alfaiataria-sarja",
+          "oversized",
+          "bermudas",
+          "acessorios"
+        ],
+        "vestuario_link": "shopify://collections/all",
+        "vestuario_position": 1,
+        "vestuario_show_images": true,
+        "showroom_text": "Visite nosso showroom",
+        "showroom_link": "https://www.google.com/maps/search/?api=1&query=Av.+Get%C3%BAlio+Vargas,+54+-+Loja+8,+Funcion%C3%A1rios,+Belo+Horizonte+-+MG"
       }
     }
   },

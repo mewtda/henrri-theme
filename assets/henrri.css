@@ -837,3 +837,131 @@ henrri-carousel {
 .henrri-installments--card strong {
   font-weight: 600;
 }
+
+/* Mega menu Vestuário */
+.henrri-vestuario {
+  display: grid;
+  grid-template-columns: minmax(18rem, 1fr) 4fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.henrri-vestuario__heading {
+  margin: 0 0 1.2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(var(--color-foreground), 0.6);
+}
+
+.henrri-vestuario__links .mega-menu__link {
+  padding: 0.5rem 0;
+  font-size: 1.4rem;
+}
+
+.henrri-vestuario__all {
+  display: inline-block;
+  margin-top: 1.6rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+}
+
+.henrri-vestuario__grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1.2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.henrri-vestuario__card {
+  display: block;
+  color: rgb(var(--color-foreground));
+  text-decoration: none;
+}
+
+.henrri-vestuario__media {
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  background: rgba(var(--color-foreground), 0.04);
+}
+
+.henrri-vestuario__media img,
+.henrri-vestuario__media svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.henrri-vestuario__card:hover img {
+  transform: scale(1.04);
+}
+
+.henrri-vestuario__card-title {
+  display: block;
+  margin-top: 0.8rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+/* Showroom */
+.henrri-showroom {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.3rem;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.henrri-showroom--header {
+  margin-right: 1.2rem;
+}
+
+.henrri-showroom--header span {
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+}
+
+.henrri-showroom--drawer {
+  padding: 1.2rem 0 1.6rem;
+  font-size: 1.5rem;
+}
+
+/* Rodapé */
+.henrri-footer-contact .list-menu__item {
+  line-height: 1.5;
+}
+
+.footer__copyright {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem 1.6rem;
+}
+
+.henrri-footer-legal {
+  opacity: 0.75;
+}
+
+.henrri-footer-dev {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.henrri-footer-dev img {
+  display: block;
+  height: 2rem;
+  width: auto;
+}
