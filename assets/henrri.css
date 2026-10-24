@@ -937,8 +937,19 @@ henrri-carousel {
   text-underline-offset: 0.3rem;
 }
 
+/* Atendimento e showroom no fim do menu do celular */
+.henrri-drawer-contact {
+  margin: 0;
+  padding: 1.2rem 3rem;
+}
+
+.header--has-localizations .henrri-drawer-contact,
+.header--has-social .henrri-drawer-contact {
+  padding: 1.2rem 0 0;
+}
+
 .henrri-showroom--drawer {
-  padding: 1.2rem 0 1.6rem;
+  padding: 1.2rem 0;
   font-size: 1.5rem;
 }
 
