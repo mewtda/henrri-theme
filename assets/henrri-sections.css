@@ -444,8 +444,12 @@
   }
 }
 
+/* O bloco acompanha o tamanho da foto para os pontos ficarem no lugar certo */
 .henrri-look__image {
   position: relative;
+  justify-self: center;
+  width: fit-content;
+  max-width: 100%;
 }
 
 .henrri-look__image img,
@@ -458,6 +462,31 @@
 .henrri-look__image .placeholder-svg {
   aspect-ratio: 4 / 5;
   background: #d9d9d9;
+}
+
+@media screen and (min-width: 750px) {
+  /* Foto inteira em uma tela de altura */
+  .henrri-look__image img {
+    width: auto;
+    max-width: 100%;
+    max-height: calc(100vh - 16rem);
+    max-height: calc(100svh - 16rem);
+  }
+
+  .henrri-look__image .placeholder-svg {
+    width: auto;
+    height: calc(100vh - 16rem);
+  }
+}
+
+@media screen and (max-width: 749px) {
+  /* Foto de ponta a ponta no celular */
+  .henrri-look__image {
+    width: auto;
+    max-width: none;
+    justify-self: stretch;
+    margin: 0 -1.5rem;
+  }
 }
 
 .henrri-look__hotspot {
@@ -480,6 +509,14 @@
 .henrri-look__hotspot svg {
   width: 1.4rem;
   height: 1.4rem;
+}
+
+@media screen and (max-width: 749px) {
+  .henrri-look__hotspot {
+    width: 3.2rem;
+    height: 3.2rem;
+    margin: -1.6rem 0 0 -1.6rem;
+  }
 }
 
 @keyframes henrri-pulse {
@@ -511,6 +548,24 @@
 .henrri-look__track > li {
   flex: 0 0 100%;
   scroll-snap-align: start;
+}
+
+@media screen and (max-width: 749px) {
+  /* Dois produtos por vez, com o próximo aparecendo na borda */
+  .henrri-look__products {
+    max-width: none;
+  }
+
+  .henrri-look__track {
+    gap: 1.2rem;
+    margin: 0 -1.5rem;
+    padding: 0 1.5rem;
+    scroll-padding: 0 1.5rem;
+  }
+
+  .henrri-look__track > li {
+    flex: 0 0 calc(50% - 2rem);
+  }
 }
 
 /* ---------- Avaliações ---------- */
