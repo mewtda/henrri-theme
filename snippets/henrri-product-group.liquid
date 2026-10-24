@@ -114,6 +114,7 @@
           {%- else -%}
             {{ p.title | escape }}
           {%- endif -%}
+          <span class="henrri-pkit__price">{{ p.price | money }}</span>
           {%- if off > 0 -%}
             <span class="henrri-pkit__off">-{{ off }}%</span>
           {%- endif -%}
