@@ -109,6 +109,13 @@
     height: auto;
   }
 
+  /* Banner inteiro na tela: no máximo a altura visível abaixo do cabeçalho (--hero-max vem do script da seção) */
+  .henrri-hero__media img {
+    max-height: var(--hero-max, calc(100svh - 12rem));
+    object-fit: cover;
+    object-position: center;
+  }
+
   .henrri-hero__media .placeholder-svg {
     position: relative;
     height: auto;

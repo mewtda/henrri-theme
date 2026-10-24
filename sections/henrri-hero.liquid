@@ -75,6 +75,19 @@
   {%- endif -%}
 </henrri-carousel>
 <span id="shopify-section-{{ section.id }}-end"></span>
+<script>
+  (() => {
+    // Altura visível do celular abaixo do cabeçalho, para o banner não passar da tela
+    const hero = document.currentScript.previousElementSibling.previousElementSibling;
+    const fit = () => {
+      const top = hero.getBoundingClientRect().top + window.scrollY;
+      hero.style.setProperty('--hero-max', `${Math.max(window.innerHeight - top, 240)}px`);
+    };
+    fit();
+    window.addEventListener('load', fit);
+    window.addEventListener('resize', fit);
+  })();
+</script>
 
 {% schema %}
 {
