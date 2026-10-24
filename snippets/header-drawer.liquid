@@ -340,11 +340,13 @@
 {%- if section.settings.support_text != blank -%}
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const item = document.querySelector('[data-henrri-support]');
       const source = document.querySelector('footer a[href^="https://wa.me/"]');
-      if (!item || !source) return;
-      item.querySelector('a').href = source.href;
-      item.hidden = false;
+      if (!source) return;
+      document.querySelectorAll('[data-henrri-support]').forEach((item) => {
+        const link = item.matches('a') ? item : item.querySelector('a');
+        link.href = source.href;
+        item.hidden = false;
+      });
     });
   </script>
 {%- endif -%}

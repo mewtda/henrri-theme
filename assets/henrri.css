@@ -932,6 +932,10 @@ henrri-carousel {
   margin-right: 1.2rem;
 }
 
+.henrri-showroom[hidden] {
+  display: none;
+}
+
 .henrri-showroom--header span {
   text-decoration: underline;
   text-underline-offset: 0.3rem;
