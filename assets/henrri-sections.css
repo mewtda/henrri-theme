@@ -71,6 +71,14 @@
 .henrri-hero--full .henrri-hero__slide { height: calc(100vh - 9rem); }
 
 
+.henrri-hero__link {
+  position: absolute;
+  inset: 0;
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
 .henrri-hero__media,
 .henrri-hero__media img,
 .henrri-hero__media picture,
@@ -112,14 +120,6 @@
 
 .henrri-hero__media .placeholder-svg {
   background: #d9d9d9;
-}
-
-.henrri-hero__link {
-  position: absolute;
-  inset: 0;
-  display: block;
-  color: inherit;
-  text-decoration: none;
 }
 
 .henrri-hero__content {
