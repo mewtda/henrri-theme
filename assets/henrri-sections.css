@@ -70,15 +70,6 @@
 .henrri-hero--large .henrri-hero__slide { height: 75vh; }
 .henrri-hero--full .henrri-hero__slide { height: calc(100vh - 9rem); }
 
-@media screen and (max-width: 749px) {
-  .henrri-hero__slide,
-  .henrri-hero--large .henrri-hero__slide,
-  .henrri-hero--full .henrri-hero__slide {
-    height: auto;
-    min-height: 0;
-    aspect-ratio: 3 / 5;
-  }
-}
 
 .henrri-hero__media,
 .henrri-hero__media img,
@@ -90,10 +81,30 @@
   height: 100%;
   object-fit: cover;
 }
+/* No celular a imagem ocupa a largura toda na proporção dela, sem faixas nas laterais */
 @media screen and (max-width: 749px) {
+  .henrri-hero__slide,
+  .henrri-hero--large .henrri-hero__slide,
+  .henrri-hero--full .henrri-hero__slide {
+    height: auto;
+    min-height: 0;
+  }
+
+  .henrri-hero__link,
+  .henrri-hero__media,
+  .henrri-hero__media picture,
   .henrri-hero__media img {
-    object-fit: contain !important;
-    object-position: center center !important;
+    position: relative;
+    inset: auto;
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .henrri-hero__media .placeholder-svg {
+    position: relative;
+    height: auto;
+    aspect-ratio: 3 / 5;
   }
 }
 
@@ -106,7 +117,9 @@
 .henrri-hero__link {
   position: absolute;
   inset: 0;
-  z-index: 2;
+  display: block;
+  color: inherit;
+  text-decoration: none;
 }
 
 .henrri-hero__content {
@@ -157,9 +170,6 @@
   text-transform: uppercase;
   letter-spacing: 0.1em;
   text-decoration: none;
-  pointer-events: auto;
-  position: relative;
-  z-index: 3;
   margin-bottom: 2rem;
 }
 
