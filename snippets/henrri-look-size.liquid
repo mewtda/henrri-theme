@@ -1,0 +1,21 @@
+{% doc %}
+  Size picker of a product in the shop the look section. Products with a single variant
+  get no picker (the variant is chosen automatically).
+
+  @param {product} product - The product
+  @param {number} index - Position of the product in the look
+  @param {string} placeholder - Text of the empty option
+
+  @example
+  {% render 'henrri-look-size', product: product, index: 0, placeholder: 'Tamanho' %}
+{% enddoc %}
+{%- unless product.has_only_default_variant or product.variants.size == 1 -%}
+  <select class="henrri-look__size" data-look-size="{{ index }}" aria-label="{{ placeholder | escape }} - {{ product.title | escape }}">
+    <option value="">{{ placeholder | escape }}</option>
+    {%- for v in product.variants -%}
+      <option value="{{ v.id }}"{% unless v.available %} disabled{% endunless %}>
+        {{- v.title | escape }}{% unless v.available %} - {{ 'products.product.sold_out' | t }}{% endunless -%}
+      </option>
+    {%- endfor -%}
+  </select>
+{%- endunless -%}

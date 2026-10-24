@@ -532,46 +532,203 @@
   100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
 }
 
-.henrri-look__products {
-  width: 100%;
-  max-width: 32rem;
-  margin: 0 auto;
-}
-
-.henrri-look__track {
+/* Cartão do produto ao clicar no ponto */
+.henrri-look__pop {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  z-index: 5;
   display: flex;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
+  gap: 1.2rem;
+  width: 32rem;
+  max-width: calc(100% - 2.4rem);
+  margin: 2rem 0 0 -1.6rem;
+  padding: 1.2rem;
+  background: #fff;
+  color: var(--henrri-black);
+  box-shadow: 0 0.6rem 2.4rem rgba(0, 0, 0, 0.18);
 }
 
-.henrri-look__track::-webkit-scrollbar {
+.henrri-look__pop.is-left {
+  transform: translateX(-100%);
+  margin-left: 1.6rem;
+}
+
+.henrri-look__pop.is-up {
+  margin-top: -2rem;
+  transform: translateY(-100%);
+}
+
+.henrri-look__pop.is-left.is-up {
+  transform: translate(-100%, -100%);
+}
+
+.henrri-look__pop[hidden] {
   display: none;
 }
 
-.henrri-look__track > li {
-  flex: 0 0 100%;
-  scroll-snap-align: start;
+.henrri-look__close {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  width: 3rem;
+  height: 3rem;
+  padding: 0.6rem;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.henrri-look__pop-media {
+  flex: 0 0 11rem;
+}
+
+.henrri-look__pop-media img,
+.henrri-look__thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+.henrri-look__pop-info,
+.henrri-look__item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.henrri-look__pop-info {
+  padding-right: 2.4rem;
+}
+
+.henrri-look__name {
+  font-size: 1.3rem;
+  line-height: 1.35;
+  color: inherit;
+  text-decoration: none;
+}
+
+.henrri-look__price {
+  display: flex;
+  gap: 0.8rem;
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.henrri-look__price s {
+  font-weight: 400;
+  color: var(--henrri-muted);
+}
+
+.henrri-look__size {
+  width: 100%;
+  min-height: 4rem;
+  padding: 0 1rem;
+  border: 1px solid rgba(15, 15, 15, 0.3);
+  background: #fff;
+  color: var(--henrri-black);
+  font: inherit;
+  font-size: 1.3rem;
+}
+
+.henrri-look__add {
+  min-height: 4.4rem;
+  margin-top: auto;
+  font-size: 1.2rem;
+}
+
+/* Lista de produtos e botão do look */
+.henrri-look__side {
+  width: 100%;
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+.henrri-look__list {
+  display: grid;
+  gap: 1.6rem;
+  margin: 0 0 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.henrri-look__item {
+  display: flex;
+  gap: 1.4rem;
+  padding-bottom: 1.6rem;
+  border-bottom: 1px solid var(--henrri-border);
+}
+
+.henrri-look__item.is-unavailable {
+  opacity: 0.55;
+}
+
+.henrri-look__thumb {
+  flex: 0 0 9rem;
+}
+
+.henrri-look__soldout {
+  font-size: 1.2rem;
+  color: var(--henrri-muted);
+}
+
+.henrri-look__total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1.2rem;
+  font-size: 1.4rem;
+}
+
+.henrri-look__total strong {
+  font-size: 1.8rem;
+}
+
+.henrri-look__error {
+  margin: 0 0 1rem;
+  font-size: 1.3rem;
+  color: var(--henrri-sale);
+}
+
+.henrri-look__buy {
+  min-height: 5rem;
+  font-size: 1.3rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 @media screen and (max-width: 749px) {
-  /* Dois produtos por vez, com o próximo aparecendo na borda */
-  .henrri-look__products {
+  /* No celular o cartão do ponto fica fixo na parte de baixo da foto */
+  .henrri-look__pop,
+  .henrri-look__pop.is-left,
+  .henrri-look__pop.is-up,
+  .henrri-look__pop.is-left.is-up {
+    left: 1.2rem;
+    right: 1.2rem;
+    top: auto;
+    bottom: 1.2rem;
+    width: auto;
     max-width: none;
+    margin: 0;
+    transform: none;
   }
 
-  .henrri-look__track {
-    gap: 1.2rem;
-    margin: 0 -1.5rem;
-    padding: 0 1.5rem;
-    scroll-padding: 0 1.5rem;
+  .henrri-look__pop-media {
+    flex-basis: 9rem;
   }
 
-  .henrri-look__track > li {
-    flex: 0 0 calc(50% - 2rem);
+  .henrri-look__thumb {
+    flex-basis: 8rem;
+  }
+
+  .henrri-look__side {
+    max-width: none;
   }
 }
 

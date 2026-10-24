@@ -1,7 +1,7 @@
-{{ 'component-card.css' | asset_url | stylesheet_tag }}
-{{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'henrri-sections.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'henrri-carousel.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'henrri-look.js' | asset_url }}" defer="defer"></script>
+
+{%- capture size_placeholder -%}{{ section.settings.size_label | default: 'Tamanho' }}{%- endcapture -%}
 
 <div class="henrri-section color-{{ section.settings.color_scheme }} gradient" style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px;">
   <div class="page-width page-width--wide">
@@ -9,60 +9,121 @@
       <h2 class="henrri-title">{{ section.settings.title | escape }}</h2>
     {%- endif -%}
 
-    <henrri-carousel class="henrri-look">
+    <henrri-look class="henrri-look" data-money-format="{{ shop.money_format | escape }}">
       <div class="henrri-look__image">
         {%- if section.settings.image != blank -%}
           {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1400', sizes: '(min-width: 750px) 60vw, 100vw' }}
         {%- else -%}
           {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
         {%- endif -%}
+
         {%- for block in section.blocks -%}
+          {%- assign p = block.settings.product -%}
           <button
             type="button"
             class="henrri-look__hotspot"
             style="left: {{ block.settings.x }}%; top: {{ block.settings.y }}%;"
-            data-index="{{ forloop.index0 }}"
-            aria-label="{{ block.settings.product.title | default: 'Produto' | escape }}"
+            data-look-spot="{{ forloop.index0 }}"
+            aria-label="{{ p.title | default: 'Produto' | escape }}"
+            aria-expanded="false"
             {{ block.shopify_attributes }}
           >
             <svg viewBox="0 0 24 24" aria-hidden="true"><path stroke="currentColor" stroke-width="2" d="M12 7v10M7 12h10"/></svg>
           </button>
+
+          {%- if p != blank -%}
+            <div
+              class="henrri-look__pop{% if block.settings.x > 50 %} is-left{% endif %}{% if block.settings.y > 50 %} is-up{% endif %}"
+              style="--x: {{ block.settings.x }}%; --y: {{ block.settings.y }}%;"
+              data-look-pop="{{ forloop.index0 }}"
+              hidden
+            >
+              <button type="button" class="henrri-look__close" data-look-close aria-label="{{ 'accessibility.close' | t }}">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path stroke="currentColor" stroke-width="1.5" d="M6 6l12 12M18 6L6 18"/></svg>
+              </button>
+              <a href="{{ p.url }}" class="henrri-look__pop-media">
+                {%- if p.featured_media != blank -%}
+                  {{ p.featured_media | image_url: width: 400 | image_tag: loading: 'lazy', widths: '200, 400', sizes: '12rem', alt: p.title }}
+                {%- endif -%}
+              </a>
+              <div class="henrri-look__pop-info">
+                <a href="{{ p.url }}" class="henrri-look__name">{{ p.title | escape }}</a>
+                {% render 'henrri-look-price', product: p %}
+                {% render 'henrri-look-size', product: p, index: forloop.index0, placeholder: size_placeholder %}
+                <button type="button" class="button button--full-width henrri-look__add" data-look-add="{{ forloop.index0 }}"{% unless p.available %} disabled{% endunless %}>
+                  {%- if p.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+                </button>
+              </div>
+            </div>
+          {%- endif -%}
         {%- endfor -%}
       </div>
 
-      <div class="henrri-look__products">
-        <ul class="henrri-look__track" data-track role="list">
+      <div class="henrri-look__side">
+        <ul class="henrri-look__list" role="list">
           {%- for block in section.blocks -%}
-            <li>
-              {%- if block.settings.product != blank -%}
-                {% render 'card-product',
-                  card_product: block.settings.product,
-                  media_aspect_ratio: 'portrait',
-                  show_secondary_image: false,
-                  lazy_load: true,
-                  show_rating: true,
-                  section_id: section.id
-                %}
-              {%- else -%}
-                {% render 'card-product' %}
-              {%- endif -%}
+            {%- assign p = block.settings.product -%}
+            {%- if p == blank -%}{%- continue -%}{%- endif -%}
+            <li class="henrri-look__item{% unless p.available %} is-unavailable{% endunless %}" data-look-item="{{ forloop.index0 }}">
+              <a href="{{ p.url }}" class="henrri-look__thumb">
+                {%- if p.featured_media != blank -%}
+                  {{ p.featured_media | image_url: width: 240 | image_tag: loading: 'lazy', widths: '120, 240', sizes: '8rem', alt: p.title }}
+                {%- endif -%}
+              </a>
+              <div class="henrri-look__item-info">
+                <a href="{{ p.url }}" class="henrri-look__name">{{ p.title | escape }}</a>
+                {% render 'henrri-look-price', product: p %}
+                {%- if p.available -%}
+                  {% render 'henrri-look-size', product: p, index: forloop.index0, placeholder: size_placeholder %}
+                {%- else -%}
+                  <span class="henrri-look__soldout">{{ 'products.product.sold_out' | t }}</span>
+                {%- endif -%}
+              </div>
             </li>
           {%- endfor -%}
         </ul>
-        <div class="henrri-dots" data-dots></div>
+
+        <div class="henrri-look__total">
+          <span>{{ section.settings.total_label | default: 'Total do look' }}</span>
+          <strong data-look-total></strong>
+        </div>
+        <p class="henrri-look__error" data-look-error role="alert" hidden></p>
+        <button type="button" class="button button--full-width henrri-look__buy" data-look-buy>
+          {{- section.settings.button_label | default: 'Compre o look' | escape -}}
+        </button>
       </div>
-    </henrri-carousel>
+
+      <script type="application/json" data-look-products>
+        {
+          {%- assign printed = false -%}
+          {%- for block in section.blocks -%}
+            {%- assign p = block.settings.product -%}
+            {%- if p == blank -%}{%- continue -%}{%- endif -%}
+            {%- if printed %},{% endif -%}
+            {%- assign printed = true -%}
+            "{{ forloop.index0 }}": {
+              "available": {{ p.available | json }},
+              "variants": [
+                {%- for v in p.variants -%}
+                  {%- unless forloop.first %},{% endunless -%}
+                  { "id": {{ v.id }}, "price": {{ v.price }}, "available": {{ v.available | json }} }
+                {%- endfor -%}
+              ]
+            }
+          {%- endfor -%}
+        }
+      </script>
+      <script>
+        window.henrriLookStrings = {
+          choose_size: {{ 'Escolha o tamanho de todas as peças.' | json }},
+          choose_one: {{ 'Escolha o tamanho.' | json }},
+          adding: {{ 'Adicionando...' | json }},
+          error: {{ 'Não foi possível adicionar ao carrinho.' | json }}
+        };
+      </script>
+    </henrri-look>
   </div>
 </div>
-
-<script>
-  (() => {
-    const look = document.currentScript.previousElementSibling.querySelector('.henrri-look');
-    look.querySelectorAll('.henrri-look__hotspot').forEach((spot) => {
-      spot.addEventListener('click', () => look.goTo && look.goTo(Number(spot.dataset.index)));
-    });
-  })();
-</script>
 
 {% schema %}
 {
@@ -71,6 +132,9 @@
   "settings": [
     { "type": "text", "id": "title", "label": "Título", "default": "Compre o look" },
     { "type": "image_picker", "id": "image", "label": "Imagem do look" },
+    { "type": "text", "id": "button_label", "label": "Texto do botão", "default": "Compre o look" },
+    { "type": "text", "id": "total_label", "label": "Texto do total", "default": "Total do look" },
+    { "type": "text", "id": "size_label", "label": "Texto da escolha de tamanho", "default": "Tamanho" },
     { "type": "color_scheme", "id": "color_scheme", "label": "Esquema de cores", "default": "scheme-2" },
     { "type": "range", "id": "padding_top", "label": "Espaço acima", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 48 },
     { "type": "range", "id": "padding_bottom", "label": "Espaço abaixo", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 48 }

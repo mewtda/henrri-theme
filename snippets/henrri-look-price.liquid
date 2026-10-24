@@ -1,0 +1,14 @@
+{% doc %}
+  Price of a product in the shop the look section.
+
+  @param {product} product - The product
+
+  @example
+  {% render 'henrri-look-price', product: product %}
+{% enddoc %}
+<p class="henrri-look__price">
+  {%- if product.compare_at_price > product.price -%}
+    <s>{{ product.compare_at_price | money }}</s>
+  {%- endif -%}
+  <span>{{ product.price | money }}</span>
+</p>
