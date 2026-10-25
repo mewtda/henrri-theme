@@ -79,6 +79,11 @@
   text-decoration: none;
 }
 
+a.henrri-hero__link,
+a.henrri-hero__link * {
+  cursor: pointer;
+}
+
 .henrri-hero__media,
 .henrri-hero__media img,
 .henrri-hero__media picture,
