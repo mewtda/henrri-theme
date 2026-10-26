@@ -511,6 +511,136 @@
         <!-- Start blocks -->
         <!-- Subtotals -->
 
+        
+{% liquid
+  assign presente_preto = all_products['camisa-100-algodao-premium']
+  assign presente_branco = all_products['camisa-100-algodao-premium-off-white']
+  assign quantidade_elegivel = 0
+  assign presente_no_carrinho = false
+
+  for item in cart.items
+    if item.product_id == presente_preto.id or item.product_id == presente_branco.id
+      assign presente_no_carrinho = true
+    else
+      assign quantidade_elegivel = quantidade_elegivel | plus: item.quantity
+    endif
+  endfor
+%}
+
+{% if quantidade_elegivel >= 2 %}
+  <div id="henrri-presente" style="padding:18px 14px;margin:14px 0;border:1px solid #dedede;background:#faf9f7;">
+    {% if presente_no_carrinho %}
+      <strong>🎁 Camiseta adicionada!</strong>
+      <p style="font-size:13px;margin:8px 0 0;">
+        Seu brinde está no carrinho. O desconto será aplicado conforme as regras da promoção.
+      </p>
+    {% else %}
+      <strong>🎁 Você ganhou uma camiseta!</strong>
+      <p style="font-size:13px;margin:9px 0;">
+        Escolha a cor e o tamanho da sua camiseta 100% algodão.
+      </p>
+
+      <label for="henrri-cor">Cor</label>
+      <select id="henrri-cor" style="width:100%;padding:11px;margin:5px 0 12px;border:1px solid #ccc;">
+        <option value="preta">Preta</option>
+        <option value="branca">Branca</option>
+      </select>
+
+      <label for="henrri-tamanho">Tamanho</label>
+      <select id="henrri-tamanho" style="width:100%;padding:11px;margin:5px 0 12px;border:1px solid #ccc;">
+        {% for variant in presente_preto.variants %}
+          {% if variant.available %}
+            <option value="{{ variant.id }}">{{ variant.title | escape }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+
+      <button type="button" id="henrri-adicionar-presente"
+        style="width:100%;padding:13px;background:#111;color:#fff;border:0;cursor:pointer;">
+        ADICIONAR MEU PRESENTE
+      </button>
+      <p id="henrri-presente-erro" role="alert" style="font-size:12px;color:#b42318;margin-top:8px;"></p>
+    {% endif %}
+  </div>
+{% endif %}
+
+<script>
+  window.henrriPresentes = {
+    preta: {{ presente_preto.variants | json }},
+    branca: {{ presente_branco.variants | json }}
+  };
+
+  if (!window.henrriPresenteConfigurado) {
+    window.henrriPresenteConfigurado = true;
+
+    function atualizarTamanhosHenrri() {
+      const cor = document.getElementById('henrri-cor');
+      const tamanho = document.getElementById('henrri-tamanho');
+      if (!cor || !tamanho) return;
+
+      const variantes = window.henrriPresentes?.[cor.value] || [];
+      tamanho.innerHTML = '';
+
+      variantes.forEach(v => {
+        if (!v.available) return;
+        const opt = document.createElement('option');
+        opt.value = v.id;
+        opt.textContent = v.title;
+        tamanho.appendChild(opt);
+      });
+
+      const botao = document.getElementById('henrri-adicionar-presente');
+      if (botao) botao.disabled = tamanho.options.length === 0;
+    }
+
+    document.addEventListener('change', e => {
+      if (e.target.id === 'henrri-cor') atualizarTamanhosHenrri();
+    });
+
+    document.addEventListener('click', async e => {
+      const botao = e.target.closest('#henrri-adicionar-presente');
+      if (!botao) return;
+
+      const tamanho = document.getElementById('henrri-tamanho');
+      const erro = document.getElementById('henrri-presente-erro');
+      if (erro) erro.textContent = '';
+      if (!tamanho?.value) return;
+
+      botao.disabled = true;
+      botao.textContent = 'ADICIONANDO...';
+
+      try {
+        const resposta = await fetch(
+          (window.Shopify?.routes?.root || '/') + 'cart/add.js',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              items: [{ id: Number(tamanho.value), quantity: 1 }]
+            })
+          }
+        );
+        const dados = await resposta.json();
+        if (!resposta.ok) throw new Error(dados.description || 'Não foi possível adicionar.');
+        window.location.reload();
+      } catch (err) {
+        if (erro) erro.textContent = err.message;
+        botao.disabled = false;
+        botao.textContent = 'ADICIONAR MEU PRESENTE';
+      }
+    });
+
+    const observador = new MutationObserver(() => {
+      const seletor = document.getElementById('henrri-tamanho');
+      if (seletor && !seletor.dataset.iniciado) {
+        seletor.dataset.iniciado = 'true';
+        atualizarTamanhosHenrri();
+      }
+    });
+    observador.observe(document.body, { childList: true, subtree: true });
+  }
+</script>
+
         <div class="cart-drawer__footer" {{ block.shopify_attributes }}>
           <div>
             {%- if cart.cart_level_discount_applications.size > 0 -%}
