@@ -129,6 +129,23 @@
                           Rastrear pedido
                         </a>
                       </li>
+                      <li>
+                        <a
+                          href="https://app.podetrocar.com.br/troca/henrri"
+                          class="link link--text list-menu__item list-menu__item--link henrri-footer-trocas"
+                          target="_blank"
+                          rel="noopener"
+                        >
+                          Trocas e Devoluções
+                          <img
+                            src="https://app.podetrocar.com.br/assets/pode-trocar-mark-c0f16f62.svg"
+                            alt=""
+                            loading="lazy"
+                            width="16"
+                            height="16"
+                          >
+                        </a>
+                      </li>
                     </ul>
                   {%- when 'henrri_policies' -%}
                     <ul class="footer-block__details-content list-unstyled">
@@ -139,7 +156,11 @@
                               href="{{ policy.url }}"
                               class="link link--text list-menu__item list-menu__item--link{% if policy.url == request.path %} list-menu__item--active{% endif %}"
                             >
-                              {{ policy.title | escape }}
+                              {%- if policy.url contains 'refund-policy' -%}
+                                Política de trocas e devoluções
+                              {%- else -%}
+                                {{ policy.title | escape }}
+                              {%- endif -%}
                             </a>
                           </li>
                         {%- endif -%}
@@ -372,6 +393,21 @@
         {%- endif -%}
       </div>
       <div class="footer__column footer__column--info">
+        <a
+          href="https://podetrocar.com.br"
+          class="henrri-footer-podetrocar"
+          target="_blank"
+          rel="noopener"
+        >
+          <img
+            src="https://app.podetrocar.com.br/assets/pode-trocar-mark-c0f16f62.svg"
+            alt="Pode Trocar"
+            loading="lazy"
+            width="20"
+            height="20"
+          >
+          <small class="copyright__content">Troca rápida e segura com Pode Trocar (podetrocar.com.br)</small>
+        </a>
         {%- if section.settings.payment_enable -%}
           <div class="footer__payment">
             <span class="visually-hidden">{{ 'sections.footer.payment' | t }}</span>
@@ -417,7 +453,13 @@
               {%- if policy != blank -%}
                 <li>
                   <small class="copyright__content"
-                    ><a href="{{ policy.url }}">{{ policy.title | escape }}</a></small
+                    ><a href="{{ policy.url }}">
+                      {%- if policy.url contains 'refund-policy' -%}
+                        Política de trocas e devoluções
+                      {%- else -%}
+                        {{- policy.title | escape -}}
+                      {%- endif -%}
+                    </a></small
                   >
                 </li>
               {%- endif -%}

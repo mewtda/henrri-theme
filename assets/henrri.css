@@ -986,4 +986,33 @@ henrri-carousel {
   display: block;
   height: 2rem;
   width: auto;
+  position: relative;
+  top: -5px;
+}
+
+.henrri-footer-trocas {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.henrri-footer-trocas img {
+  display: block;
+  height: 1.6rem;
+  width: auto;
+}
+
+.henrri-footer-podetrocar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.henrri-footer-podetrocar img {
+  display: block;
+  height: 2rem;
+  width: auto;
 }
