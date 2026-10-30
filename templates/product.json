@@ -83,7 +83,10 @@
             "text_2": "nas compras acima de R$ 399",
             "icon_3": "percent",
             "title_3": "10% OFF na primeira compra",
-            "text_3": "Use o cupom PRIMEIRACOMPRA"
+            "text_3": "Use o cupom PRIMEIRACOMPRA",
+            "exchange_title": "Trocas e devoluções",
+            "exchange_text": "Troca rápida e segura com Pode Trocar",
+            "exchange_link": "https://app.podetrocar.com.br/troca/henrri"
           }
         }
       },

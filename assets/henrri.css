@@ -449,6 +449,30 @@ henrri-carousel {
   color: var(--henrri-muted);
 }
 
+.henrri-trust__exchange {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.6rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--henrri-border);
+  text-align: left;
+  text-decoration: none;
+  color: inherit;
+}
+
+.henrri-trust__exchange img {
+  display: block;
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+.henrri-trust__exchange:hover .henrri-trust__title {
+  text-decoration: underline;
+}
+
 /* ---------- Coleção ---------- */
 .facets__summary,
 .facet-filters__label,

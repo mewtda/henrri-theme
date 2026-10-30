@@ -730,6 +730,26 @@
                         </div>
                       {%- endif -%}
                     {%- endfor -%}
+                    {%- if block.settings.exchange_title != blank -%}
+                      <a
+                        href="{{ block.settings.exchange_link | default: 'https://app.podetrocar.com.br/troca/henrri' }}"
+                        class="henrri-trust__exchange"
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        <img
+                          src="https://app.podetrocar.com.br/assets/pode-trocar-mark-c0f16f62.svg"
+                          alt="Pode Trocar"
+                          loading="lazy"
+                          width="24"
+                          height="24"
+                        >
+                        <span>
+                          <span class="henrri-trust__title">{{ block.settings.exchange_title | escape }}</span>
+                          <span class="henrri-trust__text">{{ block.settings.exchange_text | escape }}</span>
+                        </span>
+                      </a>
+                    {%- endif -%}
                   </div>
               {%- endcase -%}
             {%- endfor -%}
@@ -1615,7 +1635,10 @@
         { "type": "text", "id": "text_2", "label": "Texto 2", "default": "nas compras acima de R$ 399" },
         { "type": "select", "id": "icon_3", "label": "Ícone 3", "options": [{"value":"shield","label":"Garantia"},{"value":"box","label":"Caixa"},{"value":"percent","label":"Porcentagem"},{"value":"truck","label":"Caminhão"},{"value":"return","label":"Troca"},{"value":"tag","label":"Etiqueta"},{"value":"card","label":"Cartão"}], "default": "percent" },
         { "type": "text", "id": "title_3", "label": "Título 3", "default": "10% OFF na primeira compra" },
-        { "type": "text", "id": "text_3", "label": "Texto 3", "default": "Use o cupom PRIMEIRACOMPRA" }
+        { "type": "text", "id": "text_3", "label": "Texto 3", "default": "Use o cupom PRIMEIRACOMPRA" },
+        { "type": "text", "id": "exchange_title", "label": "Trocas: título", "default": "Trocas e devoluções" },
+        { "type": "text", "id": "exchange_text", "label": "Trocas: texto", "default": "Troca rápida e segura com Pode Trocar" },
+        { "type": "url", "id": "exchange_link", "label": "Trocas: link" }
       ]
     },
     {
