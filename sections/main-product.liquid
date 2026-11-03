@@ -518,6 +518,11 @@
                     section_id: section.id,
                     show_pickup_availability: true
                   -%}
+                  {%- render 'henrri-quick-qty',
+                    product: product,
+                    product_form_id: product_form_id,
+                    section_id: section.id
+                  -%}
                 {%- when 'rating' -%}
                   {%- if product.metafields.reviews.rating.value != blank -%}
                     <div class="rating-wrapper">

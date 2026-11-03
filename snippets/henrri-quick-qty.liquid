@@ -1,0 +1,78 @@
+{% doc %}
+  Botões "Leve 2 / Leve 3 / Leve 4" abaixo do botão de comprar: adicionam essa quantidade
+  da cor e do tamanho escolhidos direto ao carrinho, usando o formulário de produto do tema.
+  Com a Black Friday ligada, mostra quantas camisetas de brinde a quantidade dá (1 a cada 2).
+
+  @param {product} product - O produto
+  @param {string} product_form_id - Id do formulário de produto
+  @param {string} section_id - Id da seção
+
+  @example
+  {% render 'henrri-quick-qty', product: product, product_form_id: product_form_id, section_id: section.id %}
+{% enddoc %}
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign max_rule = variant.quantity_rule.max | default: 999
+-%}
+{%- if product.available and product.gift_card? == false and max_rule >= 2 -%}
+  <div class="henrri-qty" data-henrri-qty data-form="{{ product_form_id }}" data-section="{{ section_id }}">
+    <p class="henrri-qty__label">Leve mais peças</p>
+    <div class="henrri-qty__options">
+      {%- for qty in (2..4) -%}
+        {%- if qty <= max_rule -%}
+          {%- assign gifts = qty | divided_by: 2 -%}
+          <button type="button" class="henrri-qty__option" data-qty="{{ qty }}">
+            <span class="henrri-qty__count">Leve {{ qty }}</span>
+            <span class="henrri-qty__price">{{ variant.price | times: qty | money }}</span>
+            {%- if settings.henrri_bf_enabled -%}
+              <span class="henrri-qty__gift">
+                + {{ gifts }} {% if gifts == 1 %}camiseta{% else %}camisetas{% endif %} de brinde
+              </span>
+            {%- endif -%}
+          </button>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    <p class="henrri-qty__hint">Mesma cor e tamanho escolhidos acima, direto para o carrinho.</p>
+  </div>
+
+  <script>
+    (() => {
+      if (window.henrriQtyReady) return;
+      window.henrriQtyReady = true;
+
+      document.addEventListener('click', (e) => {
+        const option = e.target.closest('.henrri-qty__option');
+        if (!option) return;
+        const box = option.closest('[data-henrri-qty]');
+        const form = document.getElementById(box.dataset.form);
+        if (!form) return;
+
+        const submit = form.querySelector('[type="submit"]');
+        if (submit && (submit.disabled || submit.getAttribute('aria-disabled') === 'true')) {
+          submit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+
+        const qtyInput = document.querySelector(`input[name="quantity"][form="${form.id}"]`) || form.querySelector('input[name="quantity"]');
+        let tempInput = null;
+        let previous = null;
+        if (qtyInput) {
+          previous = qtyInput.value;
+          qtyInput.value = option.dataset.qty;
+        } else {
+          tempInput = document.createElement('input');
+          tempInput.type = 'hidden';
+          tempInput.name = 'quantity';
+          tempInput.value = option.dataset.qty;
+          form.appendChild(tempInput);
+        }
+
+        // O product-form do tema lê o formulário na hora do envio; depois volta a quantidade como estava
+        form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event('submit', { cancelable: true }));
+        if (qtyInput) qtyInput.value = previous;
+        if (tempInput) tempInput.remove();
+      });
+    })();
+  </script>
+{%- endif -%}

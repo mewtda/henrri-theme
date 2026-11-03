@@ -1274,3 +1274,71 @@ henrri-carousel {
     animation: none;
   }
 }
+
+/* ---------- Página de produto: "Leve 2 / 3 / 4" ---------- */
+.henrri-qty {
+  --qty-accent: var(--henrri-black);
+  margin: 1.6rem 0 0.8rem;
+}
+
+.henrri-bf .henrri-qty {
+  --qty-accent: var(--henrri-bf);
+}
+
+.henrri-qty__label {
+  margin: 0 0 0.8rem;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.henrri-qty__options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.henrri-qty__option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 1.2rem 0.6rem;
+  border: 1px solid var(--henrri-border);
+  background: #fff;
+  color: var(--henrri-black);
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.henrri-qty__option:hover,
+.henrri-qty__option:focus-visible {
+  border-color: var(--qty-accent);
+  box-shadow: inset 0 0 0 1px var(--qty-accent);
+}
+
+.henrri-qty__count {
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.henrri-qty__price {
+  font-size: 1.3rem;
+}
+
+.henrri-qty__gift {
+  font-size: 1.05rem;
+  line-height: 1.3;
+  color: var(--qty-accent);
+  font-weight: 500;
+}
+
+.henrri-qty__hint {
+  margin: 0.6rem 0 0;
+  font-size: 1.1rem;
+  color: var(--henrri-muted);
+}
