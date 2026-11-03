@@ -78,7 +78,7 @@
       "type": "henrri-bf-banner",
       "settings": {
         "always_show": false,
-        "eyebrow": "Só esta semana",
+        "eyebrow": "",
         "headline": "",
         "text": "",
         "button_label": "Aproveitar",
