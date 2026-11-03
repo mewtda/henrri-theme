@@ -1194,6 +1194,12 @@ henrri-carousel {
 }
 
 /* Barra listrada preta e vermelha passando (abaixo do banner da Black Friday e no topo da foto dos cards com desconto) */
+/* base.css esconde div vazia (div:empty) — a barra é vazia de propósito */
+.henrri-bf-stripe,
+.henrri-bf-stripe:empty {
+  display: block;
+}
+
 .henrri-bf-stripe {
   height: 1.4rem;
   background-color: var(--henrri-black);
