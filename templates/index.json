@@ -15,7 +15,7 @@
         "slide_6XCG3k": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Banner_luxuoso_Black_Friday_Henrri.png",
+            "image": "shopify://shop_images/Banner_Black_November_Henrri.png",
             "image_mobile": "shopify://shop_images/Banner_Black_Friday_Henrri_em_Preto_e_Dourado111.png",
             "overlay": 10,
             "text": "",
@@ -34,7 +34,8 @@
             "text": "",
             "heading": "",
             "button_label": "",
-            "link": "shopify://collections/all"
+            "link": "shopify://collections/all",
+            "bf_stripe": false
           }
         },
         "slide_UETnRy": {
@@ -46,7 +47,8 @@
             "text": "",
             "heading": "",
             "button_label": "",
-            "link": "shopify://collections/camiseta-maderite"
+            "link": "shopify://collections/camiseta-maderite",
+            "bf_stripe": false
           }
         },
         "s2": {
@@ -57,7 +59,8 @@
             "text": "Nova coleção",
             "heading": "COLEÇÃO <em>Inverno</em>",
             "button_label": "Confira",
-            "link": "shopify://collections/all"
+            "link": "shopify://collections/all",
+            "bf_stripe": false
           }
         }
       },
@@ -83,9 +86,9 @@
         "headline": "",
         "text": "",
         "button_label": "Aproveitar",
+        "link": "shopify://collections/all",
         "show_stripe": true,
         "stripe_speed": 3,
-        "link": "shopify://collections/all",
         "padding_top": 36,
         "padding_bottom": 36
       }
