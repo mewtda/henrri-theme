@@ -38,8 +38,8 @@
         },
         "slide_6XCG3k": {
           "type": "slide",
-          "disabled": true,
           "settings": {
+            "image": "shopify://shop_images/Banner_luxuoso_Black_Friday_Henrri.png",
             "overlay": 10,
             "text": "",
             "heading": "",
@@ -234,6 +234,9 @@
       "settings": {
         "title": "Compre o look",
         "image": "shopify://shop_images/DSCF1234.jpg",
+        "button_label": "Compre o look",
+        "total_label": "Total do look",
+        "size_label": "Tamanho",
         "color_scheme": "scheme-2",
         "padding_top": 36,
         "padding_bottom": 44
