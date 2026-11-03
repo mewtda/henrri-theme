@@ -1,3 +1,7 @@
+{%- comment -%} Black Friday: barra preta e vermelha passando logo abaixo do cabeçalho, nos produtos com desconto {%- endcomment -%}
+{%- if settings.henrri_bf_enabled and product.compare_at_price_max > product.price_min -%}
+  <div class="henrri-bf-stripe henrri-bf-stripe--product" aria-hidden="true"></div>
+{%- endif -%}
 <product-info
   id="MainProduct-{{ section.id }}"
   class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}"
