@@ -1071,7 +1071,7 @@ henrri-carousel {
   color: var(--henrri-bf);
 }
 
-/* Selo "Black Antecipada Henrri" (no lugar de "Promoção") ao lado do preço */
+/* Selo "Black November Henrri" (no lugar de "Promoção") ao lado do preço */
 .henrri-bf .price__badge-sale {
   background: var(--henrri-bf);
   border-color: var(--henrri-bf);

@@ -99,7 +99,7 @@
         "type": "text",
         "id": "henrri_bf_headline",
         "label": "Chamada",
-        "default": "Black antecipada Henrri até 40% off"
+        "default": "Black November Henrri até 40% off"
       },
       {
         "type": "text",
@@ -111,7 +111,7 @@
         "type": "text",
         "id": "henrri_bf_sale_label",
         "label": "Selo de desconto (no lugar de \"Promoção\")",
-        "default": "Black Antecipada Henrri"
+        "default": "Black November Henrri"
       }
     ]
   },
