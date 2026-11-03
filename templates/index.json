@@ -12,6 +12,18 @@
     "hero": {
       "type": "henrri-hero",
       "blocks": {
+        "slide_6XCG3k": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Banner_luxuoso_Black_Friday_Henrri.png",
+            "image_mobile": "shopify://shop_images/123.png",
+            "overlay": 10,
+            "text": "",
+            "heading": "",
+            "button_label": "",
+            "link": ""
+          }
+        },
         "s1": {
           "type": "slide",
           "settings": {
@@ -36,19 +48,6 @@
             "link": "shopify://collections/camiseta-maderite"
           }
         },
-        "slide_6XCG3k": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Banner_luxuoso_Black_Friday_Henrri.png",
-            "image_mobile": "shopify://shop_images/123.png",
-            "overlay": 10,
-            "text": "",
-            "heading": "",
-            "button_label": "",
-            "link": "",
-            "bf_stripe": true
-          }
-        },
         "s2": {
           "type": "slide",
           "disabled": true,
@@ -62,9 +61,9 @@
         }
       },
       "block_order": [
+        "slide_6XCG3k",
         "s1",
         "slide_UETnRy",
-        "slide_6XCG3k",
         "s2"
       ],
       "custom_css": [],
@@ -75,28 +74,13 @@
         "show_scroll": true
       }
     },
-    "black_friday": {
-      "type": "henrri-bf-banner",
-      "settings": {
-        "always_show": false,
-        "eyebrow": "",
-        "headline": "",
-        "text": "",
-        "button_label": "Aproveitar",
-        "show_stripe": true,
-        "stripe_speed": 3,
-        "link": "shopify://collections/all",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "best_sellers": {
       "type": "henrri-product-carousel",
       "blocks": {
         "t1": {
           "type": "tab",
           "settings": {
-            "title": "Black Henrri",
+            "title": "Mais vendidos",
             "collection": "best-sellers"
           }
         },
@@ -321,7 +305,6 @@
   },
   "order": [
     "hero",
-    "black_friday",
     "best_sellers",
     "tiles",
     "benefits",
