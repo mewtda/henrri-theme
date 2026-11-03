@@ -34,9 +34,16 @@
       assign max_qty = stock_left
     endif
   endif
+  comment
+    Não mostra em itens baratos (embalagem de presente, produto de teste: menos de R$ 20)
+    nem em produtos com a tag "sem-leve"
+  endcomment
   assign show = false
   if product.available and variant.available and product.gift_card? == false and max_qty >= 2
     assign show = true
+  endif
+  if product.price < 2000 or product.tags contains 'sem-leve'
+    assign show = false
   endif
 -%}
 {%- comment -%}
