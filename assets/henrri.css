@@ -1040,3 +1040,155 @@ henrri-carousel {
   height: 2rem;
   width: auto;
 }
+
+/* ---------- Black Friday (Configurações do tema > Henrri > Black Friday) ---------- */
+.henrri-bf {
+  --henrri-sale: var(--henrri-bf);
+}
+
+/* Faixa do topo vermelha */
+.henrri-bf .henrri-marquee {
+  background: var(--henrri-bf);
+  font-weight: 500;
+}
+
+/* Selo "X% OFF" cheio em vermelho */
+.henrri-bf .henrri-badge--sale {
+  background: var(--henrri-bf);
+  border-color: var(--henrri-bf);
+  color: #fff;
+  font-weight: 500;
+}
+
+/* Bolinha do carrinho e itens "sale"/"promo"/"black" do menu */
+.henrri-bf .cart-count-bubble {
+  background-color: var(--henrri-bf);
+}
+
+.henrri-bf .header__inline-menu a[href*="sale"] span,
+.henrri-bf .header__inline-menu a[href*="promo"] span,
+.henrri-bf .header__inline-menu a[href*="black"] span {
+  color: var(--henrri-bf);
+}
+
+/* Botão de comprar na página do produto */
+.henrri-bf .product-form__submit.button--primary:not([disabled]) {
+  --color-button: var(--henrri-bf-rgb);
+  --color-button-text: 255, 255, 255;
+  --border-opacity: 1;
+}
+
+/* Aviso na página do produto */
+.henrri-bf-note {
+  margin: 1.6rem 0 0.4rem;
+  padding: 1.2rem 1.4rem;
+  border-left: 3px solid var(--henrri-bf);
+  background: rgba(var(--henrri-bf-rgb), 0.06);
+}
+
+.henrri-bf-note__title {
+  margin: 0;
+  color: var(--henrri-bf);
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.henrri-bf-note__text {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0.4rem 0 0;
+  font-size: 1.3rem;
+  line-height: 1.4;
+}
+
+.henrri-bf-note__icon {
+  flex-shrink: 0;
+  width: 1.8rem;
+  height: 1.8rem;
+  color: var(--henrri-bf);
+}
+
+/* Brinde no carrinho (aparece mesmo sem a Black Friday ligada; ganha vermelho com ela) */
+.henrri-gift {
+  --gift-accent: var(--henrri-black);
+  margin: 1.4rem 0;
+  padding: 1.6rem 1.4rem;
+  border: 1px solid var(--henrri-border);
+  background: var(--henrri-grey-bg);
+}
+
+.henrri-bf .henrri-gift {
+  --gift-accent: var(--henrri-bf);
+  border-color: rgba(var(--henrri-bf-rgb), 0.35);
+  background: rgba(var(--henrri-bf-rgb), 0.05);
+}
+
+.henrri-gift__title {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--gift-accent);
+}
+
+.henrri-gift__text {
+  margin: 0.6rem 0 1rem;
+  font-size: 1.3rem;
+}
+
+.henrri-gift__label {
+  display: block;
+  font-size: 1.2rem;
+}
+
+.henrri-gift__select {
+  width: 100%;
+  margin: 0.5rem 0 1.2rem;
+  padding: 1.1rem;
+  border: 1px solid #ccc;
+  background: #fff;
+  font: inherit;
+}
+
+.henrri-gift__button {
+  width: 100%;
+  padding: 1.3rem;
+  border: 0;
+  background: var(--gift-accent);
+  color: #fff;
+  font: inherit;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+
+.henrri-gift__button[disabled] {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.henrri-gift__error:empty {
+  display: none;
+}
+
+.henrri-gift__error {
+  margin: 0.8rem 0 0;
+  font-size: 1.2rem;
+  color: #b42318;
+}
+
+.henrri-gift__progress {
+  height: 3px;
+  margin-top: 1.2rem;
+  background: var(--henrri-border);
+}
+
+.henrri-gift__progress span {
+  display: block;
+  height: 100%;
+  background: var(--gift-accent);
+}

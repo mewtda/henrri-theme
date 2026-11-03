@@ -1,0 +1,157 @@
+{% doc %}
+  Brinde no carrinho: 1 camiseta básica a cada 2 peças compradas.
+  Conta as peças (sem contar as camisetas de brinde), mostra quanto falta para o
+  próximo brinde e deixa o cliente escolher cor e tamanho de cada brinde ganho.
+  O desconto do brinde em si vem da promoção "Compre X, ganhe Y" no admin da Shopify.
+
+  @example
+  {% render 'henrri-bf-gift' %}
+{% enddoc %}
+{%- liquid
+  assign presente_preto = all_products['camisa-100-algodao-premium']
+  assign presente_branco = all_products['camisa-100-algodao-premium-off-white']
+  assign quantidade_elegivel = 0
+  assign presentes_no_carrinho = 0
+
+  for item in cart.items
+    if item.product_id == presente_preto.id or item.product_id == presente_branco.id
+      assign presentes_no_carrinho = presentes_no_carrinho | plus: item.quantity
+    else
+      assign quantidade_elegivel = quantidade_elegivel | plus: item.quantity
+    endif
+  endfor
+
+  assign presentes_ganhos = quantidade_elegivel | divided_by: 2
+  assign presentes_faltando = presentes_ganhos | minus: presentes_no_carrinho
+  assign resto = quantidade_elegivel | modulo: 2
+  assign falta_para_proximo = 2 | minus: resto
+-%}
+
+{%- if presente_preto.id != blank and quantidade_elegivel > 0 -%}
+  <div id="henrri-presente" class="henrri-gift">
+    {%- if presentes_faltando > 0 -%}
+      <p class="henrri-gift__title">
+        🎁
+        {% if presentes_ganhos == 1 -%}
+          Parabéns! Você ganhou uma camiseta básica de brinde!
+        {%- else -%}
+          Parabéns! Você ganhou {{ presentes_ganhos }} camisetas básicas de brinde!
+        {%- endif %}
+      </p>
+      <p class="henrri-gift__text">
+        {% if presentes_faltando == presentes_ganhos -%}
+          Escolha a cor e o tamanho do seu presente.
+        {%- else -%}
+          Falta escolher {{ presentes_faltando }} {% if presentes_faltando == 1 %}presente{% else %}presentes{% endif %}.
+        {%- endif %}
+      </p>
+
+      <label for="henrri-cor" class="henrri-gift__label">Cor</label>
+      <select id="henrri-cor" class="henrri-gift__select">
+        <option value="preta">Preta</option>
+        {%- if presente_branco.id != blank -%}<option value="branca">Branca</option>{%- endif -%}
+      </select>
+
+      <label for="henrri-tamanho" class="henrri-gift__label">Tamanho</label>
+      <select id="henrri-tamanho" class="henrri-gift__select">
+        {%- for variant in presente_preto.variants -%}
+          {%- if variant.available -%}
+            <option value="{{ variant.id }}">{{ variant.title | escape }}</option>
+          {%- endif -%}
+        {%- endfor -%}
+      </select>
+
+      <button type="button" id="henrri-adicionar-presente" class="henrri-gift__button">
+        Adicionar meu presente
+      </button>
+      <p id="henrri-presente-erro" class="henrri-gift__error" role="alert"></p>
+    {%- elsif presentes_ganhos > 0 -%}
+      <p class="henrri-gift__title">
+        🎁 {% if presentes_ganhos == 1 %}Camiseta de brinde adicionada!{% else %}Camisetas de brinde adicionadas!{% endif %}
+      </p>
+      <p class="henrri-gift__text">
+        Adicione mais {{ falta_para_proximo }} {% if falta_para_proximo == 1 %}peça{% else %}peças{% endif %} e ganhe outra camiseta básica.
+      </p>
+    {%- else -%}
+      <p class="henrri-gift__title">
+        🎁 Falta {{ falta_para_proximo }} peça para ganhar uma camiseta básica de brinde!
+      </p>
+    {%- endif -%}
+    <div class="henrri-gift__progress" aria-hidden="true">
+      <span style="width: {% if resto == 1 and presentes_faltando <= 0 %}50{% else %}100{% endif %}%;"></span>
+    </div>
+  </div>
+{%- endif -%}
+
+<script>
+  window.henrriPresentes = {
+    preta: {{ presente_preto.variants | json }},
+    branca: {{ presente_branco.variants | json }}
+  };
+
+  if (!window.henrriPresenteConfigurado) {
+    window.henrriPresenteConfigurado = true;
+
+    function atualizarTamanhosHenrri() {
+      const cor = document.getElementById('henrri-cor');
+      const tamanho = document.getElementById('henrri-tamanho');
+      if (!cor || !tamanho) return;
+
+      const variantes = window.henrriPresentes?.[cor.value] || [];
+      tamanho.innerHTML = '';
+
+      variantes.forEach((v) => {
+        if (!v.available) return;
+        const opt = document.createElement('option');
+        opt.value = v.id;
+        opt.textContent = v.title;
+        tamanho.appendChild(opt);
+      });
+
+      const botao = document.getElementById('henrri-adicionar-presente');
+      if (botao) botao.disabled = tamanho.options.length === 0;
+    }
+
+    document.addEventListener('change', (e) => {
+      if (e.target.id === 'henrri-cor') atualizarTamanhosHenrri();
+    });
+
+    document.addEventListener('click', async (e) => {
+      const botao = e.target.closest('#henrri-adicionar-presente');
+      if (!botao) return;
+
+      const tamanho = document.getElementById('henrri-tamanho');
+      const erro = document.getElementById('henrri-presente-erro');
+      if (erro) erro.textContent = '';
+      if (!tamanho?.value) return;
+
+      const textoOriginal = botao.textContent;
+      botao.disabled = true;
+      botao.textContent = 'Adicionando...';
+
+      try {
+        const resposta = await fetch((window.Shopify?.routes?.root || '/') + 'cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: [{ id: Number(tamanho.value), quantity: 1 }] }),
+        });
+        const dados = await resposta.json();
+        if (!resposta.ok) throw new Error(dados.description || 'Não foi possível adicionar.');
+        window.location.reload();
+      } catch (err) {
+        if (erro) erro.textContent = err.message;
+        botao.disabled = false;
+        botao.textContent = textoOriginal;
+      }
+    });
+
+    const observador = new MutationObserver(() => {
+      const seletor = document.getElementById('henrri-tamanho');
+      if (seletor && !seletor.dataset.iniciado) {
+        seletor.dataset.iniciado = 'true';
+        atualizarTamanhosHenrri();
+      }
+    });
+    observador.observe(document.body, { childList: true, subtree: true });
+  }
+</script>

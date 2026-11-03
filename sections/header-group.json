@@ -14,6 +14,20 @@
     "henrri-marquee": {
       "type": "henrri-marquee",
       "blocks": {
+        "bf1": {
+          "type": "message",
+          "settings": {
+            "text": "Black Friday: até 40% off",
+            "link": "shopify://collections/all"
+          }
+        },
+        "bf2": {
+          "type": "message",
+          "settings": {
+            "text": "Camiseta básica de brinde a cada 2 peças",
+            "link": ""
+          }
+        },
         "m1": {
           "type": "message",
           "settings": {
@@ -37,6 +51,8 @@
         }
       },
       "block_order": [
+        "bf1",
+        "bf2",
         "m1",
         "m2",
         "m3"

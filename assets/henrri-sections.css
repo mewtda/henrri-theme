@@ -950,3 +950,71 @@ a.henrri-hero__link * {
     color: var(--henrri-black) !important;
   }
 }
+
+/* ---------- Black Friday: faixa da home ---------- */
+.henrri-bf-banner {
+  background: var(--henrri-bf, #d62828);
+  color: #fff;
+  text-align: center;
+}
+
+.henrri-bf-banner__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.henrri-bf-banner__eyebrow {
+  margin: 0;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  opacity: 0.85;
+}
+
+.henrri-bf-banner__title {
+  margin: 0;
+  color: #fff;
+  font-family: var(--font-heading-family);
+  font-size: clamp(2.8rem, 6vw, 5.6rem);
+  font-weight: 600;
+  line-height: 1.05;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.henrri-bf-banner__text {
+  margin: 0;
+  max-width: 56rem;
+  font-size: 1.5rem;
+  line-height: 1.5;
+}
+
+.henrri-bf-banner__button {
+  margin-top: 0.8rem;
+  padding: 1.3rem 3.6rem;
+  background: #fff;
+  color: var(--henrri-bf, #d62828);
+  font-size: 1.3rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.henrri-bf-banner__button:hover {
+  background: var(--henrri-black);
+  color: #fff;
+}
+
+/* Aba "Black Henrri" em vermelho durante a Black Friday */
+.henrri-bf .henrri-tabs__tab--black {
+  color: var(--henrri-bf);
+  font-weight: 600;
+}
+
+.henrri-bf .henrri-tabs__tab--black[aria-selected='false'] {
+  opacity: 0.7;
+}

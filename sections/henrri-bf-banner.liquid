@@ -1,0 +1,57 @@
+{{ 'henrri-sections.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign headline = section.settings.headline | default: settings.henrri_bf_headline
+  assign gift_text = section.settings.text | default: settings.henrri_bf_gift_text
+-%}
+
+{%- if settings.henrri_bf_enabled or section.settings.always_show -%}
+  <div
+    class="henrri-bf-banner henrri-section"
+    style="--pt: {{ section.settings.padding_top }}px; --pb: {{ section.settings.padding_bottom }}px; --henrri-bf: {{ settings.henrri_bf_color }};"
+  >
+    <div class="page-width henrri-bf-banner__inner">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="henrri-bf-banner__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      <h2 class="henrri-bf-banner__title">{{ headline | escape }}</h2>
+      {%- if gift_text != blank -%}
+        <p class="henrri-bf-banner__text">{{ gift_text | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a
+          class="henrri-bf-banner__button"
+          {% if section.settings.link != blank %}
+            href="{{ section.settings.link }}"
+          {% else %}
+            role="link" aria-disabled="true"
+          {% endif %}
+        >
+          {{- section.settings.button_label | escape -}}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Henrri: Black Friday",
+  "class": "henrri-bf-banner-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Aparece só com \"Ativar visual de Black Friday\" ligado em Configurações do tema > Henrri. A cor também vem de lá."
+    },
+    { "type": "checkbox", "id": "always_show", "label": "Mostrar mesmo com a Black Friday desligada", "default": false },
+    { "type": "text", "id": "eyebrow", "label": "Texto pequeno acima", "default": "Só esta semana" },
+    { "type": "text", "id": "headline", "label": "Chamada", "info": "Em branco usa a chamada das configurações do tema" },
+    { "type": "text", "id": "text", "label": "Texto do brinde", "info": "Em branco usa o texto das configurações do tema" },
+    { "type": "text", "id": "button_label", "label": "Texto do botão", "default": "Aproveitar" },
+    { "type": "url", "id": "link", "label": "Link do botão" },
+    { "type": "range", "id": "padding_top", "label": "Espaço acima", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 },
+    { "type": "range", "id": "padding_bottom", "label": "Espaço abaixo", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 36 }
+  ],
+  "presets": [{ "name": "Henrri: Black Friday" }]
+}
+{% endschema %}

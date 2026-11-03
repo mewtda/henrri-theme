@@ -1,0 +1,20 @@
+{% doc %}
+  Aviso da Black Friday na página do produto (chamada + brinde).
+  Só aparece com "Ativar visual de Black Friday" ligado nas configurações do tema.
+
+  @example
+  {% render 'henrri-bf-note' %}
+{% enddoc %}
+{%- if settings.henrri_bf_enabled -%}
+  <div class="henrri-bf-note">
+    {%- if settings.henrri_bf_headline != blank -%}
+      <p class="henrri-bf-note__title">{{ settings.henrri_bf_headline | escape }}</p>
+    {%- endif -%}
+    {%- if settings.henrri_bf_gift_text != blank -%}
+      <p class="henrri-bf-note__text">
+        {% render 'henrri-icon', icon: 'box', class: 'henrri-bf-note__icon' %}
+        <span>{{ settings.henrri_bf_gift_text | escape }}</span>
+      </p>
+    {%- endif -%}
+  </div>
+{%- endif -%}

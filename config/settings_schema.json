@@ -77,6 +77,35 @@
         "unit": "%",
         "default": 5,
         "info": "0 esconde o preço no Pix"
+      },
+      {
+        "type": "header",
+        "content": "Black Friday"
+      },
+      {
+        "type": "checkbox",
+        "id": "henrri_bf_enabled",
+        "label": "Ativar visual de Black Friday",
+        "default": false,
+        "info": "Destaques em vermelho, faixa do topo vermelha e aviso do brinde no produto e no carrinho"
+      },
+      {
+        "type": "color",
+        "id": "henrri_bf_color",
+        "label": "Cor da Black Friday",
+        "default": "#d62828"
+      },
+      {
+        "type": "text",
+        "id": "henrri_bf_headline",
+        "label": "Chamada",
+        "default": "Black Friday até 40% off"
+      },
+      {
+        "type": "text",
+        "id": "henrri_bf_gift_text",
+        "label": "Texto do brinde",
+        "default": "+ uma camiseta básica de brinde a cada 2 peças compradas"
       }
     ]
   },

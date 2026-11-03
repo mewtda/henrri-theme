@@ -324,7 +324,7 @@
     </script>
   </head>
 
-  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+  <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}{% if settings.henrri_bf_enabled %} henrri-bf{% endif %}"{% if settings.henrri_bf_enabled %} style="--henrri-bf: {{ settings.henrri_bf_color }}; --henrri-bf-rgb: {{ settings.henrri_bf_color.red }}, {{ settings.henrri_bf_color.green }}, {{ settings.henrri_bf_color.blue }};"{% endif %}>
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>

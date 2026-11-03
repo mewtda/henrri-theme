@@ -7,9 +7,10 @@
   <div class="page-width page-width--wide">
     <div class="henrri-tabs" role="tablist">
       {%- for block in section.blocks -%}
+        {%- assign tab_title_key = block.settings.title | downcase -%}
         <button
           type="button"
-          class="henrri-tabs__tab"
+          class="henrri-tabs__tab{% if tab_title_key contains 'black' %} henrri-tabs__tab--black{% endif %}"
           role="tab"
           id="Tab-{{ section.id }}-{{ forloop.index }}"
           aria-controls="Panel-{{ section.id }}-{{ forloop.index }}"
