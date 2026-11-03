@@ -203,6 +203,7 @@ if (!customElements.get('product-info')) {
           };
 
           updateSourceFromDestination('price');
+          updateSourceFromDestination('HenrriQty');
           updateSourceFromDestination('Sku', ({ classList }) => classList.contains('hidden'));
           updateSourceFromDestination('Inventory', ({ innerText }) => innerText === '');
           updateSourceFromDestination('Volume');

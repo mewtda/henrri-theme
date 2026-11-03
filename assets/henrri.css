@@ -1385,6 +1385,16 @@ henrri-carousel {
   font-size: 1.3rem;
 }
 
+.henrri-qty__compare {
+  font-size: 1.1rem;
+  color: var(--henrri-muted);
+}
+
+.henrri-qty__compare + .henrri-qty__price {
+  color: var(--henrri-sale);
+  font-weight: 500;
+}
+
 .henrri-qty__gift {
   font-size: 1.05rem;
   line-height: 1.3;

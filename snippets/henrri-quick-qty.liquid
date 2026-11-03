@@ -12,29 +12,48 @@
 {% enddoc %}
 {%- liquid
   assign variant = product.selected_or_first_available_variant
-  assign max_rule = variant.quantity_rule.max | default: 999
+  assign max_qty = variant.quantity_rule.max | default: 999
+  if variant.inventory_management == 'shopify' and variant.inventory_policy == 'deny'
+    if variant.inventory_quantity < max_qty
+      assign max_qty = variant.inventory_quantity
+    endif
+  endif
+  assign show = false
+  if product.available and variant.available and product.gift_card? == false and max_qty >= 2
+    assign show = true
+  endif
 -%}
-{%- if product.available and product.gift_card? == false and max_rule >= 2 -%}
-  <div class="henrri-qty" data-henrri-qty data-form="{{ product_form_id }}" data-section="{{ section_id }}">
-    <p class="henrri-qty__label">Leve mais peças</p>
-    <div class="henrri-qty__options">
-      {%- for qty in (2..4) -%}
-        {%- if qty <= max_rule -%}
-          {%- assign gifts = qty | divided_by: 2 -%}
-          <button type="button" class="henrri-qty__option" data-qty="{{ qty }}">
-            <span class="henrri-qty__count">Leve {{ qty }}</span>
-            <span class="henrri-qty__price">{{ variant.price | times: qty | money }}</span>
-            {%- if settings.henrri_bf_enabled -%}
-              <span class="henrri-qty__gift">
-                + {{ gifts }} {% if gifts == 1 %}camiseta{% else %}camisetas{% endif %} de brinde
-              </span>
-            {%- endif -%}
-          </button>
-        {%- endif -%}
-      {%- endfor -%}
+{%- comment -%}
+  O wrapper com id fica sempre na página: o product-info.js troca o conteúdo dele quando
+  o cliente muda cor/tamanho, então preço e estoque são sempre os da variação escolhida.
+{%- endcomment -%}
+<div id="HenrriQty-{{ section_id }}">
+  {%- if show -%}
+    <div class="henrri-qty" data-henrri-qty data-form="{{ product_form_id }}" data-section="{{ section_id }}">
+      <p class="henrri-qty__label">Leve mais peças</p>
+      <div class="henrri-qty__options">
+        {%- for qty in (2..4) -%}
+          {%- if qty <= max_qty -%}
+            {%- assign gifts = qty | divided_by: 2 -%}
+            <button type="button" class="henrri-qty__option" data-qty="{{ qty }}">
+              <span class="henrri-qty__count">Leve {{ qty }}</span>
+              {%- if variant.compare_at_price > variant.price -%}
+                <s class="henrri-qty__compare">{{ variant.compare_at_price | times: qty | money }}</s>
+              {%- endif -%}
+              <span class="henrri-qty__price">{{ variant.price | times: qty | money }}</span>
+              {%- if settings.henrri_bf_enabled -%}
+                <span class="henrri-qty__gift">
+                  + {{ gifts }} {% if gifts == 1 %}camiseta{% else %}camisetas{% endif %} de brinde
+                </span>
+              {%- endif -%}
+            </button>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      <p class="henrri-qty__hint">Na cor e no tamanho escolhidos, direto para o carrinho.</p>
     </div>
-    <p class="henrri-qty__hint">Na cor e no tamanho escolhidos, direto para o carrinho.</p>
-  </div>
+  {%- endif -%}
+</div>
 
   <script>
     (() => {
@@ -75,4 +94,3 @@
       });
     })();
   </script>
-{%- endif -%}
