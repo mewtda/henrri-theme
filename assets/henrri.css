@@ -1250,6 +1250,16 @@ henrri-carousel {
   to { background-position: calc(2rem * 1.41421356) 0; }
 }
 
+/* No slide do banner principal: colada na borda de baixo da imagem */
+.henrri-bf-stripe--hero {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .henrri-bf-stripe {
     animation: none;

@@ -54,6 +54,13 @@
         {%- else -%}
           </div>
         {%- endif -%}
+        {%- if block.settings.bf_stripe -%}
+          <div
+            class="henrri-bf-stripe henrri-bf-stripe--hero"
+            style="--henrri-bf: {{ settings.henrri_bf_color }};"
+            aria-hidden="true"
+          ></div>
+        {%- endif -%}
       </li>
     {%- endfor -%}
   </ul>
@@ -120,7 +127,8 @@
         { "type": "text", "id": "text", "label": "Texto pequeno", "default": "A primeira camiseta tech com tecido italiano" },
         { "type": "inline_richtext", "id": "heading", "label": "Título", "default": "CAMISETA <em>Double Tech</em>", "info": "Use itálico para o efeito de letra cursiva" },
         { "type": "text", "id": "button_label", "label": "Texto do botão", "default": "Confira" },
-        { "type": "url", "id": "link", "label": "Link" }
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "checkbox", "id": "bf_stripe", "label": "Barra preta e vermelha animada (Black Friday)", "default": false, "info": "Aparece passando na borda de baixo deste slide" }
       ]
     }
   ],
