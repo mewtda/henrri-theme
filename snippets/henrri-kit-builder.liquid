@@ -28,14 +28,41 @@
 
   assign count = product.metafields.custom.number_of_products.value | plus: 0
   if count < 1
-    assign words = product.title | split: ' '
+    comment
+      Sem o metafield, lê a quantidade do título só em formatos de kit: "3x", "3X" ou "Kit 3".
+      Números soltos como "100% algodão" não contam.
+    endcomment
+    assign words = product.title | downcase | split: ' '
+    assign previous = ''
     for word in words
-      assign n = word | remove: 'x' | remove: 'X' | plus: 0
+      assign n = 0
+      assign last_char = word | slice: -1
+      if last_char == 'x'
+        assign digits = word | remove: 'x'
+        assign n = digits | plus: 0
+        assign check = n | append: ''
+        if check != digits
+          assign n = 0
+        endif
+      elsif previous == 'kit'
+        assign n = word | plus: 0
+        assign check = n | append: ''
+        if check != word
+          assign n = 0
+        endif
+      endif
       if n > 1
         assign count = n
         break
       endif
+      assign previous = word
     endfor
+  endif
+  comment
+    Kits são de 2 a 10 peças; fora disso não é kit (evita "100x" por engano)
+  endcomment
+  if count < 2 or count > 10
+    assign count = 0
   endif
   assign discount = product.metafields.custom.desconto.value | default: product.metafields.custom.desconto | plus: 0
   if discount <= 0 and product.compare_at_price > product.price
