@@ -1407,3 +1407,24 @@ henrri-carousel {
   font-size: 1.1rem;
   color: var(--henrri-muted);
 }
+
+/* Barra abaixo do cabeçalho em todas as páginas (Black Friday ligada) */
+.henrri-bf-stripe--header {
+  height: 1rem;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--henrri-bf, #d62828) 0,
+    var(--henrri-bf, #d62828) 1rem,
+    var(--henrri-black) 1rem,
+    var(--henrri-black) 2rem
+  );
+  background-size: calc(2rem * 1.41421356) 100%;
+  animation-name: henrri-bf-stripe-card;
+  animation-duration: 3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .henrri-bf-stripe--header {
+    animation: none;
+  }
+}

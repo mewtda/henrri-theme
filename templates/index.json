@@ -21,7 +21,8 @@
             "text": "",
             "heading": "",
             "button_label": "",
-            "link": ""
+            "link": "",
+            "bf_stripe": true
           }
         },
         "s1": {
@@ -74,13 +75,28 @@
         "show_scroll": true
       }
     },
+    "black_friday": {
+      "type": "henrri-bf-banner",
+      "settings": {
+        "always_show": false,
+        "eyebrow": "",
+        "headline": "",
+        "text": "",
+        "button_label": "Aproveitar",
+        "show_stripe": true,
+        "stripe_speed": 3,
+        "link": "shopify://collections/all",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "best_sellers": {
       "type": "henrri-product-carousel",
       "blocks": {
         "t1": {
           "type": "tab",
           "settings": {
-            "title": "Mais vendidos",
+            "title": "Black Henrri",
             "collection": "best-sellers"
           }
         },
@@ -305,6 +321,7 @@
   },
   "order": [
     "hero",
+    "black_friday",
     "best_sellers",
     "tiles",
     "benefits",

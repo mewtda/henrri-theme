@@ -334,6 +334,9 @@
     {%- endif -%}
 
     {% sections 'header-group' %}
+    {%- if settings.henrri_bf_enabled -%}
+      <div class="henrri-bf-stripe henrri-bf-stripe--header" aria-hidden="true"></div>
+    {%- endif -%}
 
     <main
       id="MainContent"
