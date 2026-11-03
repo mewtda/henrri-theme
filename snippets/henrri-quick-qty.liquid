@@ -5,9 +5,9 @@
 
   Preço: o Liquid mostra preço x quantidade e o JS troca pelo preço real do carrinho, porque os
   descontos automáticos da loja (kit 2 = 5%, kit 3 = 7%, desconto por peça, "compre 2 ganhe 1")
-  não aparecem no Liquid. O JS monta um carrinho de teste separado (sem o cookie do cliente,
-  então não mexe no carrinho dele) usando o fetch de um iframe vazio, para não disparar
-  os eventos de "adicionou ao carrinho" dos pixels. Guarda o resultado por 10 minutos.
+  não aparecem no Liquid. O JS cria carrinhos de teste pela Storefront API (sem token, uma
+  chamada só para 2, 3 e 4), que não mexem no carrinho do cliente nem disparam os pixels de
+  "adicionou ao carrinho". Guarda o resultado por 10 minutos.
 
   @param {product} product - O produto
   @param {string} product_form_id - Id do formulário de produto
@@ -83,59 +83,64 @@
       const money = (cents) =>
         (cents / 100).toLocaleString('pt-BR', { style: 'currency', currency });
 
-      // fetch "limpo" de um iframe vazio: não passa pelo fetch interceptado pelos pixels
-      let cleanFetch = null;
-      const getCleanFetch = () => {
-        if (cleanFetch) return cleanFetch;
-        try {
-          const frame = document.createElement('iframe');
-          frame.style.display = 'none';
-          frame.setAttribute('aria-hidden', 'true');
-          frame.tabIndex = -1;
-          document.body.appendChild(frame);
-          cleanFetch = frame.contentWindow.fetch.bind(frame.contentWindow);
-        } catch (e) {
-          cleanFetch = null;
-        }
-        return cleanFetch;
-      };
-
       const readCache = (key) => {
         try {
           const raw = sessionStorage.getItem(key);
           if (!raw) return null;
           const data = JSON.parse(raw);
-          return Date.now() - data.t < CACHE_MS ? data : null;
+          return Date.now() - data.t < CACHE_MS ? data.v : null;
         } catch (e) {
           return null;
         }
       };
-      const writeCache = (key, data) => {
+      const writeCache = (key, value) => {
         try {
-          sessionStorage.setItem(key, JSON.stringify({ ...data, t: Date.now() }));
+          sessionStorage.setItem(key, JSON.stringify({ v: value, t: Date.now() }));
         } catch (e) {}
       };
 
+      // Um carrinho de teste por quantidade, numa chamada só à Storefront API (sem token).
+      // Não usa o carrinho do cliente nem /cart/add, então não mexe no carrinho dele nem dispara pixels.
       const inflight = {};
-      const quote = (variantId, qty) => {
-        const key = `henrri-qty:${variantId}:${qty}`;
+      const quoteAll = (variantId, quantities) => {
+        const key = `henrri-qty2:${variantId}:${quantities.join('-')}`;
         const cached = readCache(key);
         if (cached) return Promise.resolve(cached);
         if (inflight[key]) return inflight[key];
-        const doFetch = getCleanFetch();
-        if (!doFetch) return Promise.resolve(null);
-        inflight[key] = doFetch((window.Shopify?.routes?.root || '/') + 'cart/update.js', {
+        const gid = `gid://shopify/ProductVariant/${variantId}`;
+        const query =
+          'mutation {' +
+          quantities
+            .map(
+              (n) =>
+                `q${n}: cartCreate(input: { lines: [{ merchandiseId: "${gid}", quantity: ${n} }] }) {` +
+                ' cart { totalQuantity cost { totalAmount { amount } }' +
+                ' lines(first: 10) { nodes { cost { subtotalAmount { amount } } } } } }'
+            )
+            .join(' ') +
+          ' }';
+        inflight[key] = fetch((window.Shopify?.routes?.root || '/') + 'api/2025-01/graphql.json', {
           method: 'POST',
           credentials: 'omit',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({ updates: { [variantId]: qty } }),
+          body: JSON.stringify({ query }),
         })
           .then((r) => (r.ok ? r.json() : null))
-          .then((cart) => {
-            if (!cart) return null;
-            const data = { total: cart.total_price, original: cart.original_total_price, count: cart.item_count };
-            writeCache(key, data);
-            return data;
+          .then((res) => {
+            if (!res || !res.data) return null;
+            const out = {};
+            quantities.forEach((n) => {
+              const cart = res.data[`q${n}`]?.cart;
+              if (!cart) return;
+              const toCents = (v) => Math.round(parseFloat(v) * 100);
+              out[n] = {
+                count: cart.totalQuantity,
+                total: toCents(cart.cost.totalAmount.amount),
+                original: cart.lines.nodes.reduce((sum, l) => sum + toCents(l.cost.subtotalAmount.amount), 0),
+              };
+            });
+            writeCache(key, out);
+            return out;
           })
           .catch(() => null)
           .finally(() => delete inflight[key]);
@@ -145,30 +150,32 @@
       const refresh = async (box) => {
         if (!box || box.dataset.quoted === box.dataset.variant) return;
         box.dataset.quoted = box.dataset.variant;
-        const variantId = box.dataset.variant;
         const options = [...box.querySelectorAll('.henrri-qty__option')];
+        if (!options.length) return;
         box.classList.add('is-loading');
-        await Promise.all(
-          options.map(async (option) => {
-            const qty = Number(option.dataset.qty);
-            const data = await quote(variantId, qty);
-            if (!data || !option.isConnected) return;
-            if (data.count < qty) {
-              option.hidden = true; // sem estoque para essa quantidade
-              return;
-            }
-            const prices = option.querySelector('[data-qty-prices]');
-            if (!prices) return;
-            const compareEl = prices.querySelector('.henrri-qty__compare');
-            const liquidCompare = compareEl ? compareEl.dataset.cents || null : null;
-            let html = '';
-            const strike = Math.max(data.original, Number(liquidCompare) || 0);
-            if (strike > data.total) html += `<s class="henrri-qty__compare">${money(strike)}</s>`;
-            html += `<span class="henrri-qty__price">${money(data.total)}</span>`;
-            prices.innerHTML = html;
-          })
+        const quotes = await quoteAll(
+          box.dataset.variant,
+          options.map((o) => Number(o.dataset.qty))
         );
         box.classList.remove('is-loading');
+        if (!quotes) return; // sem resposta: fica o preço do Liquid
+        options.forEach((option) => {
+          const qty = Number(option.dataset.qty);
+          const data = quotes[qty];
+          if (!data || !option.isConnected) return;
+          if (data.count < qty) {
+            option.hidden = true; // não há estoque para essa quantidade
+            return;
+          }
+          const prices = option.querySelector('[data-qty-prices]');
+          if (!prices) return;
+          const compareEl = prices.querySelector('.henrri-qty__compare');
+          const strike = Math.max(data.original, Number(compareEl?.dataset.cents) || 0);
+          let html = '';
+          if (strike > data.total) html += `<s class="henrri-qty__compare">${money(strike)}</s>`;
+          html += `<span class="henrri-qty__price">${money(data.total)}</span>`;
+          prices.innerHTML = html;
+        });
       };
 
       let scheduled = false;
