@@ -24,6 +24,9 @@
     assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
   endif
 -%}
+{%- if discount > 0 and settings.henrri_bf_enabled -%}
+  <div class="henrri-bf-stripe henrri-bf-stripe--card" aria-hidden="true"></div>
+{%- endif -%}
 {%- if is_best or discount > 0 -%}
   <div class="henrri-badges">
     {%- if discount > 0 -%}

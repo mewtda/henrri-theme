@@ -1192,3 +1192,60 @@ henrri-carousel {
   height: 100%;
   background: var(--gift-accent);
 }
+
+/* Barra listrada preta e vermelha passando (abaixo do banner da Black Friday e no topo da foto dos cards com desconto) */
+.henrri-bf-stripe {
+  height: 1.4rem;
+  background-color: var(--henrri-black);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--henrri-bf, #d62828) 0,
+    var(--henrri-bf, #d62828) 1.4rem,
+    var(--henrri-black) 1.4rem,
+    var(--henrri-black) 2.8rem
+  );
+  background-size: calc(2.8rem * 1.41421356) 100%;
+  animation: henrri-bf-stripe var(--stripe-speed, 3s) linear infinite;
+}
+
+@media screen and (min-width: 750px) {
+  .henrri-bf-stripe {
+    height: 1.8rem;
+  }
+}
+
+@keyframes henrri-bf-stripe {
+  from { background-position: 0 0; }
+  to { background-position: calc(2.8rem * 1.41421356) 0; }
+}
+
+.henrri-bf-stripe--card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  height: 0.6rem;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--henrri-bf, #d62828) 0,
+    var(--henrri-bf, #d62828) 0.6rem,
+    var(--henrri-black) 0.6rem,
+    var(--henrri-black) 1.2rem
+  );
+  background-size: calc(1.2rem * 1.41421356) 100%;
+  animation-name: henrri-bf-stripe-card;
+  animation-duration: 1.5s;
+}
+
+@keyframes henrri-bf-stripe-card {
+  from { background-position: 0 0; }
+  to { background-position: calc(1.2rem * 1.41421356) 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .henrri-bf-stripe {
+    animation: none;
+  }
+}
