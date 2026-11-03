@@ -1018,3 +1018,35 @@ a.henrri-hero__link * {
 .henrri-bf .henrri-tabs__tab--black[aria-selected='false'] {
   opacity: 0.7;
 }
+
+/* Barra listrada preta e vermelha passando abaixo do banner */
+.henrri-bf-stripe {
+  height: 1.4rem;
+  background-color: var(--henrri-black);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--henrri-bf, #d62828) 0,
+    var(--henrri-bf, #d62828) 1.4rem,
+    var(--henrri-black) 1.4rem,
+    var(--henrri-black) 2.8rem
+  );
+  background-size: calc(2.8rem * 1.41421356) 100%;
+  animation: henrri-bf-stripe var(--stripe-speed, 3s) linear infinite;
+}
+
+@media screen and (min-width: 750px) {
+  .henrri-bf-stripe {
+    height: 1.8rem;
+  }
+}
+
+@keyframes henrri-bf-stripe {
+  from { background-position: 0 0; }
+  to { background-position: calc(2.8rem * 1.41421356) 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .henrri-bf-stripe {
+    animation: none;
+  }
+}

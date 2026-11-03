@@ -82,6 +82,8 @@
         "headline": "",
         "text": "",
         "button_label": "Aproveitar",
+        "show_stripe": true,
+        "stripe_speed": 3,
         "link": "shopify://collections/all",
         "padding_top": 36,
         "padding_bottom": 36
