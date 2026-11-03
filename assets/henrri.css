@@ -1129,10 +1129,65 @@ henrri-carousel {
   background: var(--henrri-grey-bg);
 }
 
+/* Com a Black Friday: caixa preta com a barra listrada no topo e o selo da campanha */
 .henrri-bf .henrri-gift {
   --gift-accent: var(--henrri-bf);
-  border-color: rgba(var(--henrri-bf-rgb), 0.35);
-  background: rgba(var(--henrri-bf-rgb), 0.05);
+  position: relative;
+  overflow: hidden;
+  padding-top: 2.4rem;
+  border: 0;
+  background: var(--henrri-black);
+  color: #fff;
+}
+
+.henrri-gift__stripe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0.8rem;
+}
+
+@media screen and (min-width: 750px) {
+  .henrri-gift__stripe {
+    height: 0.8rem;
+  }
+}
+
+.henrri-gift__eyebrow {
+  display: inline-block;
+  margin: 0 0 0.8rem;
+  padding: 0.3rem 0.8rem;
+  background: var(--henrri-bf);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.henrri-bf .henrri-gift__title {
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.henrri-bf .henrri-gift__text,
+.henrri-bf .henrri-gift__label {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.henrri-bf .henrri-gift__select {
+  border-color: #fff;
+  color: var(--henrri-black);
+}
+
+.henrri-bf .henrri-gift__progress {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.henrri-bf .henrri-gift__error {
+  color: #ff8a8a;
 }
 
 .henrri-gift__title {
