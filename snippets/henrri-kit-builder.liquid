@@ -74,6 +74,10 @@
     class="henrri-kit"
     data-count="{{ count }}"
     data-discount="{{ discount }}"
+    {%- if product.compare_at_price > product.price %}
+      data-price="{{ product.price }}"
+      data-compare-at="{{ product.compare_at_price }}"
+    {%- endif %}
     data-section="{{ section_id }}"
     data-money-format="{{ shop.money_format | escape }}"
   >

@@ -7,6 +7,10 @@ if (!customElements.get('henrri-kit-builder')) {
       connectedCallback() {
         this.count = Number(this.dataset.count);
         this.discount = Number(this.dataset.discount) || 0;
+        // Quando o kit tem compare-at, o total mostrado é sempre o compare-at e o preço do próprio kit
+        // (sem recalcular pela soma das peças nem arredondar o %)
+        this.kitPrice = Number(this.dataset.price) || 0;
+        this.kitCompareAt = Number(this.dataset.compareAt) || 0;
         this.moneyFormat = this.dataset.moneyFormat || 'R$ {{amount_with_comma_separator}}';
         this.strings = window.henrriKitStrings || {};
         this.pieces = JSON.parse(this.querySelector('[data-kit-pieces]').textContent).filter(
@@ -199,7 +203,11 @@ if (!customElements.get('henrri-kit-builder')) {
           return sum + variant.price;
         }, 0);
         const compare = this.querySelector('[data-kit-compare]');
-        if (this.discount > 0) {
+        if (this.kitCompareAt > this.kitPrice && this.kitPrice > 0) {
+          compare.hidden = false;
+          compare.textContent = this.formatMoney(this.kitCompareAt);
+          this.querySelector('[data-kit-total]').textContent = this.formatMoney(this.kitPrice);
+        } else if (this.discount > 0) {
           compare.hidden = false;
           compare.textContent = this.formatMoney(total);
           this.querySelector('[data-kit-total]').textContent = this.formatMoney(Math.round((total * (100 - this.discount)) / 100));
