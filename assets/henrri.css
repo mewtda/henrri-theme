@@ -1225,23 +1225,23 @@ henrri-carousel {
   left: 0;
   right: 0;
   z-index: 3;
-  height: 0.6rem;
+  height: 1rem;
   pointer-events: none;
   background-image: repeating-linear-gradient(
     -45deg,
     var(--henrri-bf, #d62828) 0,
-    var(--henrri-bf, #d62828) 0.6rem,
-    var(--henrri-black) 0.6rem,
-    var(--henrri-black) 1.2rem
+    var(--henrri-bf, #d62828) 1rem,
+    var(--henrri-black) 1rem,
+    var(--henrri-black) 2rem
   );
-  background-size: calc(1.2rem * 1.41421356) 100%;
+  background-size: calc(2rem * 1.41421356) 100%;
   animation-name: henrri-bf-stripe-card;
-  animation-duration: 1.5s;
+  animation-duration: 3s;
 }
 
 @keyframes henrri-bf-stripe-card {
   from { background-position: 0 0; }
-  to { background-position: calc(1.2rem * 1.41421356) 0; }
+  to { background-position: calc(2rem * 1.41421356) 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
