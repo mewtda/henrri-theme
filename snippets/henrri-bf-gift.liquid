@@ -28,7 +28,7 @@
 -%}
 
 {%- if presente_preto.id != blank and quantidade_elegivel > 0 -%}
-  <div id="henrri-presente" class="henrri-gift">
+  <div id="henrri-presente" class="henrri-gift{% if presentes_faltando <= 0 %} henrri-gift--compact{% endif %}">
     {%- if settings.henrri_bf_enabled -%}
       <div class="henrri-bf-stripe henrri-gift__stripe" aria-hidden="true"></div>
       <p class="henrri-gift__eyebrow">{{ settings.henrri_bf_sale_label | default: 'Black Antecipada Henrri' | escape }}</p>
@@ -36,34 +36,32 @@
     {%- if presentes_faltando > 0 -%}
       <p class="henrri-gift__title">
         🎁
-        {% if presentes_ganhos == 1 -%}
-          Parabéns! Você ganhou uma camiseta básica de brinde!
+        {% if presentes_faltando == 1 -%}
+          Você ganhou uma camiseta de brinde! Escolha cor e tamanho:
         {%- else -%}
-          Parabéns! Você ganhou {{ presentes_ganhos }} camisetas básicas de brinde!
-        {%- endif %}
-      </p>
-      <p class="henrri-gift__text">
-        {% if presentes_faltando == presentes_ganhos -%}
-          Escolha a cor e o tamanho do seu presente.
-        {%- else -%}
-          Falta escolher {{ presentes_faltando }} {% if presentes_faltando == 1 %}presente{% else %}presentes{% endif %}.
+          Você ganhou {{ presentes_faltando }} camisetas de brinde! Escolha a 1ª:
         {%- endif %}
       </p>
 
-      <label for="henrri-cor" class="henrri-gift__label">Cor</label>
-      <select id="henrri-cor" class="henrri-gift__select">
-        <option value="preta">Preta</option>
-        {%- if presente_branco.id != blank -%}<option value="branca">Branca</option>{%- endif -%}
-      </select>
-
-      <label for="henrri-tamanho" class="henrri-gift__label">Tamanho</label>
-      <select id="henrri-tamanho" class="henrri-gift__select">
-        {%- for variant in presente_preto.variants -%}
-          {%- if variant.available -%}
-            <option value="{{ variant.id }}">{{ variant.title | escape }}</option>
-          {%- endif -%}
-        {%- endfor -%}
-      </select>
+      <div class="henrri-gift__fields">
+        <div>
+          <label for="henrri-cor" class="henrri-gift__label">Cor</label>
+          <select id="henrri-cor" class="henrri-gift__select">
+            <option value="preta">Preta</option>
+            {%- if presente_branco.id != blank -%}<option value="branca">Branca</option>{%- endif -%}
+          </select>
+        </div>
+        <div>
+          <label for="henrri-tamanho" class="henrri-gift__label">Tamanho</label>
+          <select id="henrri-tamanho" class="henrri-gift__select">
+            {%- for variant in presente_preto.variants -%}
+              {%- if variant.available -%}
+                <option value="{{ variant.id }}">{{ variant.title | escape }}</option>
+              {%- endif -%}
+            {%- endfor -%}
+          </select>
+        </div>
+      </div>
 
       <button type="button" id="henrri-adicionar-presente" class="henrri-gift__button">
         Adicionar meu presente
@@ -71,19 +69,13 @@
       <p id="henrri-presente-erro" class="henrri-gift__error" role="alert"></p>
     {%- elsif presentes_ganhos > 0 -%}
       <p class="henrri-gift__title">
-        🎁 {% if presentes_ganhos == 1 %}Camiseta de brinde adicionada!{% else %}Camisetas de brinde adicionadas!{% endif %}
-      </p>
-      <p class="henrri-gift__text">
-        Adicione mais {{ falta_para_proximo }} {% if falta_para_proximo == 1 %}peça{% else %}peças{% endif %} e ganhe outra camiseta básica.
+        🎁 Brinde garantido! +{{ falta_para_proximo }} {% if falta_para_proximo == 1 %}peça{% else %}peças{% endif %} = outra camiseta
       </p>
     {%- else -%}
       <p class="henrri-gift__title">
-        🎁 Falta {{ falta_para_proximo }} peça para ganhar uma camiseta básica de brinde!
+        🎁 Falta {{ falta_para_proximo }} peça para ganhar uma camiseta de brinde
       </p>
     {%- endif -%}
-    <div class="henrri-gift__progress" aria-hidden="true">
-      <span style="width: {% if resto == 1 and presentes_faltando <= 0 %}50{% else %}100{% endif %}%;"></span>
-    </div>
   </div>
 {%- endif -%}
 

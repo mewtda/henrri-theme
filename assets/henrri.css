@@ -1120,111 +1120,55 @@ henrri-carousel {
   color: var(--henrri-bf);
 }
 
-/* Brinde no carrinho (aparece mesmo sem a Black Friday ligada; ganha vermelho com ela) */
+/* Brinde no carrinho — compacto para não tampar os produtos do carrinho */
 .henrri-gift {
   --gift-accent: var(--henrri-black);
-  margin: 1.4rem 0;
-  padding: 1.6rem 1.4rem;
+  position: relative;
+  overflow: hidden;
+  margin: 1rem 0;
+  padding: 1rem 1.2rem;
   border: 1px solid var(--henrri-border);
   background: var(--henrri-grey-bg);
 }
 
-/* Com a Black Friday: caixa preta com a barra listrada no topo e o selo da campanha */
-.henrri-bf .henrri-gift {
-  --gift-accent: var(--henrri-bf);
-  position: relative;
-  overflow: hidden;
-  padding-top: 2.4rem;
-  border: 0;
-  background: var(--henrri-black);
-  color: #fff;
-}
-
-.henrri-gift__stripe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 0.8rem;
-}
-
-@media screen and (min-width: 750px) {
-  .henrri-gift__stripe {
-    height: 0.8rem;
-  }
-}
-
-.henrri-gift__eyebrow {
-  display: inline-block;
-  margin: 0 0 0.8rem;
-  padding: 0.3rem 0.8rem;
-  background: var(--henrri-bf);
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-.henrri-bf .henrri-gift__title {
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-
-.henrri-bf .henrri-gift__text,
-.henrri-bf .henrri-gift__label {
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.henrri-bf .henrri-gift__select {
-  border-color: #fff;
-  color: var(--henrri-black);
-}
-
-.henrri-bf .henrri-gift__progress {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.henrri-bf .henrri-gift__error {
-  color: #ff8a8a;
-}
-
 .henrri-gift__title {
   margin: 0;
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   font-weight: 600;
-  line-height: 1.4;
+  line-height: 1.35;
   color: var(--gift-accent);
 }
 
-.henrri-gift__text {
-  margin: 0.6rem 0 1rem;
-  font-size: 1.3rem;
+.henrri-gift__fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  margin: 0.8rem 0;
 }
 
 .henrri-gift__label {
   display: block;
-  font-size: 1.2rem;
+  margin-bottom: 0.3rem;
+  font-size: 1.1rem;
 }
 
 .henrri-gift__select {
   width: 100%;
-  margin: 0.5rem 0 1.2rem;
-  padding: 1.1rem;
+  padding: 0.7rem 0.8rem;
   border: 1px solid #ccc;
   background: #fff;
   font: inherit;
+  font-size: 1.2rem;
 }
 
 .henrri-gift__button {
   width: 100%;
-  padding: 1.3rem;
+  padding: 0.9rem;
   border: 0;
   background: var(--gift-accent);
   color: #fff;
   font: inherit;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   cursor: pointer;
@@ -1240,21 +1184,77 @@ henrri-carousel {
 }
 
 .henrri-gift__error {
-  margin: 0.8rem 0 0;
-  font-size: 1.2rem;
+  margin: 0.6rem 0 0;
+  font-size: 1.1rem;
   color: #b42318;
 }
 
-.henrri-gift__progress {
-  height: 3px;
-  margin-top: 1.2rem;
-  background: var(--henrri-border);
+/* Com a Black Friday: caixa preta, barra listrada fina no topo e o selo da campanha na mesma linha */
+.henrri-bf .henrri-gift {
+  --gift-accent: var(--henrri-bf);
+  padding-top: 1.4rem;
+  border: 0;
+  background: var(--henrri-black);
+  color: #fff;
 }
 
-.henrri-gift__progress span {
-  display: block;
-  height: 100%;
-  background: var(--gift-accent);
+.henrri-gift__stripe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0.5rem;
+}
+
+.henrri-gift__eyebrow {
+  display: inline-block;
+  margin: 0 0 0.5rem;
+  padding: 0.15rem 0.6rem;
+  background: var(--henrri-bf);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.henrri-bf .henrri-gift__title {
+  color: #fff;
+}
+
+.henrri-bf .henrri-gift__label {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.henrri-bf .henrri-gift__select {
+  border-color: #fff;
+  color: var(--henrri-black);
+}
+
+.henrri-bf .henrri-gift__error {
+  color: #ff8a8a;
+}
+
+/* Avisos de "falta 1 peça" / "brinde garantido": uma faixa só */
+.henrri-gift--compact {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.8rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+}
+
+.henrri-bf .henrri-gift--compact {
+  padding-top: 1.2rem;
+}
+
+.henrri-gift--compact .henrri-gift__eyebrow {
+  margin: 0;
+}
+
+.henrri-gift--compact .henrri-gift__title {
+  font-size: 1.15rem;
 }
 
 /* Barra listrada preta e vermelha passando (abaixo do banner da Black Friday e no topo da foto dos cards com desconto) */
