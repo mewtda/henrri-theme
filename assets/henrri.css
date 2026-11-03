@@ -1333,7 +1333,7 @@ henrri-carousel {
 /* ---------- Página de produto: "Leve 2 / 3 / 4" ---------- */
 .henrri-qty {
   --qty-accent: var(--henrri-black);
-  margin: 1.6rem 0 0.8rem;
+  margin: 0.4rem 0 1.6rem;
 }
 
 .henrri-bf .henrri-qty {
@@ -1357,8 +1357,8 @@ henrri-carousel {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.3rem;
-  padding: 1.2rem 0.6rem;
+  gap: 0.2rem;
+  padding: 0.9rem 0.6rem;
   border: 1px solid var(--henrri-border);
   background: #fff;
   color: var(--henrri-black);
