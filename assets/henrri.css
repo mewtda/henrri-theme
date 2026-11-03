@@ -1071,6 +1071,15 @@ henrri-carousel {
   color: var(--henrri-bf);
 }
 
+/* Selo "Black Antecipada Henrri" (no lugar de "Promoção") ao lado do preço */
+.henrri-bf .price__badge-sale {
+  background: var(--henrri-bf);
+  border-color: var(--henrri-bf);
+  color: #fff;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
 /* Botão de comprar na página do produto */
 .henrri-bf .product-form__submit.button--primary:not([disabled]) {
   --color-button: var(--henrri-bf-rgb);

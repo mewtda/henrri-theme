@@ -106,6 +106,12 @@
         "id": "henrri_bf_gift_text",
         "label": "Texto do brinde",
         "default": "+ uma camiseta básica de brinde a cada 2 peças compradas"
+      },
+      {
+        "type": "text",
+        "id": "henrri_bf_sale_label",
+        "label": "Selo de desconto (no lugar de \"Promoção\")",
+        "default": "Black Antecipada Henrri"
       }
     ]
   },
