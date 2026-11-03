@@ -14,8 +14,18 @@
   assign variant = product.selected_or_first_available_variant
   assign max_qty = variant.quantity_rule.max | default: 999
   if variant.inventory_management == 'shopify' and variant.inventory_policy == 'deny'
-    if variant.inventory_quantity < max_qty
-      assign max_qty = variant.inventory_quantity
+    comment
+      Estoque que ainda dá para adicionar = estoque - o que já está no carrinho
+    endcomment
+    assign in_cart = 0
+    for item in cart.items
+      if item.variant_id == variant.id
+        assign in_cart = in_cart | plus: item.quantity
+      endif
+    endfor
+    assign stock_left = variant.inventory_quantity | minus: in_cart
+    if stock_left < max_qty
+      assign max_qty = stock_left
     endif
   endif
   assign show = false
