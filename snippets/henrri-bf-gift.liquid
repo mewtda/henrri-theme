@@ -126,14 +126,32 @@
       botao.textContent = 'Adicionando...';
 
       try {
+        const gaveta = document.querySelector('cart-drawer');
+        const variantId = Number(tamanho.value);
+        const corpo = { items: [{ id: variantId, quantity: 1 }] };
+        if (gaveta && typeof gaveta.getSectionsToRender === 'function') {
+          // pede o HTML novo do carrinho junto, para atualizar sem recarregar a página
+          corpo.sections = gaveta.getSectionsToRender().map((s) => s.id);
+          corpo.sections_url = window.location.pathname;
+        }
         const resposta = await fetch((window.Shopify?.routes?.root || '/') + 'cart/add.js', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: [{ id: Number(tamanho.value), quantity: 1 }] }),
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(corpo),
         });
         const dados = await resposta.json();
         if (!resposta.ok) throw new Error(dados.description || 'Não foi possível adicionar.');
-        window.location.reload();
+
+        if (gaveta && dados.sections && typeof gaveta.renderContents === 'function') {
+          // atualiza a gaveta do carrinho no lugar e deixa ela aberta
+          gaveta.renderContents({ id: variantId, sections: dados.sections });
+          if (typeof publish === 'function' && typeof PUB_SUB_EVENTS !== 'undefined') {
+            publish(PUB_SUB_EVENTS.cartUpdate, { source: 'henrri-presente', productVariantId: variantId });
+          }
+        } else {
+          // página do carrinho (sem gaveta): recarrega para mostrar o presente
+          window.location.reload();
+        }
       } catch (err) {
         if (erro) erro.textContent = err.message;
         botao.disabled = false;
