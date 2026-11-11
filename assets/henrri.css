@@ -1466,3 +1466,26 @@ henrri-carousel {
 @media (prefers-reduced-motion: reduce) {
   .henrri-rainbow-edge { animation: none; }
 }
+
+/* Selos do topo do card: "11/11 · Frete grátis" ao lado do "X% OFF" */
+.henrri-badges__top {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.4rem;
+}
+
+.henrri-badges__top .henrri-badge {
+  position: static;
+}
+
+.henrri-badge--promo {
+  background: #0a3fb8;
+  border: 1px solid #0a3fb8;
+  color: #ffd60a;
+  font-weight: 700;
+}

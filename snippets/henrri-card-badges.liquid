@@ -1,5 +1,5 @@
 {% doc %}
-  Renders Henrri product card badges over the image: "X% OFF" (top right) and
+  Renders Henrri product card badges over the image: "X% OFF" and the 11/11 promo tag (top right) and
   "★ BEST SELLER" (bottom left) for products tagged with the theme setting tag.
 
   @param {product} product - The product
@@ -23,14 +23,27 @@
   if product.compare_at_price > product.price and product.available
     assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
   endif
+  # Selo 11/11 até 11/11/2026 23:59:59 (Brasília)
+  assign now_ts = 'now' | date: '%s' | plus: 0
+  assign show_promo = false
+  if now_ts < 1794452399
+    assign show_promo = true
+  endif
 -%}
 {%- if discount > 0 and settings.henrri_bf_enabled -%}
   <div class="henrri-bf-stripe henrri-bf-stripe--card" aria-hidden="true"></div>
 {%- endif -%}
-{%- if is_best or discount > 0 -%}
+{%- if is_best or discount > 0 or show_promo -%}
   <div class="henrri-badges">
-    {%- if discount > 0 -%}
-      <span class="henrri-badge henrri-badge--sale">{{ 'henrri.card.discount' | t: percent: discount }}</span>
+    {%- if discount > 0 or show_promo -%}
+      <div class="henrri-badges__top">
+        {%- if show_promo -%}
+          <span class="henrri-badge henrri-badge--promo">11/11 · Frete grátis</span>
+        {%- endif -%}
+        {%- if discount > 0 -%}
+          <span class="henrri-badge henrri-badge--sale">{{ 'henrri.card.discount' | t: percent: discount }}</span>
+        {%- endif -%}
+      </div>
     {%- endif -%}
     {%- if is_best -%}
       <span class="henrri-badge henrri-badge--best">
