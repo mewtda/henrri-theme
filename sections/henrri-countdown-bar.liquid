@@ -1,0 +1,220 @@
+{%- comment -%}
+  Faixa de promoção com contagem regressiva (ex.: 11/11 frete grátis).
+  Some sozinha quando o prazo acaba.
+{%- endcomment -%}
+
+{%- liquid
+  assign end_ts = section.settings.end_at | date: '%s' | plus: 0
+  assign now_ts = 'now' | date: '%s' | plus: 0
+  assign expired = false
+  if end_ts > 0 and now_ts > end_ts
+    assign expired = true
+  endif
+-%}
+
+{%- unless expired -%}
+  <style>
+    #henrri-cd-{{ section.id }} {
+      --cd-bg: {{ section.settings.bg_color }};
+      --cd-fg: {{ section.settings.text_color }};
+    }
+    .henrri-cd {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(120% 180% at 0% 0%, rgba(255, 255, 255, 0.16), transparent 55%),
+        radial-gradient(120% 180% at 100% 100%, rgba(0, 0, 0, 0.28), transparent 55%),
+        var(--cd-bg);
+      color: var(--cd-fg);
+      text-align: center;
+    }
+    .henrri-cd::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.14) 50%, transparent 70%);
+      transform: translateX(-100%);
+      animation: henrri-cd-shine 4.5s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes henrri-cd-shine {
+      60%, 100% { transform: translateX(100%); }
+    }
+    .henrri-cd__link {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem 2.4rem;
+      padding: 1.2rem 1.6rem;
+      color: inherit;
+      text-decoration: none;
+    }
+    .henrri-cd__msg {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 0;
+      font-family: var(--font-heading-family);
+      font-size: 1.4rem;
+      font-weight: 700;
+      line-height: 1.2;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .henrri-cd__date {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      border-radius: 0.4rem;
+      background: var(--cd-fg);
+      color: var(--cd-bg);
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+    .henrri-cd__timer {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .henrri-cd__label {
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      opacity: 0.9;
+    }
+    .henrri-cd__units {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4rem;
+    }
+    .henrri-cd__unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 3.6rem;
+      padding: 0.35rem 0.5rem 0.25rem;
+      border: 1px solid color-mix(in srgb, var(--cd-fg) 45%, transparent);
+      border-radius: 0.5rem;
+      background: rgba(0, 0, 0, 0.18);
+    }
+    .henrri-cd__num {
+      font-size: 1.8rem;
+      font-weight: 800;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .henrri-cd__unit small {
+      margin-top: 0.2rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.85;
+    }
+    .henrri-cd__sep {
+      font-size: 1.8rem;
+      font-weight: 800;
+      line-height: 1;
+      padding-top: 0.35rem;
+    }
+    @media screen and (min-width: 750px) {
+      .henrri-cd__link { padding: 1.4rem 2rem; }
+      .henrri-cd__msg { font-size: 1.7rem; }
+      .henrri-cd__date { font-size: 1.8rem; }
+      .henrri-cd__label { font-size: 1.15rem; }
+      .henrri-cd__num, .henrri-cd__sep { font-size: 2.2rem; }
+      .henrri-cd__unit { min-width: 4.4rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .henrri-cd::after { animation: none; }
+    }
+  </style>
+
+  <div
+    id="henrri-cd-{{ section.id }}"
+    class="henrri-cd"
+    data-end="{{ section.settings.end_at | escape }}"
+    role="region"
+    aria-label="{{ section.settings.text | escape }}"
+  >
+    <a
+      class="henrri-cd__link"
+      {% if section.settings.link != blank %}
+        href="{{ section.settings.link }}"
+      {% else %}
+        role="presentation"
+      {% endif %}
+    >
+      <p class="henrri-cd__msg">
+        {%- if section.settings.date_label != blank -%}
+          <span class="henrri-cd__date">{{ section.settings.date_label | escape }}</span>
+        {%- endif -%}
+        <span>{{ section.settings.text | escape }}</span>
+      </p>
+      <span class="henrri-cd__timer" aria-live="off">
+        {%- if section.settings.timer_label != blank -%}
+          <span class="henrri-cd__label">{{ section.settings.timer_label | escape }}</span>
+        {%- endif -%}
+        <span class="henrri-cd__units">
+          <span class="henrri-cd__unit"><span class="henrri-cd__num" data-h>--</span><small>horas</small></span>
+          <span class="henrri-cd__sep">:</span>
+          <span class="henrri-cd__unit"><span class="henrri-cd__num" data-m>--</span><small>min</small></span>
+          <span class="henrri-cd__sep">:</span>
+          <span class="henrri-cd__unit"><span class="henrri-cd__num" data-s>--</span><small>seg</small></span>
+        </span>
+      </span>
+    </a>
+  </div>
+
+  <script>
+    (function () {
+      var el = document.getElementById('henrri-cd-{{ section.id }}');
+      if (!el) return;
+      var end = Date.parse(el.dataset.end);
+      if (isNaN(end)) return;
+      var h = el.querySelector('[data-h]');
+      var m = el.querySelector('[data-m]');
+      var s = el.querySelector('[data-s]');
+      var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
+      var timer;
+      function tick() {
+        var left = Math.floor((end - Date.now()) / 1000);
+        if (left <= 0) {
+          clearInterval(timer);
+          el.remove();
+          return;
+        }
+        h.textContent = pad(Math.floor(left / 3600));
+        m.textContent = pad(Math.floor((left % 3600) / 60));
+        s.textContent = pad(left % 60);
+      }
+      tick();
+      timer = setInterval(tick, 1000);
+    })();
+  </script>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "Henrri: contagem",
+  "class": "henrri-countdown-section",
+  "settings": [
+    { "type": "text", "id": "date_label", "label": "Selo (data)", "default": "11/11" },
+    { "type": "text", "id": "text", "label": "Texto", "default": "Frete grátis em todo site" },
+    { "type": "text", "id": "timer_label", "label": "Texto antes do relógio", "default": "Termina em" },
+    {
+      "type": "text",
+      "id": "end_at",
+      "label": "Fim da promoção",
+      "default": "2026-11-11T23:59:59-03:00",
+      "info": "Formato AAAA-MM-DDTHH:MM:SS-03:00 (horário de Brasília). A faixa some sozinha depois disso."
+    },
+    { "type": "url", "id": "link", "label": "Link" },
+    { "type": "color", "id": "bg_color", "label": "Cor de fundo", "default": "#0a3fb8" },
+    { "type": "color", "id": "text_color", "label": "Cor do texto", "default": "#ffd60a" }
+  ],
+  "presets": [{ "name": "Henrri: contagem" }]
+}
+{% endschema %}

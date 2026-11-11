@@ -9,6 +9,18 @@
  */
 {
   "sections": {
+    "countdown_1111": {
+      "type": "henrri-countdown-bar",
+      "settings": {
+        "date_label": "11/11",
+        "text": "Frete grátis em todo site",
+        "timer_label": "Termina em",
+        "end_at": "2026-11-11T23:59:59-03:00",
+        "link": "shopify://collections/all",
+        "bg_color": "#0a3fb8",
+        "text_color": "#ffd60a"
+      }
+    },
     "hero": {
       "type": "henrri-hero",
       "blocks": {
@@ -326,6 +338,7 @@
   },
   "order": [
     "hero",
+    "countdown_1111",
     "black_friday",
     "best_sellers",
     "tiles",
