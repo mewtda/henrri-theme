@@ -55,6 +55,7 @@
         },
         "henrri_shipping": {
           "type": "henrri_shipping",
+          "disabled": true,
           "settings": {
             "text": "<strong>Frete grátis</strong> nas compras acima de R$ 399"
           }
@@ -83,10 +84,10 @@
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
+        "henrri_trust",
         "henrri_shipping",
         "description",
-        "share",
-        "henrri_trust"
+        "share"
       ],
       "settings": {
         "henrri_floating_video": true,
