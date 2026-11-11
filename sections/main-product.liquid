@@ -727,9 +727,10 @@
                         assign icon_key = 'icon_' | append: i
                         assign title_key = 'title_' | append: i
                         assign text_key = 'text_' | append: i
+                        assign promo_key = 'promo_' | append: i
                       -%}
                       {%- if block.settings[title_key] != blank -%}
-                        <div class="henrri-trust__item">
+                        <div class="henrri-trust__item{% if block.settings[promo_key] %} henrri-trust__item--promo{% endif %}">
                           {% render 'henrri-icon', icon: block.settings[icon_key], class: 'henrri-trust__icon' %}
                           <span class="henrri-trust__title">{{ block.settings[title_key] | escape }}</span>
                           <span class="henrri-trust__text">{{ block.settings[text_key] | escape }}</span>
@@ -1636,12 +1637,15 @@
         { "type": "select", "id": "icon_1", "label": "Ícone 1", "options": [{"value":"shield","label":"Garantia"},{"value":"box","label":"Caixa"},{"value":"percent","label":"Porcentagem"},{"value":"truck","label":"Caminhão"},{"value":"return","label":"Troca"},{"value":"tag","label":"Etiqueta"},{"value":"card","label":"Cartão"}], "default": "shield" },
         { "type": "text", "id": "title_1", "label": "Título 1", "default": "Garantia" },
         { "type": "text", "id": "text_1", "label": "Texto 1", "default": "de 3 meses neste produto" },
+        { "type": "checkbox", "id": "promo_1", "label": "Destacar item 1 nas cores 11/11 (azul e amarelo)", "default": false },
         { "type": "select", "id": "icon_2", "label": "Ícone 2", "options": [{"value":"shield","label":"Garantia"},{"value":"box","label":"Caixa"},{"value":"percent","label":"Porcentagem"},{"value":"truck","label":"Caminhão"},{"value":"return","label":"Troca"},{"value":"tag","label":"Etiqueta"},{"value":"card","label":"Cartão"}], "default": "box" },
         { "type": "text", "id": "title_2", "label": "Título 2", "default": "Frete grátis" },
         { "type": "text", "id": "text_2", "label": "Texto 2", "default": "nas compras acima de R$ 399" },
+        { "type": "checkbox", "id": "promo_2", "label": "Destacar item 2 nas cores 11/11 (azul e amarelo)", "default": false },
         { "type": "select", "id": "icon_3", "label": "Ícone 3", "options": [{"value":"shield","label":"Garantia"},{"value":"box","label":"Caixa"},{"value":"percent","label":"Porcentagem"},{"value":"truck","label":"Caminhão"},{"value":"return","label":"Troca"},{"value":"tag","label":"Etiqueta"},{"value":"card","label":"Cartão"}], "default": "percent" },
         { "type": "text", "id": "title_3", "label": "Título 3", "default": "10% OFF na primeira compra" },
         { "type": "text", "id": "text_3", "label": "Texto 3", "default": "Use o cupom PRIMEIRACOMPRA" },
+        { "type": "checkbox", "id": "promo_3", "label": "Destacar item 3 nas cores 11/11 (azul e amarelo)", "default": false },
         { "type": "text", "id": "exchange_title", "label": "Trocas: título", "default": "Trocas e devoluções" },
         { "type": "text", "id": "exchange_text", "label": "Trocas: texto", "default": "Troca rápida e segura com Pode Trocar" },
         { "type": "url", "id": "exchange_link", "label": "Trocas: link" }

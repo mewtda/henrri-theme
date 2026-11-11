@@ -1489,3 +1489,26 @@ henrri-carousel {
   color: #ffd60a;
   font-weight: 700;
 }
+
+/* Item dos selos do produto destacado nas cores 11/11 */
+.henrri-trust__item--promo {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-radius: 0.6rem;
+  background: #0a3fb8;
+  color: #ffd60a;
+}
+
+.henrri-trust__item--promo .henrri-trust__title {
+  font-weight: 700;
+}
+
+.henrri-trust__item--promo .henrri-trust__text {
+  color: #ffd60a;
+  opacity: 0.9;
+}
+
+.henrri-trust__item + .henrri-trust__item--promo,
+.henrri-trust__item--promo + .henrri-trust__item {
+  border-left-color: transparent;
+}

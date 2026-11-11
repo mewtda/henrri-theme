@@ -62,7 +62,11 @@
         },
         "henrri_trust": {
           "type": "henrri_trust",
-          "settings": {}
+          "settings": {
+            "title_2": "Frete grátis 11/11",
+            "text_2": "em todo o site, só hoje",
+            "promo_2": true
+          }
         },
         "henrri_group": {
           "type": "henrri_group",
