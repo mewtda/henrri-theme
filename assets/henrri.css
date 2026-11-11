@@ -1442,20 +1442,26 @@ henrri-carousel {
   }
 }
 
-/* Borda arco-íris animada no fim do rodapé (abaixo do "Desenvolvido por Mewtda") */
-.henrri-rainbow-edge,
-.henrri-rainbow-edge:empty {
-  display: block;
+/* Borda arco-íris animada só embaixo do "Desenvolvido por Mewtda" */
+.henrri-footer-dev {
+  position: relative;
+  padding-bottom: 0.6rem;
 }
 
-.henrri-rainbow-edge {
-  height: 0.5rem;
+.henrri-footer-dev::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0.3rem;
+  border-radius: 0.3rem;
   background: linear-gradient(
     90deg,
     #ff3b30, #ff9500, #ffcc00, #34c759, #00c7be, #007aff, #af52de, #ff2d92, #ff3b30
   );
   background-size: 200% 100%;
-  animation: henrri-rainbow 4s linear infinite;
+  animation: henrri-rainbow 3s linear infinite;
 }
 
 @keyframes henrri-rainbow {
@@ -1464,7 +1470,7 @@ henrri-carousel {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .henrri-rainbow-edge { animation: none; }
+  .henrri-footer-dev::after { animation: none; }
 }
 
 /* Selos do topo do card: "11/11 · Frete grátis" ao lado do "X% OFF" */
