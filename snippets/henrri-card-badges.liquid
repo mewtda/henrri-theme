@@ -26,7 +26,7 @@
   # Selo 11/11 até 11/11/2026 23:59:59 (Brasília)
   assign now_ts = 'now' | date: '%s' | plus: 0
   assign show_promo = false
-  if now_ts < 1794452399
+  if now_ts < 1794452399 and product.available
     assign show_promo = true
   endif
 -%}
