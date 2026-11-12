@@ -63,9 +63,8 @@
         "henrri_trust": {
           "type": "henrri_trust",
           "settings": {
-            "title_2": "Frete grátis 11/11",
-            "text_2": "em todo o site, só hoje",
-            "promo_2": true
+            "title_2": "Frete grátis",
+            "text_2": "nas compras acima de R$ 299"
           }
         },
         "henrri_group": {
